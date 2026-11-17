@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>コンボダメージシミュレーター（イングリッド） | hasuke-sf6</title>
+<style>
+  body { font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; margin: 0; background: #f7f5ef; color: #26282e; line-height: 1.7; }
+  main { max-width: 880px; margin: 0 auto; padding: 32px 16px 64px; background: #fff; }
+  @media (min-width: 920px) { main { border-left: 1px solid #e3ded2; border-right: 1px solid #e3ded2; } }
+  h1 { font-size: 1.6rem; margin-bottom: 0.1em; }
+  .sub { color: #8a8578; margin-top: 0; }
+  h2 { background: #2b4a8b; color: #fff; padding: 7px 12px; border-radius: 4px; margin-top: 1.8em; font-size: 1.15rem; }
+  a { color: #1a5fb4; }
+  .panel { background: #fbfaf7; border: 1px solid #ddd6c6; border-radius: 10px; padding: 14px 16px; margin: 14px 0; }
+  .init-grid { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: flex-end; }
+  .init-grid label { display: block; font-size: 0.82rem; color: #6b675c; margin-bottom: 2px; }
+  select, button { background: #fff; color: #26282e; border: 1px solid #b9c2d4; border-radius: 6px; padding: 6px 8px; font-size: 0.95rem; }
+  button { cursor: pointer; }
+  button:hover { border-color: #2b4a8b; }
+  .gauge-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+  .gauge-name { width: 92px; font-size: 0.85rem; color: #6b675c; flex-shrink: 0; }
+  .gauge { display: flex; gap: 3px; flex: 1; }
+  .cell { height: 16px; flex: 1; background: #dde3ee; border-radius: 3px; }
+  .cell.on-drive { background: #57c785; }
+  .cell.on-sa { background: #5b8def; }
+  .cell.on-stock { background: #f5c542; }
+  .gauge-num { width: 74px; font-size: 0.85rem; text-align: right; flex-shrink: 0; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; background: #fbfaf7; border: 1px solid #ddd6c6; border-radius: 10px; padding: 10px 12px; margin: 8px 0; }
+  .row .idx { font-weight: bold; color: #6b675c; width: 1.6em; text-align: right; }
+  .row select.move { min-width: 240px; flex: 1; }
+  .row .res { font-size: 0.92rem; }
+  .row .res b { font-size: 1.05rem; }
+  .row .state { font-size: 0.8rem; color: #6b675c; width: 100%; }
+  .row .warn { color: #c0392b; font-size: 0.85rem; width: 100%; }
+  .row .del { margin-left: auto; }
+  .chk { font-size: 0.88rem; white-space: nowrap; }
+  .total-box { text-align: center; padding: 10px 0 2px; }
+  .total-num { font-size: 2.6rem; font-weight: bold; color: #d97c06; line-height: 1.2; }
+  .flow { font-size: 0.88rem; color: #6b675c; text-align: center; word-break: break-all; }
+  .preset-btn { margin: 2px 4px 2px 0; font-size: 0.88rem; }
+  .notes { font-size: 0.88rem; color: #3c3f47; }
+  .notes li { margin: 0.35em 0; }
+  footer { color: #8a8578; font-size: 0.85rem; margin-top: 3em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>コンボダメージシミュレーター（イングリッド）</h1>
+  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。コンボが実際に繋がるかの判定はしない（リソース不足の技だけ選べなくなる）。</p>
+
+  <h2>初期条件</h2>
+  <div class="panel">
+    <div class="init-grid">
+      <div>
+        <label for="init-drive">ドライブゲージ</label>
+        <select id="init-drive"></select>
+      </div>
+      <div>
+        <label for="init-sa">SAゲージ</label>
+        <select id="init-sa"></select>
+      </div>
+      <div>
+        <label for="init-stock">サンシンボル（ストック）</label>
+        <select id="init-stock"></select>
+      </div>
+      <div>
+        <label for="init-counter">始動の当たり方</label>
+        <select id="init-counter">
+          <option value="none">通常ヒット</option>
+          <option value="ch">カウンターヒット（初段×1.2）</option>
+          <option value="pc">パニッシュカウンター（初段×1.2／投げ×1.7）</option>
+        </select>
+      </div>
+      <div>
+        <label for="init-control">操作タイプ</label>
+        <select id="init-control">
+          <option value="classic">クラシック</option>
+          <option value="modern">モダン</option>
+        </select>
+      </div>
+      <div>
+        <label class="chk"><input type="checkbox" id="init-pp"> ジャストパリィ始動（全体×0.5）</label>
+        <label class="chk"><input type="checkbox" id="init-wall"> 端DIガード壁やられ追撃（全体×0.8）</label>
+      </div>
+    </div>
+  </div>
+
+  <h2>ゲージ残量（コンボ終了時点）</h2>
+  <div class="panel">
+    <div class="gauge-row"><div class="gauge-name">ドライブ</div><div class="gauge" id="g-drive"></div><div class="gauge-num" id="n-drive"></div></div>
+    <div class="gauge-row"><div class="gauge-name">SA</div><div class="gauge" id="g-sa"></div><div class="gauge-num" id="n-sa"></div></div>
+    <div class="gauge-row"><div class="gauge-name">ストック</div><div class="gauge" id="g-stock"></div><div class="gauge-num" id="n-stock"></div></div>
+  </div>
+
+  <h2>コンボ</h2>
+  <div>
+    <span style="font-size:0.88rem;color:#8a8578;">プリセット（練習カードの必須コンボ）:</span><br>
+    <button class="preset-btn" data-preset="weak">弱始動（1370）</button>
+    <button class="preset-btn" data-preset="mid">中始動（2140）</button>
+    <button class="preset-btn" data-preset="mid2">中始動・発展（2480）</button>
+    <button class="preset-btn" data-preset="cdr">中足ラッシュ（2163）</button>
+    <button class="preset-btn" data-preset="heavy">強始動・発展（2823）</button>
+    <button class="preset-btn" id="btn-reset">リセット</button>
+  </div>
+  <div id="rows"></div>
+
+  <div class="panel total-box">
+    <div style="font-size:0.9rem;color:#8a8578;">合計ダメージ</div>
+    <div class="total-num" id="total">0</div>
+    <div class="flow" id="flow"></div>
+  </div>
+
+  <h2>計算の前提・未確認事項</h2>
+  <ul class="notes">
+    <li>補正モデル: 補正率 = floor((100 − 累積ペナルティ) × 乗算系)。ペナルティは「基本（3つ目の技から+10ずつ）」「始動補正（初段の技の値、2つ目から）」「通常始動補正（始動補正なしの場合に+10）」「コンボ補正（フレーム表の表記値、その技の次の技から）」「即時補正（2つ目以降、その技自身）」の合算で、上限90（最低10%）。</li>
+    <li>ドライブラッシュ補正: コンボ中にラッシュを使った技から先の全ヒットに×0.85（切り捨てで最低10%を割ることもある）。生ラッシュ始動にはかからない。</li>
+    <li>SA最低保証: SA1=30%／SA2=40%／SA3・CA=50%。乗算系で下回っても、この値に置き換わる。SA3/CAを必殺技からスーパーキャンセルした場合は即時+10ペナルティ（通常技からなら無し）。浮かせた相手への追撃などキャンセルでない場合は、SA3/CAの行の「必殺技からキャンセル」チェックを外すと+10が付かない。</li>
+    <li>モダンでは、必殺技とSAの行ごとに入力方法（SP入力／コマンド入力）を選べます。SP入力補正（×0.8）はSP入力にした技にのみ適用され、コマンド入力ではかかりません。SA最低保証が優先します。アシストコンボには補正なし（このシミュレーターではアシストコンボは未対応）。</li>
+    <li>カウンター／パニッシュカウンターの×1.2は当たった技自身のみ（SAには無し）。投げはカウンターで増えず、パニカンで×1.7。</li>
+    <li>多段技は全ヒット同じ補正率。ターゲットコンボは各段を別カウントする。サンオーダー（SA2）の光弾は合計ダメージで一括計算している（遅れて当たる弾の補正進行は未再現）。</li>
+    <li>各ヒットのダメージの端数処理は出典で確定できなかったため「切り捨て」で仮置きしている。検証済みコンボ（練習カード5本ほか）では全て一致した。</li>
+    <li>SA3/CAをキャンセル以外で組み込んだ場合の追加補正は出典が割れている（追加なし説／1段階進む説／即時20%説）。ここでは実例のある「追加なし」を採用し、キャンセルかどうかを行ごとのチェックで切り替えられるようにした（初期状態はオン）。</li>
+    <li>検証状況: 練習カード5本と公開コンボリスト（dood.gg）の33本で照合し、29本が完全一致。不一致の内訳は、出典値がどの補正配分でも再現できない2本（2強K絡み、出典側の誤記の疑い）と、長いコンボ1本（−39）。また「ラッシュ立ち強K＞立ち中P＞ODサンフレアLv3＞サンバニッシュ（上方）＞ラッシュ立ち中P＞エアリートス＞SA1」は実測報告4,609に対し本モデルでは4,543となり、差+66はラッシュ立ち中P〜エアリートスの区間に絞られたが原因は未特定（他のコンボを壊さずに再現する補正値の組み合わせは存在しなかった）。</li>
+    <li>ゲージの増加（技を当てた時のドライブ/SA回復）は計算していない。消費とストック生成のみ。</li>
+    <li>サンバニッシュ（前方）の固有補正値は未確認のため補正なしとして扱っている。サンヴェールは当身成功時の反撃ダメージで計算する。</li>
+    <li>スタン（気絶）中の相手へのコンボ開始補正（80%開始説）は進行方法が未検証のため未実装。</li>
+  </ul>
+
+  <p><a href="../index.html">← トップへ戻る</a></p>
+  <footer>Street Fighter is a trademark of CAPCOM. This is a fan-made, unofficial notes site.</footer>
+</main>
+
+<script>
+// === ENGINE START ===
+"use strict";
+// 技データ: starter=始動補正(ポイント), combo=コンボ補正(フレーム表表記値・基本10込み), immediate=即時補正
+// dmgLv/starterLv/comboLv はストック数で自動決定するLv制の技（配列は Lv1,Lv2,Lv3）
+// segments はターゲットコンボ（各段が別カウント）
+const MOVES = [
+  // 通常技
+  { id:"5lp", name:"ライトタッチ（立ち弱P）", cmd:"5LP", cat:"normal", dmg:300, starter:20 },
+  { id:"5lk", name:"プチリフト（立ち弱K）", cmd:"5LK", cat:"normal", dmg:300, starter:20 },
+  { id:"5mp", name:"スタートーチ（立ち中P）", cmd:"5MP", cat:"normal", dmg:600 },
+  { id:"5mk", name:"スタークリップ（立ち中K）", cmd:"5MK", cat:"normal", dmg:700 },
+  { id:"5hp", name:"ステラーウェーブ（立ち強P）", cmd:"5HP", cat:"normal", dmg:900, starter:20 },
+  { id:"5hk", name:"シューティングスター（立ち強K・2ヒット）", cmd:"5HK", cat:"normal", dmg:800 },
+  { id:"2lp", name:"リトルスター（しゃがみ弱P）", cmd:"2LP", cat:"normal", dmg:300, starter:20 },
+  { id:"2lk", name:"リトルワイプ（しゃがみ弱K）", cmd:"2LK", cat:"normal", dmg:200, starter:20 },
+  { id:"2mp", name:"アンダートーチ（しゃがみ中P）", cmd:"2MP", cat:"normal", dmg:600 },
+  { id:"2mk", name:"ミルキーウェイ（しゃがみ中K）", cmd:"2MK", cat:"normal", dmg:500, starter:20 },
+  { id:"2hp", name:"ステラーリング（しゃがみ強P）", cmd:"2HP", cat:"normal", dmg:800 },
+  { id:"2hk", name:"オービットキック（しゃがみ強K）", cmd:"2HK", cat:"normal", dmg:900 },
+  { id:"jlp", name:"ライトパット（ジャンプ弱P）", cmd:"j.LP", cat:"normal", dmg:300 },
+  { id:"jlk", name:"プチトリック（ジャンプ弱K）", cmd:"j.LK", cat:"normal", dmg:300 },
+  { id:"jmp", name:"スタービーコン（ジャンプ中P）", cmd:"j.MP", cat:"normal", dmg:600 },
+  { id:"jmk", name:"タイニーメテオ（ジャンプ中K）", cmd:"j.MK", cat:"normal", dmg:500 },
+  { id:"jhp", name:"タコクライン（ジャンプ強P）", cmd:"j.HP", cat:"normal", dmg:800 },
+  { id:"jhk", name:"サテライトアーク（ジャンプ強K）", cmd:"j.HK", cat:"normal", dmg:800 },
+  // 特殊技
+  { id:"6mp", name:"サンブライト", cmd:"6MP", cat:"command", dmg:600 },
+  { id:"6hp", name:"ヘイローステップ", cmd:"6HP", cat:"command", dmg:900 },
+  // ターゲットコンボ（各段別カウント）
+  { id:"tc_airy", name:"エアリートス（5MP＞MK）", cmd:"5MP>MK", cat:"target",
+    segments:[ {label:"5MP", dmg:600, combo:10}, {label:"MK", dmg:700, combo:20} ] },
+  { id:"tc_glow", name:"グロータッチ（4MK＞HP）", cmd:"4MK>HP", cat:"target",
+    segments:[ {label:"4MK", dmg:700, combo:10}, {label:"HP", dmg:800, combo:10} ] },
+  { id:"tc_lumi", name:"ルミナスアッパー（4HP＞HP）", cmd:"4HP>HP", cat:"target",
+    segments:[ {label:"4HP", dmg:800, combo:10}, {label:"HP", dmg:800, combo:10} ] },
+  { id:"tc_leap", name:"サテライトリープ（空中 j.HK＞HK）", cmd:"j.HK>HK", cat:"target",
+    segments:[ {label:"HK", dmg:600, combo:10} ] },
+  // 投げ
+  { id:"throw_f", name:"ストレンジナックル（前投げ）", cmd:"LP+LK", cat:"throw", dmg:1200, immediate:20, isThrow:true },
+  { id:"throw_b", name:"グラビティードロップ（後ろ投げ）", cmd:"4+LP+LK", cat:"throw", dmg:1200, immediate:20, isThrow:true },
+  // 必殺技
+  { id:"shoot_l", name:"弱サンシュート", cmd:"236LP", cat:"special", dmg:700, starter:20, combo:20 },
+  { id:"shoot_m", name:"中サンシュート", cmd:"236MP", cat:"special", dmg:700, starter:20, combo:20 },
+  { id:"shoot_h", name:"強サンシュート", cmd:"236HP", cat:"special", dmg:700, starter:20, combo:20 },
+  { id:"shoot_od", name:"ODサンシュート", cmd:"236PP", cat:"special", dmg:1000, starter:20, combo:20, drive:2 },
+  { id:"flare_l", name:"弱サンフレア（溜め・ストック+1）", cmd:"214LP", cat:"special", dmg:0, noHit:true, stockGain:1 },
+  { id:"flare_m", name:"中サンフレア Lv1", cmd:"214MP", cat:"special", dmg:900, starter:30, combo:20 },
+  { id:"flare_h", name:"強サンフレア（ストックで自動Lv）", cmd:"214HP", cat:"special", dmgLv:[900,1100,1350], starter:30, combo:20, stockAuto:true },
+  { id:"flare_od", name:"ODサンフレア（ストックで自動Lv）", cmd:"214PP", cat:"special", dmgLv:[1100,1350,1800], starter:30, combo:20, drive:2, stockAuto:true },
+  { id:"sflare_l", name:"弱ソーラーフレア（空中・溜め・ストック+1）", cmd:"空中214LP", cat:"special", dmg:0, noHit:true, stockGain:1 },
+  { id:"sflare_m", name:"中ソーラーフレア Lv1（空中）", cmd:"空中214MP", cat:"special", dmg:900, starter:20 },
+  { id:"sflare_h", name:"強ソーラーフレア（空中・ストックで自動Lv）", cmd:"空中214HP", cat:"special", dmgLv:[900,1100,1350], starterLv:[20,20,30], stockAuto:true },
+  { id:"sflare_od", name:"ODソーラーフレア（空中・ストックで自動Lv）", cmd:"空中214PP", cat:"special", dmgLv:[1100,1350,1800], starterLv:[20,20,30], comboLv:[10,10,15], drive:2, stockAuto:true },
+  { id:"rise_l", name:"弱サンライズ", cmd:"236LK", cat:"special", dmg:1000, starter:20 },
+  { id:"rise_m", name:"中サンライズ", cmd:"236MK", cat:"special", dmg:1200, combo:20 },
+  { id:"rise_h", name:"強サンライズ", cmd:"236HK", cat:"special", dmg:1300, starter:20, combo:20 },
+  { id:"rise_od", name:"ODサンライズ", cmd:"236KK", cat:"special", dmg:1600, combo:20, drive:2 },
+  { id:"veil", name:"サンヴェール（当身成功時）", cmd:"22K", cat:"special", dmg:1000 },
+  { id:"veil_od", name:"ODサンヴェール（当身成功時）", cmd:"22KK", cat:"special", dmg:1200, drive:2 },
+  { id:"vanish_u", name:"サンバニッシュ（上方）", cmd:"2KKK", cat:"special", dmg:1100, starter:20, combo:20 },
+  { id:"vanish_f", name:"サンバニッシュ（前方）※補正未確認", cmd:"6KKK", cat:"special", dmg:1000 },
+  // SA
+  { id:"sa1_1", name:"SA1 サンシャイン Lv1", cmd:"236236K", cat:"sa", dmg:1900, sa:1, saLv:1 },
+  { id:"sa1_2", name:"SA1 サンシャイン Lv2", cmd:"236236K(ホールド)", cat:"sa", dmg:2300, sa:1, saLv:1, stock:1 },
+  { id:"sa1_3", name:"SA1 サンシャイン Lv3", cmd:"236236K(ホールド)", cat:"sa", dmg:2700, sa:1, saLv:1, stock:2 },
+  { id:"sa2_1", name:"SA2 サンオーダー Lv1（光弾3発）", cmd:"214214P", cat:"sa", dmg:1600, sa:2, saLv:2 },
+  { id:"sa2_2", name:"SA2 サンオーダー Lv2（光弾4発）", cmd:"214214P(ホールド)", cat:"sa", dmg:2400, sa:2, saLv:2, stock:1 },
+  { id:"sa2_3", name:"SA2 サンオーダー Lv3（光弾5発）", cmd:"214214P(ホールド)", cat:"sa", dmg:3400, sa:2, saLv:2, stock:2 },
+  { id:"sa3", name:"SA3 コズミックレイ", cmd:"236236P", cat:"sa", dmg:4000, sa:3, saLv:3 },
+  { id:"ca", name:"CA コズミックレイ（体力25%以下）", cmd:"236236P", cat:"sa", dmg:4500, sa:3, saLv:3 },
+  // システム
+  { id:"di", name:"ドライブインパクト（トゥインクルキック）", cmd:"HP+HK", cat:"system", dmg:800, starter:20, drive:1 },
+];
+const MOVE_BY_ID = {};
+for (const m of MOVES) MOVE_BY_ID[m.id] = m;
+const SA_MIN = { 1:30, 2:40, 3:50 };
+
+function resolveLv(move, stock) {
+  // ストック自動Lv技: 所持数 0→Lv1(消費0), 1→Lv2(消費1), 2以上→Lv3(消費2)
+  const idx = Math.min(Math.max(stock, 0), 2);
+  return {
+    lv: idx + 1,
+    dmg: move.dmgLv[idx],
+    starter: move.starterLv ? move.starterLv[idx] : (move.starter || 0),
+    combo: move.comboLv ? move.comboLv[idx] : (move.combo !== undefined ? move.combo : 10),
+    stockCost: idx,
+  };
+}
+
+// init: {drive, sa, stock, counter:'none'|'ch'|'pc', pp:bool, wall:bool, modern:bool}
+// picks: [{id, rush:'none'|'raw'|'cdr', sp:bool}]
+function computeCombo(db, init, picks) {
+  const byId = {};
+  for (const m of db) byId[m.id] = m;
+  let drive = init.drive, sa = init.sa, stock = init.stock;
+  let P = 0;                 // 累積加算ペナルティ
+  let drActive = false;      // DR補正 ×0.85 が有効か
+  let atkIndex = 0;          // 当たった攻撃の通し番号（TCは各段カウント、溜め技は数えない）
+  let firstStarter = 0;      // 初段の始動補正
+  let prevHitCat = null;     // 直前に当たった技のカテゴリ（SA3キャンセル判定用）
+  let total = 0;
+  const rows = [];
+  const flow = [];
+
+  for (let pi = 0; pi < picks.length; pi++) {
+    const pick = picks[pi];
+    const move = byId[pick.id];
+    const row = { pickIndex: pi, moveId: pick.id, name: move ? move.name : "(未選択)",
+                  attacks: [], dmg: 0, warn: [],
+                  before: { drive, sa, stock }, after: null, lvLabel: "" };
+    if (!move) { row.after = { drive, sa, stock }; rows.push(row); continue; }
+
+    // --- ラッシュ（この技の前に使用） ---
+    if (pick.rush && pick.rush !== "none") {
+      const cost = pick.rush === "cdr" ? 3 : 1;
+      drive -= cost;
+      if (pi >= 1) drActive = true; // コンボ中のラッシュはその技から ×0.85（初段の生ラッシュ始動は不適用）
+      if (drive < 0) row.warn.push("ドライブゲージ不足（ラッシュ）");
+    }
+    // --- 技のコスト ---
+    let lvInfo = null;
+    if (move.stockAuto) {
+      lvInfo = resolveLv(move, stock);
+      stock -= lvInfo.stockCost;
+      row.lvLabel = "Lv" + lvInfo.lv + "で発動（ストック-" + lvInfo.stockCost + "）";
+    } else if (move.stock) {
+      stock -= move.stock;
+      if (stock < 0) row.warn.push("ストック不足");
+    }
+    if (move.drive) { drive -= move.drive; if (drive < 0) row.warn.push("ドライブゲージ不足"); }
+    if (move.sa) { sa -= move.sa; if (sa < 0) row.warn.push("SAゲージ不足"); }
+    if (move.stockGain) stock = Math.min(4, stock + move.stockGain);
+
+    // --- 攻撃の展開（TCは各段） ---
+    let attacks;
+    if (move.segments) {
+      attacks = move.segments.map(s => ({ label: move.name + " " + s.label, dmg: s.dmg, combo: s.combo,
+                                          starter: move.starter || 0, immediate: 0 }));
+    } else if (move.noHit) {
+      attacks = [];
+    } else if (lvInfo) {
+      attacks = [{ label: move.name, dmg: lvInfo.dmg, combo: lvInfo.combo, starter: lvInfo.starter, immediate: 0 }];
+    } else {
+      attacks = [{ label: move.name, dmg: move.dmg, combo: (move.combo !== undefined ? move.combo : 10),
+                   starter: move.starter || 0, immediate: move.immediate || 0 }];
+    }
+
+    for (const atk of attacks) {
+      atkIndex++;
+      let Pi = P;
+      if (atkIndex >= 2 && atk.immediate) Pi += atk.immediate;
+      if (move.saLv === 3 && prevHitCat === "special" && pick.saCancel !== false) Pi += 10; // SA3/CAのスーパーキャンセル追加補正（追撃の場合は行のチェックを外す）
+      Pi = Math.min(Pi, 90);
+      let mult = 1.0;
+      if (init.pp) mult *= 0.5;
+      if (init.wall) mult *= 0.8;
+      if (drActive) mult *= 0.85;
+      if (init.modern && pick.sp && (move.cat === "special" || move.cat === "sa")) mult *= 0.8;
+      let rate = Math.floor((100 - Pi) * mult + 1e-9);
+      if (move.saLv) rate = Math.max(rate, SA_MIN[move.saLv]);
+      let dmg = Math.floor(atk.dmg * rate / 100 + 1e-9);
+      if (atkIndex === 1 && init.counter !== "none") {
+        if (move.isThrow) { if (init.counter === "pc") dmg = Math.floor(dmg * 1.7 + 1e-9); }
+        else if (!move.saLv) { dmg = Math.floor(dmg * 1.2 + 1e-9); }
+      }
+      row.attacks.push({ label: atk.label, rate, dmg });
+      flow.push(rate + "%");
+      row.dmg += dmg; total += dmg;
+      // --- 次の攻撃へ向けた P の更新 ---
+      if (atkIndex === 1) { P = atk.starter; firstStarter = atk.starter; }
+      else {
+        if (atkIndex === 2 && firstStarter === 0) P += 10; // 通常始動補正
+        P += atk.combo;
+      }
+      prevHitCat = move.cat;
+    }
+    if (move.noHit) { row.attacks.push({ label: move.name + "（溜め）", rate: null, dmg: 0 }); }
+    row.after = { drive, sa, stock };
+    rows.push(row);
+  }
+  return { rows, total, flow, end: { drive, sa, stock } };
+}
+// === ENGINE END ===
+</script>
+
+<script>
+"use strict";
+// ---------- UI ----------
+const $ = id => document.getElementById(id);
+const CAT_LABEL = { normal:"通常技", command:"特殊技", target:"ターゲットコンボ", throw:"投げ", special:"必殺技", sa:"スーパーアーツ", system:"システム" };
+const CAT_ORDER = ["normal","command","target","throw","special","sa","system"];
+let picks = []; // {id, rush, sp}
+
+const PRESETS = {
+  weak:  [ {id:"2lk"}, {id:"5lp"}, {id:"5lk"}, {id:"rise_m"} ],
+  mid:   [ {id:"tc_airy"}, {id:"rise_m"} ],
+  mid2:  [ {id:"2mp"}, {id:"tc_airy"}, {id:"rise_m"} ],
+  cdr:   [ {id:"2mk"}, {id:"5hk", rush:"cdr"}, {id:"tc_airy"}, {id:"rise_m"} ],
+  heavy: [ {id:"2hp"}, {id:"2hp", rush:"cdr"}, {id:"rise_h"}, {id:"sflare_m"} ],
+};
+
+function initOptions() {
+  const d = $("init-drive");
+  for (let v = 0; v <= 6.001; v += 0.5) {
+    const o = document.createElement("option"); o.value = v; o.textContent = v.toFixed(1) + " 本"; d.appendChild(o);
+  }
+  d.value = "6";
+  const s = $("init-sa");
+  for (let v = 0; v <= 3; v++) { const o = document.createElement("option"); o.value = v; o.textContent = v + " 本"; s.appendChild(o); }
+  s.value = "3";
+  const st = $("init-stock");
+  for (let v = 0; v <= 4; v++) { const o = document.createElement("option"); o.value = v; o.textContent = v + " 個"; st.appendChild(o); }
+  st.value = "1";
+}
+function getInit() {
+  return {
+    drive: parseFloat($("init-drive").value),
+    sa: parseInt($("init-sa").value, 10),
+    stock: parseInt($("init-stock").value, 10),
+    counter: $("init-counter").value,
+    pp: $("init-pp").checked,
+    wall: $("init-wall").checked,
+    modern: $("init-control").value === "modern",
+  };
+}
+function moveOptions(select, avail) {
+  for (const cat of CAT_ORDER) {
+    const g = document.createElement("optgroup"); g.label = CAT_LABEL[cat];
+    for (const m of MOVES) {
+      if (m.cat !== cat) continue;
+      const o = document.createElement("option");
+      o.value = m.id;
+      o.textContent = m.name + "（" + m.cmd + "）";
+      // リソース不足なら選択不可（ストック自動Lv技はLvが下がるだけなので常に可）
+      if (avail) {
+        if (m.drive && m.drive > avail.drive) o.disabled = true;
+        if (m.sa && m.sa > avail.sa) o.disabled = true;
+        if (m.stock && m.stock > avail.stock) o.disabled = true;
+      }
+      g.appendChild(o);
+    }
+    select.appendChild(g);
+  }
+}
+function renderGauges(end) {
+  const mk = (el, n, cls, val) => {
+    el.innerHTML = "";
+    for (let i = 0; i < n; i++) {
+      const c = document.createElement("div"); c.className = "cell";
+      const fill = Math.max(0, Math.min(1, val - i));
+      if (fill >= 1) c.classList.add(cls);
+      else if (fill > 0) c.style.background = "linear-gradient(90deg, #57c785 " + (fill*100) + "%, #dde3ee " + (fill*100) + "%)";
+      el.appendChild(c);
+    }
+  };
+  mk($("g-drive"), 6, "on-drive", Math.max(0, end.drive));
+  mk($("g-sa"), 3, "on-sa", Math.max(0, end.sa));
+  mk($("g-stock"), 4, "on-stock", Math.max(0, end.stock));
+  $("n-drive").textContent = end.drive.toFixed(1) + " 本";
+  $("n-sa").textContent = end.sa + " 本";
+  $("n-stock").textContent = end.stock + " 個";
+}
+function render() {
+  const init = getInit();
+  const result = computeCombo(MOVES, init, picks);
+  const container = $("rows");
+  container.innerHTML = "";
+  const slots = picks.length + 1; // 末尾に空の選択欄を1つ出す
+  for (let i = 0; i < slots; i++) {
+    const isSlot = i === picks.length;
+    const pick = isSlot ? null : picks[i];
+    const rowRes = isSlot ? null : result.rows[i];
+    const avail = isSlot ? result.end : rowRes.before;
+    const div = document.createElement("div"); div.className = "row";
+    const idx = document.createElement("span"); idx.className = "idx"; idx.textContent = (i + 1) + "."; div.appendChild(idx);
+    const sel = document.createElement("select"); sel.className = "move";
+    const ph = document.createElement("option"); ph.value = ""; ph.textContent = "技を選択"; sel.appendChild(ph);
+    moveOptions(sel, avail);
+    if (pick) sel.value = pick.id;
+    sel.addEventListener("change", () => {
+      if (isSlot) {
+        if (sel.value) picks.push({ id: sel.value, rush: "none", sp: init.modern });
+      } else if (sel.value) {
+        picks[i].id = sel.value;
+      } else {
+        picks.splice(i, 1);
+      }
+      render();
+    });
+    div.appendChild(sel);
+    if (pick) {
+      const move = MOVE_BY_ID[pick.id];
+      // ラッシュ選択
+      const rs = document.createElement("select");
+      const ro = [["none","ラッシュなし"],["raw","生ラッシュ（D-1）"],["cdr","キャンセルラッシュ（D-3）"]];
+      for (const [v, t] of ro) { const o = document.createElement("option"); o.value = v; o.textContent = t; rs.appendChild(o); }
+      if (i === 0) rs.querySelector('option[value="cdr"]').disabled = true;
+      rs.value = pick.rush || "none";
+      rs.addEventListener("change", () => { picks[i].rush = rs.value; render(); });
+      div.appendChild(rs);
+      // モダンの入力方法（SP入力のときだけその技に×0.8。コマンド入力なら補正なし）
+      if (init.modern && (move.cat === "special" || move.cat === "sa")) {
+        const is = document.createElement("select");
+        const io = [["sp","SP入力（補正×0.8）"],["cmd","コマンド入力"]];
+        for (const [v, t] of io) { const o = document.createElement("option"); o.value = v; o.textContent = t; is.appendChild(o); }
+        is.value = pick.sp ? "sp" : "cmd";
+        is.addEventListener("change", () => { picks[i].sp = is.value === "sp"; render(); });
+        div.appendChild(is);
+      }
+      // SA3/CA スーパーキャンセル補正（必殺技からキャンセルした場合のみ+10。浮かせた相手への追撃はキャンセルではないので外す）
+      if (move.saLv === 3) {
+        const lab = document.createElement("label"); lab.className = "chk";
+        const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = pick.saCancel !== false;
+        cb.addEventListener("change", () => { picks[i].saCancel = cb.checked; render(); });
+        lab.appendChild(cb); lab.appendChild(document.createTextNode(" 必殺技からキャンセル（補正+10）"));
+        div.appendChild(lab);
+      }
+      // 結果
+      const res = document.createElement("span"); res.className = "res";
+      const parts = rowRes.attacks.filter(a => a.rate !== null).map(a => a.rate + "%");
+      res.innerHTML = "補正 " + (parts.length ? parts.join(" / ") : "—") + " → <b>" + rowRes.dmg + "</b> ダメージ";
+      div.appendChild(res);
+      const del = document.createElement("button"); del.className = "del"; del.textContent = "✕";
+      del.addEventListener("click", () => { picks.splice(i, 1); render(); });
+      div.appendChild(del);
+      if (rowRes.lvLabel) {
+        const st = document.createElement("div"); st.className = "state"; st.textContent = rowRes.lvLabel; div.appendChild(st);
+      }
+      const st = document.createElement("div"); st.className = "state";
+      st.textContent = "この技の後: ドライブ " + rowRes.after.drive.toFixed(1) + " 本 / SA " + rowRes.after.sa + " 本 / ストック " + rowRes.after.stock + " 個";
+      div.appendChild(st);
+      for (const w of rowRes.warn) {
+        const wd = document.createElement("div"); wd.className = "warn"; wd.textContent = "⚠ " + w + "（この技は選べないはずの状態）"; div.appendChild(wd);
+      }
+    }
+    container.appendChild(div);
+  }
+  $("total").textContent = result.total.toLocaleString();
+  $("flow").textContent = result.flow.length ? "補正率の流れ: " + result.flow.join(" → ") : "";
+  renderGauges(result.end);
+}
+document.querySelectorAll(".preset-btn[data-preset]").forEach(b => {
+  b.addEventListener("click", () => {
+    picks = PRESETS[b.dataset.preset].map(p => ({ id: p.id, rush: p.rush || "none", sp: getInit().modern }));
+    render();
+  });
+});
+$("btn-reset").addEventListener("click", () => { picks = []; render(); });
+for (const id of ["init-drive","init-sa","init-stock","init-counter","init-control","init-pp","init-wall"]) {
+  $(id).addEventListener("change", render);
+}
+initOptions();
+render();
+</script>
+</body>
+</html>

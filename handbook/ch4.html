@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4章 共通の立ち回り・ストック管理 ― イングリッド アルティメットマスター到達ハンドブック | hasuke-sf6</title>
+<style>
+  body { font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; margin: 0; background: #f7f5ef; color: #26282e; line-height: 1.8; }
+  main { max-width: 820px; margin: 0 auto; padding: 40px 20px 64px; background: #fff; }
+  @media (min-width: 860px) { main { border-left: 1px solid #e3ded2; border-right: 1px solid #e3ded2; } }
+  h1 { font-size: 1.6rem; line-height: 1.5; margin-bottom: 0.8em; }
+  h2 { background: #2b4a8b; color: #fff; padding: 7px 12px; border-radius: 4px; margin-top: 1.8em; font-size: 1.15rem; }
+  h3 { border-left: 4px solid #2b4a8b; padding-left: 10px; margin-top: 1.5em; font-size: 1.05rem; }
+  a { color: #1a5fb4; }
+  table { border-collapse: collapse; width: 100%; margin: 1em 0; font-size: 0.88rem; line-height: 1.6; display: block; overflow-x: auto; }
+  th, td { border: 1px solid #d9d2c0; padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { background: #e9edf4; }
+  .nav { display: flex; justify-content: space-between; gap: 12px; margin: 2.2em 0 0; font-size: 0.95rem; flex-wrap: wrap; }
+  .nav .spacer { flex: 1; }
+  .crumb { color: #8a8578; font-size: 0.9rem; }
+  footer { color: #8a8578; font-size: 0.85rem; margin-top: 3em; }
+  li { margin: 0.3em 0; }
+  .char-icon { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; vertical-align: -11px; margin-right: 9px; }
+  .keyvisual { width: 100%; height: auto; display: block; border-radius: 6px; margin: 0.4em 0 1.1em; }
+</style>
+</head>
+<body>
+<main>
+<p class="crumb"><a href="index.html">イングリッド アルティメットマスター到達ハンドブック</a> ／ <a href="../index.html">hasuke-sf6 トップ</a></p>
+<h1>第4章 共通の立ち回り・ストック管理</h1>
+
+<ul>
+  <li>サンシュートは相手の回答を測る道具です。同じ距離・同じ間隔で連射せず、相手に弾抜けのリズムを覚えさせないようにします。</li>
+  <li>サンシュートを撃ったら、次は何もしない・歩く・ガードする・前進する・通常技を置く、のいずれかを選び、相手の反応を観察します。</li>
+  <li>サンフレアLv2以上をガードさせた後は、イングリッドが先に動けます。+4F／+5F／ODのLv3の+9Fを、投げ・小技・中段・シミーにつなげることが重要です。</li>
+  <li>1個消費のサンフレアLv2は、ガード+4Fで攻めを継続しやすいです。2個消費のLv3は威力・ゲージ削り・ガード有利が伸びるため、相手のドライブゲージが少ないときや、端でバーンアウトを狙えるときに価値が高いです。</li>
+  <li>サンシンボルを溜めることだけに固執しません。高火力コンボ、リーサル、強い起き攻め、バーンアウトを取れるなら使います。</li>
+  <li>奇数（1・3）は起き攻めの回数を増やす発想、偶数（2・4）は火力やSA2のリターンを高める発想で整理できますが、固定ルールではありません。</li>
+  <li>弾をガードさせて相手のドライブゲージを削り、バーンアウトさせたら、端まで運んで投げ・中段・シミーを散らして倒し切ります。相手のSAゲージや無敵技を確認せず同じ連係を繰り返すと、SAで割り込まれます。</li>
+</ul>
+
+<h2>反撃の選び方</h2>
+<p>相手の技をガードしたら、まず硬直差を確認し、次に距離を確認します。発生4Fの技を持っていても、ガード後に押し返されて届かなければ確定反撃になりません。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>相手技の不利</th>
+      <th>基本候補</th>
+      <th>確認事項</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>−4F</td>
+      <td>4F技（立ち弱P／しゃがみ弱P）</td>
+      <td>ガード距離で届くか</td>
+    </tr>
+    <tr>
+      <td>−5F</td>
+      <td>5F技まで</td>
+      <td>4Fが届かない距離の代替</td>
+    </tr>
+    <tr>
+      <td>−6F</td>
+      <td>6F技まで</td>
+      <td>立ち中Pのリーチとキャンセル</td>
+    </tr>
+    <tr>
+      <td>−7F〜−8F</td>
+      <td>7F／8F技</td>
+      <td>しゃがみ中P・中K・中足の届き</td>
+    </tr>
+    <tr>
+      <td>−9F以上</td>
+      <td>立ち強K・強攻撃・コンボ始動</td>
+      <td>前進量・先端ガード・パニッシュカウンター</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>実際の反撃は、技の強度・先端当て・持続当て・キャンセル派生・バーンアウト中かどうかでも変わります。</p>
+<nav class="nav"><a href="mu-dis.html">← 前へ：第3章 全31キャラクター別対策 ― 不利・無理（キンバリー・ブランカ・ダルシム・C.ヴァイパー・ベガ）</a><span class="spacer"></span><a href="ch5.html">次へ：第5章 対戦中のチェックリスト →</a></nav>
+<footer>Street Fighter is a trademark of CAPCOM. This is a fan-made, unofficial notes site.</footer>
+</main>
+</body>
+</html>
