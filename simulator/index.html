@@ -475,6 +475,14 @@ function render() {
 }
 document.querySelectorAll(".preset-btn[data-preset]").forEach(b => {
   b.addEventListener("click", () => {
+    // プリセットは初期条件も標準に戻す（カウンターやモダンを変えたままだと、合計がボタンの表記とズレるため）
+    $("init-drive").value = "6";
+    $("init-sa").value = "3";
+    $("init-stock").value = "1";
+    $("init-counter").value = "none";
+    $("init-control").value = "classic";
+    $("init-pp").checked = false;
+    $("init-wall").checked = false;
     picks = PRESETS[b.dataset.preset].map(p => ({ id: p.id, rush: p.rush || "none", sp: getInit().modern }));
     render();
   });
