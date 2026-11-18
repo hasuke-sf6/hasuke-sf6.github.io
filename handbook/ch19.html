@@ -23,12 +23,33 @@
   .char-icon { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; vertical-align: -11px; margin-right: 9px; }
   .keyvisual { width: 100%; height: auto; display: block; border-radius: 6px; margin: 0.4em 0 1.1em; }
   .key { color: #43a047; }
+  .points { background: #fbf8f1; border: 1px solid #d9d2c0; border-left: 5px solid #2b4a8b; border-radius: 6px; padding: 12px 16px 6px; margin: 1.2em 0; }
+  .points p { margin: 0 0 0.4em; font-weight: bold; color: #2b4a8b; }
+  .points ul { margin: 0.2em 0 0.6em; padding-left: 1.2em; }
+  .gifs { display: flex; gap: 8px; margin: 1em 0; }
+  .gifs figure { margin: 0; flex: 1; }
+  .gifs img { width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid #e3ded2; }
+  .gifs figcaption { text-align: center; font-size: 0.82rem; color: #8a8578; margin-top: 0.3em; }
+  .tbl-title { border-left: 4px solid #2b4a8b; padding-left: 10px; margin: 1.4em 0 0.2em; font-weight: bold; }
+  .photo { margin: 1.2em 0; }
+  .photo img { width: 100%; height: auto; display: block; border-radius: 6px; }
+  .photo figcaption { text-align: center; font-size: 0.82rem; color: #8a8578; margin-top: 0.3em; }
+  .credit { color: #8a8578; font-size: 0.8rem; margin-top: 2em; }
+
 </style>
 </head>
 <body>
 <main>
 <p class="crumb"><a href="index.html">イングリッド アルティメットマスター到達ハンドブック</a> ／ <a href="../index.html">hasuke-sf6 トップ</a></p>
 <h1>第19章 実戦コンボとリターン最大化</h1>
+<div class="points">
+<p>この章のポイント</p>
+<ul>
+  <li>コンボはダメージだけでなく、その後の起き攻め・画面位置・ストック回収まで見て選びます</li>
+  <li>基本方針は、ストック0・1・2以上の3段階に分けて考えます</li>
+  <li>締めは、中サンライズ＝起き攻めの継続、強サンライズ＝画面を運ぶ・画面端が近いとき、が目安です</li>
+</ul>
+</div>
 <h2>19-1 コンボはダメージだけで選ばない</h2>
 <p>イングリッドのコンボを選ぶときは、単純なダメージだけでなく、その後の状況まで考える必要があります。特に重要なのは、次の4点です。</p>
 <ul>
@@ -41,6 +62,13 @@
 <p><strong class="key">わずかなダメージ差よりも、次の攻めにつながる状況を優先する</strong>という考え方を身に付けましょう。</p>
 <h2>19-2 ストック数に応じたコンボの基本方針</h2>
 <p>コンボを選ぶ際は、現在のストック数を意識することが大切です。基本的には、ストック0・1・2以上の3段階に分けて考えると管理しやすくなります。</p>
+<p class="tbl-title">ストック数別の基本方針</p>
+<table>
+<tr><th>ストック</th><th>基本方針</th></tr>
+<tr><td>0</td><td>通常コンボで締めてストックを回収します。ODサンフレアは「ドライブで買うLv2」として使えます</td></tr>
+<tr><td>1</td><td>サンフレアLv2（ガード+4F）で、固めと攻めの継続に使います</td></tr>
+<tr><td>2以上</td><td>Lv3やOD技まで使って、ダメージとリターンを最大化します</td></tr>
+</table>
 <h3>ストック0のとき</h3>
 <p>ダメージを取りながらストックを回収することを優先します。中サンフレア締めや、コンボ中に空中ビームを挟むルートなどを使い、次の攻めに必要なストックを確保しましょう。</p>
 <h3>ストック1のとき</h3>
@@ -51,6 +79,10 @@
 <h2>19-3 中ライズ締めと強ライズ締めの使い分け</h2>
 <p>サンライズによるコンボ締めは、ダメージと起き攻めの両面で重要です。特に中サンライズ締めは、前ステップから投げが埋まる基本的な起き攻めにつながります。小技始動やジャンプ攻撃始動など、さまざまな場面から中サンライズで締めることで、安定した攻めを継続できます。</p>
 <p>一方、強サンライズ締めは、コンボ後に空中チャージなどを組み合わせることで、ストック回収と起き攻めを両立できます。中央では、コンボ後に前ステップして有利状況を作るルートが強力です。コンボを覚える際は、技のつなぎだけでなく、締めた後にどのような起き攻めを行うかまでセットで覚えましょう。</p>
+<div class="gifs">
+  <figure><img src="https://static.frame-search.com/tn_img_29_48.gif" alt="中サンライズ" loading="lazy"><figcaption>中サンライズ</figcaption></figure>
+  <figure><img src="https://static.frame-search.com/tn_img_29_49.gif" alt="強サンライズ" loading="lazy"><figcaption>強サンライズ</figcaption></figure>
+</div>
 <h2>19-4 中足ラッシュは使う場面を分ける</h2>
 <p>中足ラッシュは、イングリッドにとって重要な攻撃手段ですが、すべての場面で強力というわけではありません。特に注意したいのが、中立状態で中足を先端ヒットさせた場合です。中足ラッシュから攻め込んでも、先端当てでは前進量が足りず、相手を投げ間合いに捉えられないことがあります。そのため、中立で先端当てを狙うだけの目的で、無理にドライブゲージを使う必要はありません。</p>
 <p>一方、コンボ始動や起き攻めの展開では、中足ラッシュは十分に価値があります。例えば、中足ラッシュから立ち強Kを経由して中サンライズで締めるルートは、ダメージを取りながら前ステップ後の投げ埋まりを狙えます。また、中足ラッシュから中Kを経由して強サンライズにつなぐルートは、ダメージを少し抑える代わりに、中央で非常に強力な起き攻めを作れます。</p>
@@ -75,6 +107,7 @@
 <h2>19-7 対空からの大きなリターン</h2>
 <p>イングリッドは対空からの追撃も重要なダメージ源です。通常の対空だけで終わらせず、状況に応じて引き大パン（引き強P）からの追撃を狙いましょう。相手が垂直ジャンプを選択してくる場合は、ガードを固めてから引き大パンで落とす方法が有効です。特に、OD当て身や投げを警戒して垂直ジャンプを選ぶ相手には、引き大パンを見せることで別の選択肢を抑制できます。</p>
 <p>また、相手のめくり飛びなど、通常の対空が難しい状況では空対空も重要です。対空技を無理に出すのではなく、相手のジャンプ軌道を見て、引き大パン・空対空・その他の対空手段を使い分けましょう。</p>
+<p class="credit">技モーション画像：frame-search.com ／ 画像：(C)CAPCOM</p>
 <nav class="nav"><a href="ch18.html">← 前へ：第18章 上級者の立ち回りと弾の撃ち分け</a><span class="spacer"></span><a href="ch20.html">次へ：第20章 起き攻めと画面端の攻め →</a></nav>
 <footer>Street Fighter is a trademark of CAPCOM. This is a fan-made, unofficial notes site.</footer>
 </main>

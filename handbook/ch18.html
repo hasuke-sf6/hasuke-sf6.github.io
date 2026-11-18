@@ -23,15 +23,42 @@
   .char-icon { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; vertical-align: -11px; margin-right: 9px; }
   .keyvisual { width: 100%; height: auto; display: block; border-radius: 6px; margin: 0.4em 0 1.1em; }
   .key { color: #43a047; }
+  .points { background: #fbf8f1; border: 1px solid #d9d2c0; border-left: 5px solid #2b4a8b; border-radius: 6px; padding: 12px 16px 6px; margin: 1.2em 0; }
+  .points p { margin: 0 0 0.4em; font-weight: bold; color: #2b4a8b; }
+  .points ul { margin: 0.2em 0 0.6em; padding-left: 1.2em; }
+  .gifs { display: flex; gap: 8px; margin: 1em 0; }
+  .gifs figure { margin: 0; flex: 1; }
+  .gifs img { width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid #e3ded2; }
+  .gifs figcaption { text-align: center; font-size: 0.82rem; color: #8a8578; margin-top: 0.3em; }
+  .tbl-title { border-left: 4px solid #2b4a8b; padding-left: 10px; margin: 1.4em 0 0.2em; font-weight: bold; }
+  .photo { margin: 1.2em 0; }
+  .photo img { width: 100%; height: auto; display: block; border-radius: 6px; }
+  .photo figcaption { text-align: center; font-size: 0.82rem; color: #8a8578; margin-top: 0.3em; }
+  .credit { color: #8a8578; font-size: 0.8rem; margin-top: 2em; }
+
 </style>
 </head>
 <body>
 <main>
 <p class="crumb"><a href="index.html">イングリッド アルティメットマスター到達ハンドブック</a> ／ <a href="../index.html">hasuke-sf6 トップ</a></p>
 <h1>第18章 上級者の立ち回りと弾の撃ち分け</h1>
+<div class="points">
+<p>この章のポイント</p>
+<ul>
+  <li>勝ち筋は「弾を撃って、追いかけて、ラッシュ立ち強K」です</li>
+  <li>弾を撃つ距離は「ギリギリ弱弾が当たらない位置」が目安です</li>
+  <li>しゃがみ強P→中ビームは連続ガードで割り込まれず、ヒットすればダウン後に安全にストックを溜められます</li>
+</ul>
+</div>
+<figure class="photo"><img src="https://prcdn.freetls.fastly.net/release_image/13450/5790/13450-5790-750ab31d75ea7b6ed1f79d83450a7a17-3840x2160.jpg?width=1200&quality=85%2C75&format=jpeg&auto=webp&fit=bounds&bg-color=fff" alt="イングリッド（アーケードモードのイラスト）" loading="lazy"><figcaption>イングリッド（アーケードモードのイラスト） (C)CAPCOM</figcaption></figure>
 <h2>18-1 基本となる勝ち筋は弾からのラッシュ</h2>
 <p>イングリッドの立ち回りで最も重要なのは、弾を撃ち、その弾を追いかけてラッシュで攻め込むことです。弱弾や強弾を撃った後、そのままドライブラッシュで接近すれば、弾を盾にして相手へ接近できます。相手が弾をガードすれば、弾に続いて攻撃を重ねられるため、単独でラッシュするよりも安全に攻めを開始できます。</p>
 <p>特に強力なのが、弾を追いかけてからのラッシュ立ち強Kです。<strong>ラッシュ立ち強Kはガードさせて+2F</strong>となり、ヒットすればコンボへ移行できます。ガード後は投げと打撃の択を仕掛けられ、相手が投げ抜けを狙ってくる場合は後ろ下がりによるシミーで対応できます。</p>
+<div class="gifs">
+  <figure><img src="https://static.frame-search.com/tn_img_29_27.gif" alt="弱サンシュート" loading="lazy"><figcaption>弱サンシュート</figcaption></figure>
+  <figure><img src="https://static.frame-search.com/tn_img_29_29.gif" alt="強サンシュート（上弾）" loading="lazy"><figcaption>強サンシュート（上弾）</figcaption></figure>
+  <figure><img src="https://static.frame-search.com/tn_img_29_6.gif" alt="立ち強K" loading="lazy"><figcaption>立ち強K</figcaption></figure>
+</div>
 <p>基本的な攻めの流れは次のとおりです。</p>
 <ul>
   <li>相手との距離を見ながら弱弾・強弾を撃ちます。</li>
@@ -46,6 +73,14 @@
 <p>また、相手の弾抜け技が届く距離で不用意に弾を撃たないことも大切です。弾を撃つこと自体が強いからといって、常に同じ距離から撃ってよいわけではありません。</p>
 <h2>18-3 相手のタイプに応じた弾の撃ち分け</h2>
 <p>弾の種類を使い分けることで、相手の対策を崩せます。相手の行動は、大きく4タイプに分けて考えると整理しやすくなります。</p>
+<p class="tbl-title">相手のタイプ別・弾の撃ち分け早見</p>
+<table>
+<tr><th>相手のタイプ</th><th>主に使う弾</th><th>狙い</th></tr>
+<tr><td>ガードや後ろ下がりが多い</td><td>弱弾</td><td>弾を追いかけてラッシュで崩します</td></tr>
+<tr><td>ジャンプで弾を避ける</td><td>強弾（上弾）</td><td>飛びを抑制して地上戦に持ち込みます</td></tr>
+<tr><td>前に突っ込んでくる</td><td>弱弾・中弾（横弾）</td><td>前進を止めます</td></tr>
+<tr><td>弾抜け技を狙ってくる</td><td>中弾</td><td>弾抜けに入る前の前進を止めます</td></tr>
+</table>
 <h3>① ガードや後ろ下がりを続ける相手</h3>
 <p>相手が積極的に飛んだり突っ込んだりせず、ガードやジャストパリィ、後ろ下がりを中心に立ち回る場合は、弱弾を中心に攻めます。弱弾を撃ってラッシュで追いかけ、立ち強Kなどを重ねて崩しを狙いましょう。相手が守りに徹しているなら、弾を撃つ回数を増やしてプレッシャーをかけることも有効です。</p>
 <h3>② ジャンプで弾を避けようとする相手</h3>
@@ -57,6 +92,7 @@
 <h2>18-4 弾の種類を使い分ける</h2>
 <p>弾の撃ち分けで重要なのは、相手に次の行動を予測させないことです。弱弾だけを連続して撃つ、強弾だけを撃つといった単調な行動は避けましょう。弱弾・中弾・強弾・ビームを状況に応じて混ぜることで、相手は飛ぶべきか、ガードすべきか、弾抜けを狙うべきか判断しにくくなります。</p>
 <p>特に、相手が弾抜けを意識しているときは中弾、飛びを意識しているときは上弾というように、相手の意識を逆手に取ることが重要です。弾を撃つこと自体を目的にせず、相手の行動を制限して、自分が攻めやすい状況を作ることを目標にしましょう。</p>
+<figure class="photo"><img src="https://prcdn.freetls.fastly.net/release_image/13450/5790/13450-5790-f7f6254a922c9328947b9e3eece290cd-3840x2160.jpg?width=1200&quality=85%2C75&format=jpeg&auto=webp&fit=bounds&bg-color=fff" alt="対戦イメージ" loading="lazy"><figcaption>対戦イメージ (C)CAPCOM</figcaption></figure>
 <h2>18-5 弾が使いにくいときの地上戦</h2>
 <p>相手の弾対策が強力な場合や、弾を撃つと危険な距離では、地上技を使って立ち回ります。特に重要なのが、しゃがみ強P、立ち強K、垂直ジャンプ攻撃です。</p>
 <h3>しゃがみ強P</h3>
@@ -69,7 +105,18 @@
 <h2>18-6 しゃがみ強Pからの安全な連携とストック溜め</h2>
 <p>しゃがみ強Pから中ビームにつなぐ連携は、立ち回りとストック管理の両面で重要です。しゃがみ強Pから中ビームは、<strong>ガードされても-4Fで、距離的に確定反撃を受けません</strong>。さらに、<strong class="key">連続ガードになるため、途中で無敵技を割り込まれることはありません</strong>（割り込めるのはドライブリバーサルのみです）。</p>
 <p>相手のドライブゲージを削りながら、ガードされた場合も安全に連携を終えられます。ヒットした場合はダウンを取れるため、その後にストックを溜める展開へ移行できます。</p>
+<div class="gifs">
+  <figure><img src="https://static.frame-search.com/tn_img_29_5.gif" alt="しゃがみ強P" loading="lazy"><figcaption>しゃがみ強P</figcaption></figure>
+  <figure><img src="https://static.frame-search.com/tn_img_29_35.gif" alt="中ビーム（サンフレアLv2）" loading="lazy"><figcaption>中ビーム（サンフレアLv2）</figcaption></figure>
+</div>
 <p>また、しゃがみ強Pからラッシュしゃがみ強Pにつなぐ連携も強力です。こちらも連続ガードになり、<strong>ガード時は+3F</strong>を取れるため、投げ・打撃・シミーの択を仕掛けられます。相手の無敵技を警戒しながら攻めたいときは、これらの連携を使い分けましょう。</p>
+<p class="tbl-title">しゃがみ強P連携の比較</p>
+<table>
+<tr><th>連携</th><th>ガード時</th><th>連続ガード</th><th>主な用途</th></tr>
+<tr><td>しゃがみ強P→中ビーム</td><td>−4F</td><td>○</td><td>削りながら安全に連携を終え、ストックを溜めます</td></tr>
+<tr><td>ラッシュしゃがみ強P</td><td>+3F</td><td>○</td><td>投げ・打撃・シミーの択をかけます</td></tr>
+</table>
+<p class="credit">技モーション画像：frame-search.com ／ 画像：(C)CAPCOM</p>
 <nav class="nav"><a href="part3-intro.html">← 前へ：第3部 上級者の実戦戦術 ― 導入</a><span class="spacer"></span><a href="ch19.html">次へ：第19章 実戦コンボとリターン最大化 →</a></nav>
 <footer>Street Fighter is a trademark of CAPCOM. This is a fan-made, unofficial notes site.</footer>
 </main>
