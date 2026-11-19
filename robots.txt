@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /burnout-plan/
+
+Sitemap: https://hasuke-sf6.github.io/sitemap.xml
