@@ -66,7 +66,7 @@
 <body>
 <main>
   <h1>コンボダメージシミュレーター（イングリッド）</h1>
-  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。ジャグル（コンボカウント）も判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補から選べなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。</p>
+  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。ジャグル（コンボカウント）も判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補から選べなくなる。地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補から選べなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。</p>
 
   <h2>初期条件</h2>
   <div class="panel">
@@ -135,6 +135,7 @@
     <li>検証状況: 練習カード5本と公開コンボリスト（dood.gg）の33本で照合し、29本が完全一致。不一致の内訳は、出典値がどの補正配分でも再現できない2本（2強K絡み、出典側の誤記の疑い）と、長いコンボ1本（−39）。また「ラッシュ立ち強K＞立ち中P＞ODサンフレアLv3＞サンバニッシュ（上方）＞ラッシュ立ち中P＞エアリートス＞SA1」は実測報告4,609に対し本モデルでは4,543となり、差+66はラッシュ立ち中P〜エアリートスの区間に絞られたが原因は未特定（他のコンボを壊さずに再現する補正値の組み合わせは存在しなかった）。</li>
     <li>ゲージの増加（技を当てた時のドライブ/SA回復）は計算していない。消費とストック生成のみ。</li>
     <li>ジャグル判定: SuperCombo の技データ（Juggle Start/Increase/Limit）でジャグルカウントを追跡し、相手が空中にある間は、最初のヒットが当たらない技（第1段の Juggle Limit が現在のカウント未満）を次の一手の候補から選べなくしている。第1段は当たるが後段が当たらなくなる技は選べるままで、行に警告を出す（部分ヒット。ダメージは全段当たったものとして計算するので、実ダメージは表示より下がる）。追跡の仮定: 浮かせた直後のカウントはその技の最終段の Juggle Start／浮かせ技が空中で当たった後のカウントは最後に当たった段の Juggle Start（浮かせない技の空中ヒットでは増えない）／バニッシュ系が当たると 0 に戻る／ラッシュ通常技は Juggle Limit +3。ジャグル値が未公開の技（強サンフレア Lv1、サンヴェールなど）が絡む区間はカウント不明として、候補の制限も警告もしない。クランプル、着地でのリセット、タイミング・間合いは判定していない。</li>
+    <li>リンク判定: 地上の通常技同士の繋ぎは、フレーム表のヒット時有利と発生で判定し、繋がらない通常技（発生が前の技のヒット時有利を超えるもの）を次の一手の候補から選べなくしている。判定するのは、前の技が地上の相手に当たって、相手が地上のヒットスタンのままの場合だけ（浮かせ・ノックダウン・投げ・溜めの後は判定しない）。ターゲットコンボは発生を第1段、ヒット時有利を最終段の値で見る。カウンター／パニッシュカウンター始動は1段目のヒット時有利に+2F／+4F、ドライブラッシュ中の通常技・特殊技・ターゲットコンボは+4Fを加算する。連打キャンセル（チェーン）で繋がる組み合わせ（立ち弱P・しゃがみ弱P・しゃがみ弱Kから弱系への繋ぎ）は判定の対象外。必殺技・SAへのキャンセルは間合いで変わるため判定していない。ジャンプ攻撃のヒット時有利は当てるタイミング・高さで変わるため、その次の手は判定していない。立ち強Pはパニッシュカウンターでクランプルになるため（フレーム表の備考にも前強Pへ繋がると明記）、その場合も判定していない。持続当てで有利が伸びるケースも判定していない。</li>
     <li>サンバニッシュ（前方）の固有補正値は未確認のため補正なしとして扱っている。サンヴェールは当身成功時の反撃ダメージで計算する。</li>
     <li>スタン（気絶）中の相手へのコンボ開始補正（80%開始説）は進行方法が未検証のため未実装。</li>
   </ul>
@@ -279,6 +280,32 @@ function jugCandidateBlocked(move, jcBefore, stock, rush) {
   return jl < jcBefore;
 }
 
+// === リンク判定用データ（SuperCombo Cargo API: SF6_FrameData の startup / hitAdv） ===
+// startup: 発生（TCは第1セグメントの値）。onHit: 地上ヒット時有利（数値のみ。KD/HKD は null＝ノックダウン系で、リンク判定の対象外）。
+// chains: 連打キャンセルで繋がる相手（cancel 欄の Chn と notes の "Chains into ..." が根拠）。
+// jump: ジャンプ攻撃。ヒット時有利が当てるタイミング・高さで変動する（表記も '+8(+15)' のように幅がある）ため、その行からはリンク判定をしない。
+const LINK = {"5lp": {"startup": 4, "onHit": 5, "chains": ["5lp", "2lp", "2lk"]}, "5lk": {"startup": 5, "onHit": 3}, "5mp": {"startup": 6, "onHit": 1}, "5mk": {"startup": 8, "onHit": 4}, "5hp": {"startup": 12, "onHit": 3}, "5hk": {"startup": 9, "onHit": 4}, "2lp": {"startup": 4, "onHit": 4, "chains": ["5lp", "2lp", "2lk"]}, "2lk": {"startup": 5, "onHit": 3, "chains": ["5lp", "2lp", "2lk"]}, "2mp": {"startup": 7, "onHit": 6}, "2mk": {"startup": 8, "onHit": 1}, "2hp": {"startup": 12, "onHit": 1}, "2hk": {"startup": 10, "onHit": null}, "jlp": {"startup": 4, "onHit": 6, "jump": true}, "jlk": {"startup": 6, "onHit": 5, "jump": true}, "jmp": {"startup": 8, "onHit": 10, "jump": true}, "jmk": {"startup": 8, "onHit": 9, "jump": true}, "jhp": {"startup": 9, "onHit": 8, "jump": true}, "jhk": {"startup": 12, "onHit": 10, "jump": true}, "6mp": {"startup": 21, "onHit": 3}, "6hp": {"startup": 17, "onHit": null}, "shoot_l": {"startup": 17, "onHit": -2}, "shoot_m": {"startup": 17, "onHit": -2}, "shoot_h": {"startup": 15, "onHit": -1}, "shoot_od": {"startup": 17, "onHit": null}, "flare_m": {"startup": 21, "onHit": null}, "sflare_m": {"startup": 22, "onHit": null, "jump": true}, "rise_l": {"startup": 8, "onHit": null}, "rise_m": {"startup": 13, "onHit": null}, "rise_h": {"startup": 27, "onHit": null}, "rise_od": {"startup": 14, "onHit": null}, "sa1_1": {"startup": 11, "onHit": null}, "sa1_2": {"startup": 11, "onHit": null}, "sa1_3": {"startup": 11, "onHit": null}, "sa3": {"startup": 20, "onHit": null}, "ca": {"startup": 20, "onHit": null}, "di": {"startup": 26, "onHit": null}, "tc_airy": {"startup": 6, "onHit": -3}, "tc_glow": {"startup": 9, "onHit": null}, "tc_lumi": {"startup": 14, "onHit": null}, "tc_leap": {"startup": 12, "onHit": null, "jump": true}, "flare_h": {"startup": 18, "onHit": null}, "flare_od": {"startup": 18, "onHit": null}, "sflare_h": {"startup": 22, "onHit": null}, "sflare_od": {"startup": 22, "onHit": null}, "vanish_u": {"startup": 43, "onHit": null}, "vanish_f": {"startup": 36, "onHit": null}, "veil": {"startup": 6, "onHit": null}, "veil_od": {"startup": 1, "onHit": null}};
+// パニッシュカウンターでクランプルになる技。地上ヒットスタンではなくクランプル状態にするため、リンク判定の対象外にする。
+// 根拠: Cargo の 5HP の notes に「links to 6HP at nearly any range on Punish Counter」と明記されており、
+// 公式コンボトライアル（上級7）も 5HP(PC)＞6HP を採用している。フレーム表の hitAdv（+3）にはこの状態変化が表れない。
+const PC_CRUMPLE = { "5hp": true };
+// === リンク候補フィルタ（通常技同士の繋ぎをフレーム表で判定する。エンジン本体が各行に残す linkAdv を使う） ===
+// ctx: { adv, prevId, rush } — adv は前の行が地上ヒットで残した実効ヒット時有利（computeCombo の row.linkAdv / result.endLinkAdv）。
+// 除外するのは「adv が数値で、候補が通常技・特殊技・TC（発生は第1セグメント）、候補の行にラッシュ指定がなく、
+// チェーン（連打キャンセル）でも繋がらず、候補の発生 > adv」の場合だけ。
+// 必殺技・SA・投げ・DI は判定しない（キャンセルの繋がりは間合い等で決まるため）。adv が null の区間（浮かせ・ノックダウン・
+// 投げ・溜め・ジャンプ攻撃始動など）も判定しない。
+function linkCandidateBlocked(move, ctx) {
+  if (!move || !ctx || ctx.adv == null) return false;
+  if (ctx.rush === "raw" || ctx.rush === "cdr") return false;
+  if (move.cat !== "normal" && move.cat !== "command" && move.cat !== "target") return false;
+  const L = LINK[move.id];
+  if (!L || L.startup == null) return false;
+  const prev = LINK[ctx.prevId];
+  if (prev && prev.chains && prev.chains.indexOf(move.id) >= 0) return false; // 連打キャンセルで繋がる組み合わせは対象外
+  return L.startup > ctx.adv;
+}
+
 function computeCombo(db, init, picks) {
   const byId = {};
   for (const m of db) byId[m.id] = m;
@@ -298,7 +325,7 @@ function computeCombo(db, init, picks) {
     const pick = picks[pi];
     const move = byId[pick.id];
     const row = { pickIndex: pi, moveId: pick.id, name: move ? move.name : "(未選択)",
-                  attacks: [], dmg: 0, warn: [], jwarn: [], jcBefore: jc,
+                  attacks: [], dmg: 0, warn: [], jwarn: [], jcBefore: jc, linkAdv: null,
                   before: { drive, sa, stock }, after: null, lvLabel: "" };
     if (!move) { row.after = { drive, sa, stock }; rows.push(row); continue; }
 
@@ -416,10 +443,22 @@ function computeCombo(db, init, picks) {
       prevHitCat = move.cat;
     }
     if (move.noHit) { row.attacks.push({ label: move.name + "（溜め）", rate: null, dmg: 0 }); }
+    // --- リンク判定用: この行が地上ヒットで残す実効ヒット時有利（次の行の通常技候補フィルタが使う） ---
+    // 対象は「この行の終了時点で相手が地上（jc === null）のまま、溜め・投げではなく、フレーム表のヒット時有利が数値の技」だけ。
+    // ジャンプ攻撃始動の行は有利が当てるタイミングで変動するため判定しない。パニカンでクランプルになる技も対象外（PC_CRUMPLE 参照）。
+    if (jc === null && !move.noHit && move.cat !== "throw") {
+      const L = LINK[move.id];
+      if (L && L.onHit != null && !L.jump && !(pi === 0 && init.counter === "pc" && PC_CRUMPLE[move.id])) {
+        let adv = L.onHit;
+        if (pi === 0 && init.counter !== "none" && !move.saLv) adv += init.counter === "pc" ? 4 : 2; // カウンター+2F／パニッシュカウンター+4F（打撃のみ）
+        if ((pick.rush === "raw" || pick.rush === "cdr") && (move.cat === "normal" || move.cat === "command" || move.cat === "target")) adv += 4; // ドライブラッシュ中の通常技・特殊技・TCはヒット時有利+4F（SuperCombo「Gauges」）
+        row.linkAdv = adv;
+      }
+    }
     row.after = { drive, sa, stock };
     rows.push(row);
   }
-  return { rows, total, flow, end: { drive, sa, stock }, juggleInvalid, endJc: jc };
+  return { rows, total, flow, end: { drive, sa, stock }, juggleInvalid, endJc: jc, endLinkAdv: rows.length ? rows[rows.length - 1].linkAdv : null };
 }
 // === ENGINE END ===
 </script>
@@ -465,7 +504,7 @@ function getInit() {
     modern: $("init-control").value === "modern",
   };
 }
-function moveOptions(select, avail, jug) {
+function moveOptions(select, avail, jug, lnk) {
   for (const cat of CAT_ORDER) {
     const g = document.createElement("optgroup"); g.label = CAT_LABEL[cat];
     for (const m of MOVES) {
@@ -481,6 +520,8 @@ function moveOptions(select, avail, jug) {
       }
       // ジャグル: 空中で最初のヒットが当たらない技は選べなくする（選択中の技は外さない。不成立になった場合は行の警告で示す）
       if (jug && m.id !== jug.currentId && jugCandidateBlocked(m, jug.jc, jug.stock, jug.rush)) o.disabled = true;
+      // リンク: 前の技のヒット時有利で繋がらない通常技は選べなくする（選択中の技は外さない）
+      if (lnk && m.id !== lnk.currentId && linkCandidateBlocked(m, lnk)) o.disabled = true;
       g.appendChild(o);
     }
     select.appendChild(g);
@@ -522,7 +563,10 @@ function render() {
     const jugCtx = isSlot
       ? { jc: result.endJc, stock: result.end.stock, rush: "none", currentId: null }
       : { jc: rowRes.jcBefore, stock: rowRes.before.stock, rush: pick.rush || "none", currentId: pick.id };
-    moveOptions(sel, avail, jugCtx);
+    const lnkCtx = isSlot
+      ? { adv: result.endLinkAdv, prevId: picks.length ? picks[picks.length - 1].id : null, rush: "none", currentId: null }
+      : { adv: i > 0 ? result.rows[i - 1].linkAdv : null, prevId: i > 0 ? picks[i - 1].id : null, rush: pick.rush || "none", currentId: pick.id };
+    moveOptions(sel, avail, jugCtx, lnkCtx);
     if (pick) sel.value = pick.id;
     sel.addEventListener("change", () => {
       if (isSlot) {
