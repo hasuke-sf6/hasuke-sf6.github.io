@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>確定反撃クイズ コンボ編（サンプル） | ストリートファイター6 攻略ノート</title>
+<meta name="description" content="ガードした技への反撃コンボを選ぶ上級編クイズ（サンプル版）。ドライブ・SA・ストックの条件が毎回変わります。">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SW34Z97RXY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SW34Z97RXY');
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f7f5ef; color: #22252b; font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; line-height: 1.7; }
+  main { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; }
+  .site-name { color: #2b4a8b; font-weight: bold; letter-spacing: .08em; margin: 0 0 4px; }
+  h1 { font-size: 1.45rem; margin: 0 0 6px; }
+  .sub { color: #555; font-size: .92rem; margin: 0 0 18px; }
+  .card { background: #fff; border: 1px solid #ddd6c4; border-radius: 10px; padding: 18px; margin: 0 0 16px; }
+  .hidden { display: none; }
+  button { font: inherit; cursor: pointer; }
+  .btn-main { background: #2b4a8b; color: #fff; border: none; border-radius: 8px; padding: 12px 28px; font-size: 1.05rem; font-weight: bold; }
+  .q-head { display: flex; justify-content: space-between; color: #555; font-size: .9rem; margin-bottom: 8px; }
+  .q-char { font-size: 1.25rem; font-weight: bold; color: #2b4a8b; margin: 0 0 6px; }
+  .q-gif { text-align: center; margin: 6px 0 10px; }
+  .q-gif img { max-width: 100%; border-radius: 8px; }
+  .q-move { font-size: 1.15rem; font-weight: bold; text-align: center; margin: 4px 0 12px; }
+  .res { background: #fbf9f3; border: 1px solid #e4ddc9; border-radius: 8px; padding: 10px 14px; margin: 0 0 14px; }
+  .res-row { display: flex; align-items: center; gap: 10px; margin: 4px 0; font-size: .95rem; }
+  .res-row .lbl { width: 4.5em; color: #555; }
+  .segs { display: flex; gap: 3px; }
+  .seg { width: 26px; height: 12px; border-radius: 3px; background: #e3ddcb; }
+  .seg.on { background: #43a047; }
+  .seg.sa.on { background: #b03a5b; }
+  .dots { font-size: 1rem; letter-spacing: 2px; color: #d98a00; }
+  .dots .off { color: #ddd6c4; }
+  .choices { display: grid; gap: 10px; }
+  .choice { text-align: left; background: #fff; border: 2px solid #cfc8b2; border-radius: 8px; padding: 12px 14px; font-size: .98rem; line-height: 1.55; }
+  .choice:hover:not(:disabled) { border-color: #2b4a8b; }
+  .choice:disabled { cursor: default; opacity: .92; }
+  .choice.picked { border-color: #2b4a8b; background: #eef2fa; }
+  .choice.is-max { border-color: #43a047; background: #eef7ee; }
+  .choice.is-bad { border-color: #c62828; background: #fbeeee; }
+  .verdict { font-size: 1.3rem; font-weight: bold; margin: 0 0 6px; }
+  .verdict.maru { color: #2e7d32; }
+  .verdict.sankaku { color: #b8860b; }
+  .verdict.batsu { color: #c62828; }
+  .fb-meta { margin: 4px 0; }
+  .route-list { margin: 12px 0 0; padding: 0; list-style: none; }
+  .route-list li { border-top: 1px solid #eee5cf; padding: 8px 2px; font-size: .92rem; }
+  .route-list .rt { font-weight: bold; }
+  .route-list .ok { color: #2e7d32; font-weight: bold; }
+  .route-list .ng { color: #c62828; }
+  .route-list .best { color: #2e7d32; font-weight: bold; }
+  .score-line { font-size: 1.1rem; font-weight: bold; }
+  .review-item { border-top: 1px solid #eee5cf; padding: 10px 2px; }
+  .note { color: #555; font-size: .88rem; }
+  a { color: #2b4a8b; }
+</style>
+</head>
+<body>
+<main>
+  <p class="site-name">hasuke-sf6</p>
+  <h1>確定反撃クイズ コンボ編（サンプル）</h1>
+  <p class="sub">相手の技をガードした場面で、イングリッドの反撃コンボを6つの候補から選ぶ上級編です。ドライブ・SA・サンボルストックの条件は問題ごとに変わります。</p>
+
+  <div class="card" id="start-card">
+    <p>各問題では、ガードした技と、その時点の資源（ドライブ／SA／ストック）と位置（中央／画面端）が提示されます。反撃はパニッシュカウンター扱いです。</p>
+    <p>採点は3段階です。</p>
+    <ul>
+      <li><b>○</b>：その条件で最大ダメージのコンボを選んだ</li>
+      <li><b>△</b>：コンボは完走するけど、もっとダメージが出る選択肢があった</li>
+      <li><b>✗</b>：始動が間に合わない、または資源・コンボカウントの都合で完走できない</li>
+    </ul>
+    <p>ダメージと完走可否は、コンボシミュレーターと同じ計算で判定しています。ガード時のフレームは回答後に表示されます。全5問のサンプル版です。</p>
+    <button class="btn-main" id="start-btn">スタート</button>
+  </div>
+
+  <div class="card hidden" id="quiz-card">
+    <div class="q-head"><span id="q-progress"></span><span id="q-score"></span></div>
+    <p class="q-char" id="q-char"></p>
+    <div class="q-gif"><img id="q-gif" alt="相手の技"></div>
+    <p class="q-move" id="q-move"></p>
+    <div class="res" id="q-res"></div>
+    <p style="margin:0 0 10px;">この技をガードしたときのベスト反撃コンボは？</p>
+    <div class="choices" id="q-choices"></div>
+    <div id="feedback" class="hidden" style="margin-top:16px;">
+      <p class="verdict" id="fb-verdict"></p>
+      <p class="fb-meta" id="fb-meta"></p>
+      <ul class="route-list" id="fb-routes"></ul>
+      <p style="margin-top:14px;"><button class="btn-main" id="next-btn">次の問題へ</button></p>
+    </div>
+  </div>
+
+  <div class="card hidden" id="result-card">
+    <p class="score-line" id="result-score"></p>
+    <div id="result-review"></div>
+    <p style="margin-top:14px;"><button class="btn-main" id="retry-btn">もう一度</button></p>
+    <p class="note">サンプル版はここまでです。感触が良ければ全問題に広げます。</p>
+  </div>
+
+  <p><a href="../index.html">トップへ戻る</a> ／ <a href="../quiz/index.html">確定反撃クイズ（反撃編）</a> ／ <a href="../simulator/index.html">コンボシミュレーター</a></p>
+</main>
+<script>
+
+"use strict";
+// 技データ: starter=始動補正(ポイント), combo=コンボ補正(フレーム表表記値・基本10込み), immediate=即時補正
+// dmgLv/starterLv/comboLv はストック数で自動決定するLv制の技（配列は Lv1,Lv2,Lv3）
+// segments はターゲットコンボ（各段が別カウント）
+const MOVES = [
+  // 通常技
+  { id:"5lp", name:"ライトタッチ（立ち弱P）", cmd:"5LP", cat:"normal", dmg:300, starter:20 },
+  { id:"5lk", name:"プチリフト（立ち弱K）", cmd:"5LK", cat:"normal", dmg:300, starter:20 },
+  { id:"5mp", name:"スタートーチ（立ち中P）", cmd:"5MP", cat:"normal", dmg:600 },
+  { id:"5mk", name:"スタークリップ（立ち中K）", cmd:"5MK", cat:"normal", dmg:700 },
+  { id:"5hp", name:"ステラーウェーブ（立ち強P）", cmd:"5HP", cat:"normal", dmg:900, starter:20 },
+  { id:"5hk", name:"シューティングスター（立ち強K・2ヒット）", cmd:"5HK", cat:"normal", dmg:800 },
+  { id:"2lp", name:"リトルスター（しゃがみ弱P）", cmd:"2LP", cat:"normal", dmg:300, starter:20 },
+  { id:"2lk", name:"リトルワイプ（しゃがみ弱K）", cmd:"2LK", cat:"normal", dmg:200, starter:20 },
+  { id:"2mp", name:"アンダートーチ（しゃがみ中P）", cmd:"2MP", cat:"normal", dmg:600 },
+  { id:"2mk", name:"ミルキーウェイ（しゃがみ中K）", cmd:"2MK", cat:"normal", dmg:500, starter:20 },
+  { id:"2hp", name:"ステラーリング（しゃがみ強P）", cmd:"2HP", cat:"normal", dmg:800 },
+  { id:"2hk", name:"オービットキック（しゃがみ強K）", cmd:"2HK", cat:"normal", dmg:900 },
+  { id:"jlp", name:"ライトパット（ジャンプ弱P）", cmd:"j.LP", cat:"normal", dmg:300 },
+  { id:"jlk", name:"プチトリック（ジャンプ弱K）", cmd:"j.LK", cat:"normal", dmg:300 },
+  { id:"jmp", name:"スタービーコン（ジャンプ中P）", cmd:"j.MP", cat:"normal", dmg:600 },
+  { id:"jmk", name:"タイニーメテオ（ジャンプ中K）", cmd:"j.MK", cat:"normal", dmg:500 },
+  { id:"jhp", name:"タコクライン（ジャンプ強P）", cmd:"j.HP", cat:"normal", dmg:800 },
+  { id:"jhk", name:"サテライトアーク（ジャンプ強K）", cmd:"j.HK", cat:"normal", dmg:800 },
+  // 特殊技
+  { id:"6mp", name:"サンブライト", cmd:"6MP", cat:"command", dmg:600 },
+  { id:"6hp", name:"ヘイローステップ", cmd:"6HP", cat:"command", dmg:900 },
+  // ターゲットコンボ（各段別カウント）
+  { id:"tc_airy", name:"エアリートス（5MP＞MK）", cmd:"5MP>MK", cat:"target", dmg:700, combo:20 },
+  { id:"tc_glow", name:"グロータッチ（4MK＞HP）", cmd:"4MK>HP", cat:"target",
+    segments:[ {label:"4MK", dmg:700, combo:10}, {label:"HP", dmg:800, combo:10} ] },
+  { id:"tc_lumi", name:"ルミナスアッパー（4HP＞HP）", cmd:"4HP>HP", cat:"target",
+    segments:[ {label:"4HP", dmg:800, combo:10}, {label:"HP", dmg:800, combo:10} ] },
+  { id:"tc_leap", name:"サテライトリープ（空中 j.HK＞HK）", cmd:"j.HK>HK", cat:"target",
+    segments:[ {label:"HK", dmg:600, combo:10} ] },
+  // 投げ
+  { id:"throw_f", name:"ストレンジナックル（前投げ）", cmd:"LP+LK", cat:"throw", dmg:1200, immediate:20, isThrow:true },
+  { id:"throw_b", name:"グラビティードロップ（後ろ投げ）", cmd:"4+LP+LK", cat:"throw", dmg:1200, immediate:20, isThrow:true },
+  // 必殺技
+  { id:"shoot_l", name:"弱サンシュート", cmd:"236LP", cat:"special", dmg:700, starter:20, combo:20 },
+  { id:"shoot_m", name:"中サンシュート", cmd:"236MP", cat:"special", dmg:700, starter:20, combo:20 },
+  { id:"shoot_h", name:"強サンシュート", cmd:"236HP", cat:"special", dmg:700, starter:20, combo:20 },
+  { id:"shoot_od", name:"ODサンシュート", cmd:"236PP", cat:"special", dmg:1000, starter:20, combo:20, drive:2 },
+  { id:"flare_l", name:"弱サンフレア（溜め・ストック+1）", cmd:"214LP", cat:"special", dmg:0, noHit:true, stockGain:1 },
+  { id:"flare_m", name:"中サンフレア Lv1", cmd:"214MP", cat:"special", dmg:900, starter:30, combo:20 },
+  { id:"flare_h", name:"強サンフレア（ストックで自動Lv）", cmd:"214HP", cat:"special", dmgLv:[900,1100,1350], starter:30, combo:20, stockAuto:true },
+  { id:"flare_od", name:"ODサンフレア（ストックで自動Lv）", cmd:"214PP", cat:"special", dmgLv:[1100,1350,1800], starter:30, combo:20, drive:2, stockAuto:true },
+  { id:"sflare_l", name:"弱ソーラーフレア（空中・溜め・ストック+1）", cmd:"空中214LP", cat:"special", dmg:0, noHit:true, stockGain:1 },
+  { id:"sflare_m", name:"中ソーラーフレア Lv1（空中）", cmd:"空中214MP", cat:"special", dmg:900, starter:20 },
+  { id:"sflare_h", name:"強ソーラーフレア（空中・ストックで自動Lv）", cmd:"空中214HP", cat:"special", dmgLv:[900,1100,1350], starterLv:[20,20,30], stockAuto:true },
+  { id:"sflare_od", name:"ODソーラーフレア（空中・ストックで自動Lv）", cmd:"空中214PP", cat:"special", dmgLv:[1100,1350,1800], starterLv:[20,20,30], comboLv:[10,10,15], drive:2, stockAuto:true },
+  { id:"rise_l", name:"弱サンライズ", cmd:"236LK", cat:"special", dmg:1000, starter:20 },
+  { id:"rise_m", name:"中サンライズ", cmd:"236MK", cat:"special", dmg:1200, combo:20 },
+  { id:"rise_h", name:"強サンライズ", cmd:"236HK", cat:"special", dmg:1300, starter:20, combo:20 },
+  { id:"rise_od", name:"ODサンライズ", cmd:"236KK", cat:"special", dmg:1600, combo:20, drive:2 },
+  { id:"veil", name:"サンヴェール（当身成功時）", cmd:"22K", cat:"special", dmg:1000 },
+  { id:"veil_od", name:"ODサンヴェール（当身成功時）", cmd:"22KK", cat:"special", dmg:1200, drive:2 },
+  { id:"vanish_u", name:"サンバニッシュ（上方）", cmd:"2KKK", cat:"special", dmg:1100, starter:20, combo:20 },
+  { id:"vanish_f", name:"サンバニッシュ（前方）", cmd:"6KKK", cat:"special", dmg:1000 },
+  // SA
+  { id:"sa1_1", name:"SA1 サンシャイン Lv1", cmd:"236236K", cat:"sa", dmg:1900, sa:1, saLv:1 },
+  { id:"sa1_2", name:"SA1 サンシャイン Lv2", cmd:"236236K(ホールド)", cat:"sa", dmg:2300, sa:1, saLv:1, stock:1 },
+  { id:"sa1_3", name:"SA1 サンシャイン Lv3", cmd:"236236K(ホールド)", cat:"sa", dmg:2700, sa:1, saLv:1, stock:2 },
+  { id:"sa2_1", name:"SA2 サンオーダー Lv1（光弾3発）", cmd:"214214P", cat:"sa", dmg:1600, sa:2, saLv:2 },
+  { id:"sa2_2", name:"SA2 サンオーダー Lv2（光弾4発）", cmd:"214214P(ホールド)", cat:"sa", dmg:2400, sa:2, saLv:2, stock:1 },
+  { id:"sa2_3", name:"SA2 サンオーダー Lv3（光弾5発）", cmd:"214214P(ホールド)", cat:"sa", dmg:3400, sa:2, saLv:2, stock:2 },
+  { id:"sa3", name:"SA3 コズミックレイ", cmd:"236236P", cat:"sa", dmg:4000, sa:3, saLv:3 },
+  { id:"ca", name:"CA コズミックレイ（体力25%以下）", cmd:"236236P", cat:"sa", dmg:4500, sa:3, saLv:3 },
+  // システム
+  { id:"di", name:"ドライブインパクト（トゥインクルキック）", cmd:"HP+HK", cat:"system", dmg:800, starter:20, drive:1 },
+];
+const MOVE_BY_ID = {};
+for (const m of MOVES) MOVE_BY_ID[m.id] = m;
+const SA_MIN = { 1:30, 2:40, 3:50 };
+
+function resolveLv(move, stock) {
+  // ストック自動Lv技: 所持数 0→Lv1(消費0), 1→Lv2(消費1), 2以上→Lv3(消費2)
+  const idx = Math.min(Math.max(stock, 0), 2);
+  return {
+    lv: idx + 1,
+    dmg: move.dmgLv[idx],
+    starter: move.starterLv ? move.starterLv[idx] : (move.starter || 0),
+    combo: move.comboLv ? move.comboLv[idx] : (move.combo !== undefined ? move.combo : 10),
+    stockCost: idx,
+  };
+}
+
+// init: {drive, sa, stock, counter:'none'|'ch'|'pc', start:'none'|'stun'|'di'|'splat', pp:bool, wall:bool, modern:bool}
+// picks: [{id, rush:'none'|'raw'|'cdr', sp:bool}]
+
+// === ジャグル判定用データ（SuperCombo Cargo API: SF6_FrameData の jugStart/jugIncrease/jugLimit） ===
+// hits: [JS, JI, JL] の配列（段ごと）。null = 出典に値なし（その段は判定スキップ）。
+// launch: 地上の相手に当てると浮かせてジャグルが始まる技か（Cargo の hitAdv が KD/HKD 表記かどうかで判定）。
+// jsGround: 地上ヒット時の JS が別表記の場合の地上値。seg: TCの段ごと。lv: ストック自動LvのLvごと。
+// vanish: バニッシュ系。相手を叩き落としてバウンドさせる性質上、当たった後は JC=0 に戻るものとして扱う（仮定A4）。
+// sa2: SA2。当たった後は JC=0 とする（仮定A2）。missing: 出典に行が無いLv（判定せず、浮いた後は JC 不明として扱う）。
+const JUGGLE = {"5lp": {"launch": false, "hits": [[1, 1, 0]]}, "5lk": {"launch": false, "hits": [[1, 1, 0]]}, "5mp": {"launch": false, "hits": [[1, 1, 0]]}, "5mk": {"launch": false, "hits": [[1, 1, 0]]}, "5hp": {"launch": false, "hits": [[1, 1, 0]]}, "5hk": {"launch": false, "hits": [[1, 1, 0], [1, 1, 1]]}, "2lp": {"launch": false, "hits": [[1, 1, 0]]}, "2lk": {"launch": false, "hits": [[1, 1, 0]]}, "2mp": {"launch": false, "hits": [[1, 1, 0]]}, "2mk": {"launch": false, "hits": [[1, 1, 0]]}, "2hp": {"launch": false, "hits": [[1, 1, 0]]}, "2hk": {"launch": true, "hits": [[1, 1, 2]]}, "jlp": {"launch": false, "hits": [[1, 1, 0]]}, "jlk": {"launch": false, "hits": [[1, 1, 0]]}, "jmp": {"launch": false, "hits": [[1, 5, 1]]}, "jmk": {"launch": false, "hits": [[1, 1, 0]]}, "jhp": {"launch": false, "hits": [[1, 0, 1]]}, "jhk": {"launch": false, "hits": [[1, 1, 0]]}, "6mp": {"launch": false, "hits": [[1, 1, 0]]}, "6hp": {"launch": true, "hits": [[0, 1, 0]]}, "shoot_l": {"launch": false, "hits": [[1, 1, 3]]}, "shoot_m": {"launch": false, "hits": [[1, 1, 3]]}, "shoot_h": {"launch": false, "hits": [[1, 1, 3]]}, "shoot_od": {"launch": true, "hits": [[0, 1, 3], [1, 1, 6]]}, "flare_m": {"launch": true, "hits": [[1, 1, 1]]}, "sflare_m": {"launch": true, "hits": [[1, 1, 5]]}, "rise_l": {"launch": true, "hits": [[1, 1, 10]]}, "rise_m": {"launch": true, "hits": [[1, 1, 5], [0, 1, 10]]}, "rise_h": {"launch": true, "hits": [[1, 0, 0], [1, 0, 0], [0, 1, 1], [0, 1, 7]]}, "rise_od": {"launch": true, "hits": [[1, 1, 5], [1, 1, 5], [1, 0, 7], [0, 1, 10]]}, "sa1_1": {"launch": true, "hits": [[1, 1, 99]]}, "sa1_2": {"launch": true, "hits": [[1, 1, 99]]}, "sa1_3": {"launch": true, "hits": [[1, 1, 99]]}, "sa3": {"launch": true, "hits": [[null, null, 99]]}, "ca": {"launch": true, "hits": [[null, null, 99]]}, "di": {"launch": true, "hits": [[0, 1, 0]]}, "tc_airy": {"launch": false, "hits": [[1, 0, 1]]}, "tc_glow": {"seg": [{"launch": false, "hits": [[1, 1, 0]]}, {"launch": true, "hits": [[1, 0, 3]]}]}, "tc_lumi": {"seg": [{"launch": true, "hits": [[0, 0, 0]]}, {"launch": true, "hits": [[1, 1, 0]]}]}, "flare_h": {"lv": [{"missing": true, "launch": true}, {"launch": true, "hits": [[0, 0, 1], [2, 2, 1]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [2, 1, 99]]}]}, "flare_od": {"lv": [{"launch": true, "hits": [[0, 0, 1], [2, 2, 1]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [2, 1, 99]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [1, 0, 99], [0, 1, 99]], "jsGround": 0}]}, "sflare_h": {"lv": [{"missing": true, "launch": true}, {"launch": true, "hits": [[1, 0, 99], [2, 1, 99]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [2, 1, 99]]}]}, "sflare_od": {"lv": [{"launch": true, "hits": [[1, 0, 99], [2, 1, 99]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [2, 1, 99]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [1, 0, 99], [0, 0, 99]]}]}, "vanish_u": {"launch": true, "hits": [[1, 1, 10]], "vanish": true}, "vanish_f": {"launch": true, "hits": [[1, 1, 10]], "vanish": true}, "tc_leap": {"launch": true, "hits": [[1, 0, 1]]}, "sa2_1": {"launch": true, "jsGround": 0, "sa2": true, "hits": [[0, 0, 100]]}, "sa2_2": {"launch": true, "jsGround": 0, "sa2": true, "hits": [[0, 0, 100]]}, "sa2_3": {"launch": true, "jsGround": 0, "sa2": true, "hits": [[0, 0, 100]]}};
+// ジャグル値が未公開だが地上ヒットで浮かせる技（当て身）。当たった後は JC「不明」として扱う。
+const JUG_UNKNOWN_LAUNCH = { veil: true, veil_od: true };
+function jugProfile(move, lvIdx, segIdx) {
+  const j = JUGGLE[move.id];
+  if (!j) return null;
+  if (j.lv) return j.lv[lvIdx] || null;
+  if (j.seg) return j.seg[segIdx] || null;
+  return j;
+}
+// === ジャグル候補フィルタ（UIの次の一手の候補を絞る判定。エンジン本体の警告判定と同じデータ・同じ決め方を使う） ===
+// 技の「最初の攻撃の第1段」の実効 JL を返す。判定材料が無い場合は null。
+// - ストック自動Lv技は、その行の開始時点のストックで決まる Lv のプロファイルを使う（resolveLv と同じ決め方）。
+// - ラッシュを付けた通常技・特殊技・TC は JL+3（エンジン本体の判定と同じ）。
+// - プロファイルが無い技（投げ・溜め技・当て身など）、出典に行が無い Lv、第1段の JL が未公開の場合は null。
+function jugFirstHitJl(move, stock, rush) {
+  if (!move) return null;
+  let lvIdx = 0;
+  if (move.stockAuto) lvIdx = Math.min(Math.max(stock, 0), 2);
+  const prof = jugProfile(move, lvIdx, 0);
+  if (!prof || prof.missing || !prof.hits || prof.hits.length === 0) return null;
+  const jl = prof.hits[0][2];
+  if (jl == null) return null;
+  const rushedNormal = (rush === "raw" || rush === "cdr") && (move.cat === "normal" || move.cat === "command" || move.cat === "target");
+  return rushedNormal ? jl + 3 : jl;
+}
+// ジャンプ攻撃かどうか（LINK の jump フラグ、または空中TCのリープ）。
+// ジャンプ攻撃の空中ヒットは当てる高さとタイミングで決まり、フレーム表の JL（地上への跳び込み用）では
+// 判定できない。実演ルート（ODフレア＞ジャンプ強K #13/#113、強ライズ＞ジャンプ中P #51ほか）でも
+// JL を超えた接続が確認できるため、ジャグル判定（候補フィルタ・行の警告とも）の対象外にする。
+// リンク判定でジャンプ攻撃を対象外にしているのと同じ扱い。
+function isJumpAttack(move) {
+  if (!move) return false;
+  if (move.id === "tc_leap") return true;
+  const L = LINK[move.id];
+  return !!(L && L.jump);
+}
+// その行の開始時点のジャグル状態（jcBefore）で、その技を選べなくすべきかを返す。
+// 除外するのは「相手が空中（JC が数値）で、第1段の JL < JC」の場合だけ。
+// 地上（jcBefore === null）、JC 不明（"unknown"）、判定材料の無い技は除外しない。
+// 第1段は当たるが後段が当たらない技（部分ヒット）は除外せず、行の警告（jwarn）で扱う。
+function jugCandidateBlocked(move, jcBefore, stock, rush) {
+  if (isJumpAttack(move)) return false; // ジャンプ攻撃はジャグル判定の対象外（当てる高さ・タイミングで決まる）
+  if (jcBefore === null || jcBefore === "unknown") return false;
+  const jl = jugFirstHitJl(move, stock, rush);
+  if (jl === null) return false;
+  return jl < jcBefore;
+}
+
+// === リンク判定用データ（SuperCombo Cargo API: SF6_FrameData の startup / hitAdv） ===
+// startup: 発生（TCは第1セグメントの値）。onHit: 地上ヒット時有利（数値のみ。KD/HKD は null＝ノックダウン系で、リンク判定の対象外）。
+// chains: 連打キャンセルで繋がる相手（cancel 欄の Chn と notes の "Chains into ..." が根拠）。
+// jump: ジャンプ攻撃。ヒット時有利が当てるタイミング・高さで変動する（表記も '+8(+15)' のように幅がある）ため、その行からはリンク判定をしない。
+const LINK = {"5lp": {"startup": 4, "onHit": 5, "chains": ["5lp", "2lp", "2lk"]}, "5lk": {"startup": 5, "onHit": 3}, "5mp": {"startup": 6, "onHit": 1}, "5mk": {"startup": 8, "onHit": 4}, "5hp": {"startup": 12, "onHit": 3}, "5hk": {"startup": 9, "onHit": 4}, "2lp": {"startup": 4, "onHit": 4, "chains": ["5lp", "2lp", "2lk"]}, "2lk": {"startup": 5, "onHit": 3, "chains": ["5lp", "2lp", "2lk"]}, "2mp": {"startup": 7, "onHit": 6}, "2mk": {"startup": 8, "onHit": 1}, "2hp": {"startup": 12, "onHit": 1}, "2hk": {"startup": 10, "onHit": null}, "jlp": {"startup": 4, "onHit": 6, "jump": true}, "jlk": {"startup": 6, "onHit": 5, "jump": true}, "jmp": {"startup": 8, "onHit": 10, "jump": true}, "jmk": {"startup": 8, "onHit": 9, "jump": true}, "jhp": {"startup": 9, "onHit": 8, "jump": true}, "jhk": {"startup": 12, "onHit": 10, "jump": true}, "6mp": {"startup": 21, "onHit": 3}, "6hp": {"startup": 17, "onHit": null}, "shoot_l": {"startup": 17, "onHit": -2}, "shoot_m": {"startup": 17, "onHit": -2}, "shoot_h": {"startup": 15, "onHit": -1}, "shoot_od": {"startup": 17, "onHit": null}, "flare_m": {"startup": 21, "onHit": null}, "sflare_m": {"startup": 22, "onHit": null, "jump": true}, "rise_l": {"startup": 8, "onHit": null}, "rise_m": {"startup": 13, "onHit": null}, "rise_h": {"startup": 27, "onHit": null}, "rise_od": {"startup": 14, "onHit": null}, "sa1_1": {"startup": 11, "onHit": null}, "sa1_2": {"startup": 11, "onHit": null}, "sa1_3": {"startup": 11, "onHit": null}, "sa3": {"startup": 20, "onHit": null}, "ca": {"startup": 20, "onHit": null}, "di": {"startup": 26, "onHit": null}, "tc_airy": {"startup": 12, "onHit": -3}, "tc_glow": {"startup": 9, "onHit": null}, "tc_lumi": {"startup": 14, "onHit": null}, "tc_leap": {"startup": 12, "onHit": null, "jump": true}, "flare_h": {"startup": 18, "onHit": null}, "flare_od": {"startup": 18, "onHit": null}, "sflare_h": {"startup": 22, "onHit": null}, "sflare_od": {"startup": 22, "onHit": null}, "vanish_u": {"startup": 43, "onHit": null}, "vanish_f": {"startup": 36, "onHit": null}, "veil": {"startup": 6, "onHit": null}, "veil_od": {"startup": 1, "onHit": null}};
+// パニッシュカウンターでクランプルになる技。地上ヒットスタンではなくクランプル状態にするため、リンク判定の対象外にする。
+// 根拠: Cargo の 5HP の notes に「links to 6HP at nearly any range on Punish Counter」と明記されており、
+// 公式コンボトライアル（上級7）も 5HP(PC)＞6HP を採用している。フレーム表の hitAdv（+3）にはこの状態変化が表れない。
+const PC_CRUMPLE = { "5hp": true };
+// === リンク候補フィルタ（通常技同士の繋ぎをフレーム表で判定する。エンジン本体が各行に残す linkAdv を使う） ===
+// ctx: { adv, prevId, rush } — adv は前の行が地上ヒットで残した実効ヒット時有利（computeCombo の row.linkAdv / result.endLinkAdv）。
+// 除外するのは「adv が数値で、候補が通常技・特殊技・TC（発生は第1セグメント）、候補の行にラッシュ指定がなく、
+// チェーン（連打キャンセル）でも繋がらず、候補の発生 > adv」の場合だけ。
+// 必殺技・SA・投げ・DI は判定しない（キャンセルの繋がりは間合い等で決まるため）。adv が null の区間（浮かせ・ノックダウン・
+// 投げ・溜め・ジャンプ攻撃始動など）も判定しない。
+function linkCandidateBlocked(move, ctx) {
+  if (!move || !ctx || ctx.adv == null) return false;
+  if (ctx.rush === "raw" || ctx.rush === "cdr") return false;
+  if (move.cat !== "normal" && move.cat !== "command" && move.cat !== "target") return false;
+  const L = LINK[move.id];
+  if (!L || L.startup == null) return false;
+  const prev = LINK[ctx.prevId];
+  if (prev && prev.chains && prev.chains.indexOf(move.id) >= 0) return false; // 連打キャンセルで繋がる組み合わせは対象外
+  if (move.id === "tc_airy" && ctx.prevId === "5mp") return false; // エアリートスは立ち中Pからのタゲコン派生（キャンセル接続）なので対象外
+  return L.startup > ctx.adv;
+}
+
+// === キャンセル判定用データ（SuperCombo Cargo API: SF6_FrameData の cancel 欄） ===
+// 各技の cancel 欄をトークン列にしたもの。Sp = 必殺技キャンセル可、SA = SAキャンセル可（全レベル）、
+// SA2/SA3 = そのレベルのSAのみ可、Chn = 連打キャンセル、TC = ターゲットコンボ派生。
+// データが無い技（弱フレア等の溜め技）は CANCEL に含めない（判定しない）。
+const CANCEL = {"5lp": ["Chn", "Sp", "SA"], "5lk": ["Sp", "SA"], "5mp": ["Sp", "SA", "TC"], "5mk": ["Sp", "SA"], "5hp": [], "5hk": ["SA"], "2lp": ["Chn", "Sp", "SA"], "2lk": ["Chn"], "2mp": ["Sp", "SA"], "2mk": ["Sp", "SA"], "2hp": ["Sp", "SA"], "2hk": [], "jlp": [], "jlk": [], "jmp": [], "jmk": [], "jhp": [], "jhk": ["TC"], "6mp": [], "6hp": ["Sp"], "tc_airy": ["Sp", "SA"], "shoot_l": ["SA3"], "shoot_m": ["SA3"], "shoot_h": ["SA3"], "shoot_od": ["SA2", "SA3"], "flare_m": ["SA3"], "sflare_m": [], "rise_l": [], "rise_m": [], "rise_h": [], "rise_od": ["SA2", "SA3"], "sa1_1": [], "sa1_2": [], "sa1_3": [], "sa3": [], "ca": [], "di": [], "tc_glow": [], "tc_lumi": ["TC"], "tc_leap": [], "flare_h": ["SA3"], "flare_od": ["SA2", "SA3"], "sflare_h": [], "sflare_od": [], "vanish_u": [], "vanish_f": [], "veil": [], "veil_od": []};
+function saLevelOf(id) {
+  if (!id) return 0;
+  if (id.indexOf("sa1") === 0) return 1;
+  if (id.indexOf("sa2") === 0) return 2;
+  if (id === "sa3" || id === "ca") return 3;
+  return 0;
+}
+// === キャンセル候補フィルタ（地上ヒット中の接続がキャンセルになる場合の可否。リンクフィルタと併用する） ===
+// ctx: { grounded, prevId, rush } — grounded は前の行の開始時点のジャグル状態が地上（jcBefore === null）かどうか。
+// 除外するのは「相手が地上で、前の技が通常技・特殊技・TC・必殺技のいずれかで、接続がキャンセルになる場合」だけ:
+// - 必殺技の候補: 前の技（通常技・特殊技・TC）の cancel 欄に Sp が無ければ除外。必殺技の後の拾いは判定しない
+//   （飛び道具の着弾タイミングで決まるため。例: 強シュート＞弱ライズ）。立ち強K(PC)の後は相手が浮くので
+//   ジャグル接続として扱い除外しない（いおりのコンボガイドで 立ち強K(PC)＞中ライズ が実演されている）。
+// - SAの候補: 前の技の cancel 欄に SA（全レベル可）か、そのSAのレベルの記載が無ければ除外。
+// - ラッシュ（cdr）指定の通常技・特殊技・TC: ドライブラッシュキャンセルにも Sp が必要。
+// 空中（ジャグル中）の拾いはキャンセルではないので判定しない。前の技がSA・投げ・DI等の場合も判定しない。
+function cancelCandidateBlocked(move, ctx) {
+  if (!move || !ctx || !ctx.grounded || !ctx.prevId) return false;
+  const prev = MOVE_BY_ID[ctx.prevId];
+  if (!prev) return false;
+  if (prev.cat !== "normal" && prev.cat !== "command" && prev.cat !== "target" && prev.cat !== "special") return false;
+  const tokens = CANCEL[ctx.prevId];
+  if (!tokens) return false;
+  if (ctx.rush === "cdr" && (move.cat === "normal" || move.cat === "command" || move.cat === "target")) {
+    return tokens.indexOf("Sp") < 0;
+  }
+  if (move.cat === "special") {
+    if (prev.cat === "special") return false; // 必殺技の後はキャンセルではなく着弾タイミングで決まる拾いなので判定しない
+    if (ctx.pc5hk && ctx.prevId === "5hk") return false; // 立ち強K(PC)は相手を浮かせるためジャグル接続として扱う
+    return tokens.indexOf("Sp") < 0;
+  }
+  if (move.cat === "sa") {
+    const lv = saLevelOf(move.id);
+    if (!lv) return false;
+    return tokens.indexOf("SA") < 0 && tokens.indexOf("SA" + lv) < 0;
+  }
+  return false;
+}
+// 前の技からドライブラッシュキャンセルできるか（cancel 欄に Sp があること。キャンセル候補フィルタの cdr 判定と同じ基準）。
+function drCancelPossible(prevId) {
+  if (!prevId) return false;
+  const tokens = CANCEL[prevId];
+  return !!tokens && tokens.indexOf("Sp") >= 0;
+}
+// その候補が「ラッシュなしでは繋がらないが、キャンセルラッシュなら繋がる」通常技・特殊技・TC かを返す。
+// ctx: { adv, prevId, jc, stock } — adv/jc/stock は候補の行の開始時点の状態。
+// リンクで弾かれる場合と、空中でラッシュの JL+3 があれば当たる場合の両方を見る。
+// ジャンプ攻撃は当てる高さで決まるため対象外（cdr の自動付与もしない）。
+function cdrWouldConnect(move, ctx) {
+  if (!move || !ctx || !drCancelPossible(ctx.prevId)) return false;
+  if (isJumpAttack(move)) return false;
+  if (move.cat !== "normal" && move.cat !== "command" && move.cat !== "target") return false;
+  const linkBlocked = linkCandidateBlocked(move, { adv: ctx.adv, prevId: ctx.prevId, rush: "none" });
+  const jugBlocked = jugCandidateBlocked(move, ctx.jc, ctx.stock, "none");
+  const jugHelped = jugBlocked && !jugCandidateBlocked(move, ctx.jc, ctx.stock, "cdr");
+  return linkBlocked || jugHelped;
+}
+
+// === 終了候補フィルタ（その技でコンボが終わるため、次の一手そのものを出さない） ===
+// 中サンライズは相手を叩き落とすので、その後は続かない。ODサンライズも同様だが、SA2/SA3への
+// キャンセルだけは可能（cancel 欄: SA2 SA3、3段目のみ）。強サンライズは浮かせるので対象外。
+// 弱サンライズは相手が高く浮いている場合のみ続くため、ジャグル判定に任せて対象外にする。
+function enderCandidateBlocked(move, ctx) {
+  if (!move || !ctx || !ctx.prevId) return false;
+  if (ctx.prevId === "rise_m") return true;
+  if (ctx.prevId === "vanish_f") return true;
+  if (ctx.prevId === "rise_od") {
+    const lv = saLevelOf(move.id);
+    return !(move.cat === "sa" && (lv === 2 || lv === 3));
+  }
+  return false;
+}
+
+function computeCombo(db, init, picks) {
+  const byId = {};
+  for (const m of db) byId[m.id] = m;
+  let drive = init.drive, sa = init.sa, stock = init.stock;
+  let P = 0;                 // 累積加算ペナルティ
+  let drActive = false;      // DR補正 ×0.85 が有効か
+  let atkIndex = 0;          // 当たった攻撃の通し番号（TCは各段カウント、溜め技は数えない）
+  let firstStarter = 0;      // 初段の始動補正
+  let prevHitCat = null;     // 直前に当たった技のカテゴリ（SA3キャンセル判定用）
+  let jc = null; // ジャグルカウント: null=地上 / 数値=空中 / "unknown"=空中だがカウント不明
+  let juggleInvalid = false;
+  // 始動条件（スタン／DIクランプル／DI壁ドン）: そのイベントが始動補正20%を負い、追撃は 80% -> 70% -> 60% と進行する
+  // （SuperCombo「Game Data」Damage Scaling の Drive Impact 項。スタンも同項のバーンアウトスタンが該当）。
+  // 壁ドン後は相手がフリージャグル状態（コンボカウント0）になる（DI の jugStart=0、Cargo 由来）。
+  const startMode = init.start || "none";
+  if (startMode === "stun" || startMode === "di" || startMode === "splat") { P = 20; atkIndex = 1; firstStarter = 20; }
+  if (startMode === "splat") jc = 0;
+  const counter0 = startMode !== "none" ? "none" : (init.counter || "none"); // 始動条件がある場合、当たり方はそのイベント側で消費済みとして扱う
+  let total = 0;
+  const rows = [];
+  const flow = [];
+
+  for (let pi = 0; pi < picks.length; pi++) {
+    const pick = picks[pi];
+    const move = byId[pick.id];
+    const row = { pickIndex: pi, moveId: pick.id, name: move ? move.name : "(未選択)",
+                  attacks: [], dmg: 0, warn: [], jwarn: [], jcBefore: jc, linkAdv: null,
+                  before: { drive, sa, stock }, after: null, lvLabel: "" };
+    if (!move) { row.after = { drive, sa, stock }; rows.push(row); continue; }
+
+    // --- ラッシュ（この技の前に使用） ---
+    if (pick.rush && pick.rush !== "none") {
+      const cost = pick.rush === "cdr" ? 3 : 1;
+      drive -= cost;
+      if (pi >= 1) drActive = true; // コンボ中のラッシュはその技から ×0.85（初段の生ラッシュ始動は不適用）
+      if (drive < 0) row.warn.push("ドライブゲージ不足（ラッシュ）");
+    }
+    // --- 技のコスト ---
+    let lvInfo = null;
+    if (move.stockAuto) {
+      lvInfo = resolveLv(move, stock);
+      stock -= lvInfo.stockCost;
+      row.lvLabel = "Lv" + lvInfo.lv + "で発動（ストック-" + lvInfo.stockCost + "）";
+    } else if (move.stock) {
+      stock -= move.stock;
+      if (stock < 0) row.warn.push("ストック不足");
+    }
+    if (move.drive) { drive -= move.drive; if (drive < 0) row.warn.push("ドライブゲージ不足"); }
+    if (move.sa) { sa -= move.sa; if (sa < 0) row.warn.push("SAゲージ不足"); }
+    if (move.stockGain) stock = Math.min(4, stock + move.stockGain);
+
+    // --- 攻撃の展開（TCは各段） ---
+    let attacks;
+    if (move.segments) {
+      attacks = move.segments.map(s => ({ label: move.name + " " + s.label, dmg: s.dmg, combo: s.combo,
+                                          starter: move.starter || 0, immediate: 0 }));
+    } else if (move.noHit) {
+      attacks = [];
+    } else if (lvInfo) {
+      attacks = [{ label: move.name, dmg: lvInfo.dmg, combo: lvInfo.combo, starter: lvInfo.starter, immediate: 0 }];
+    } else {
+      attacks = [{ label: move.name, dmg: move.dmg, combo: (move.combo !== undefined ? move.combo : 10),
+                   starter: move.starter || 0, immediate: move.immediate || 0 }];
+    }
+
+    for (let ai = 0; ai < attacks.length; ai++) { const atk = attacks[ai];
+      atkIndex++;
+      let Pi = P;
+      if (atkIndex >= 2 && atk.immediate) Pi += atk.immediate;
+      if (move.saLv === 3 && prevHitCat === "special" && pick.saCancel !== false) Pi += 10; // SA3/CAのスーパーキャンセル追加補正（追撃の場合は行のチェックを外す）
+      Pi = Math.min(Pi, 90);
+      let mult = 1.0;
+      if (init.pp) mult *= 0.5;
+      if (init.wall) mult *= 0.8;
+      if (drActive) mult *= 0.85;
+      if (init.modern && pick.sp && (move.cat === "special" || move.cat === "sa")) mult *= 0.8;
+      let rate = Math.floor((100 - Pi) * mult + 1e-9);
+      if (move.saLv) rate = Math.max(rate, SA_MIN[move.saLv]);
+      let dmg = Math.floor(atk.dmg * rate / 100 + 1e-9);
+      if (atkIndex === 1 && counter0 !== "none") {
+        if (move.isThrow) { if (counter0 === "pc") dmg = Math.floor(dmg * 1.7 + 1e-9); }
+        else if (!move.saLv) { dmg = Math.floor(dmg * 1.2 + 1e-9); }
+      }
+      row.attacks.push({ label: atk.label, rate, dmg });
+      flow.push(rate + "%");
+      row.dmg += dmg; total += dmg;
+      // --- ジャグル判定（警告のみ。ダメージ計算には影響させない） ---
+      {
+        const prof = jugProfile(move, lvInfo ? lvInfo.lv - 1 : 0, ai);
+        const rushedNormal = (pick.rush === "raw" || pick.rush === "cdr") && (move.cat === "normal" || move.cat === "command" || move.cat === "target");
+        if (prof && !prof.missing) {
+          let hits = prof.hits;
+          if (rushedNormal) hits = hits.map(h => [0, 0, h[2] == null ? null : h[2] + 3]); // ラッシュ通常技は JS/JI=0・JL+3（SuperCombo Glossary）
+          if (jc === null) {
+            if (prof.launch) {
+              const jsA = prof.jsGround != null ? prof.jsGround : (hits.length ? hits[hits.length - 1][0] : null);
+              jc = jsA == null ? "unknown" : jsA;
+            }
+          } else if (jc === "unknown") {
+            if (prof.vanish || prof.sa2) jc = 0;
+            else if (hits.length && hits[hits.length - 1][0] != null) jc = rushedNormal ? 0 : hits[hits.length - 1][0];
+          } else {
+            let connected = 0, lastConnJs = null; const whiffs = [];
+            hits.forEach((h, hi) => {
+              if (h[2] == null || h[2] >= jc) { connected++; lastConnJs = h[0]; }
+              else whiffs.push(hi);
+            });
+            if (isJumpAttack(move)) { connected = hits.length; whiffs.length = 0; lastConnJs = hits.length ? hits[hits.length - 1][0] : null; } // ジャンプ攻撃は対象外: 全段当たるものとして JC だけ進める
+            if (connected === 0) {
+              row.jwarn.push("コンボカウント: " + atk.label + " が当たらない（全段のJLが JC " + jc + " 未満）— 実機ではこのルートは成立しない");
+              row.juggleInvalid = true; juggleInvalid = true;
+            } else {
+              if (whiffs.length) {
+                if (whiffs.indexOf(hits.length - 1) >= 0 && prof.launch) {
+                  row.jwarn.push("コンボカウント: " + atk.label + " の最終段が当たらない（JL < JC " + jc + "）— 浮かせが成立せず、実機ではこのルートは成立しない");
+                  row.juggleInvalid = true; juggleInvalid = true;
+                } else {
+                  row.jwarn.push("コンボカウント: " + atk.label + " の " + whiffs.map(i => (i + 1) + "段目").join("・") + " が当たらない（JL < JC " + jc + "）— 部分ヒットになり、実ダメージは表示より下がる");
+                }
+              }
+              if (prof.vanish || prof.sa2) jc = 0;
+              else if (lastConnJs != null) {
+                if (rushedNormal) jc = 0;
+                else if (prof.launch) jc = lastConnJs; // 浮かせ技は相手の状態を作り直すので JS で置き換え
+                else jc = Math.min(lastConnJs, jc); // 浮かせない技の空中ヒットは JC を増やさない（仮定A3: 実演ルート群からの帰納）
+              }
+            }
+          }
+        } else if (prof && prof.missing) {
+          if (jc === null && prof.launch) jc = "unknown";
+        } else if (move.cat === "throw") {
+          jc = null; // 投げでコンボは終わる。以後の手は当て直しとして扱う
+        } else if (JUG_UNKNOWN_LAUNCH[move.id]) {
+          jc = "unknown";
+        }
+      }
+      // --- 次の攻撃へ向けた P の更新 ---
+      if (atkIndex === 1) { P = atk.starter; firstStarter = atk.starter; }
+      else {
+        if (atkIndex === 2 && firstStarter === 0) P += 10; // 通常始動補正
+        P += atk.combo;
+      }
+      prevHitCat = move.cat;
+    }
+    if (move.noHit) { row.attacks.push({ label: move.name + "（溜め）", rate: null, dmg: 0 }); }
+    // --- リンク判定用: この行が地上ヒットで残す実効ヒット時有利（次の行の通常技候補フィルタが使う） ---
+    // 対象は「この行の終了時点で相手が地上（jc === null）のまま、溜め・投げではなく、フレーム表のヒット時有利が数値の技」だけ。
+    // ジャンプ攻撃始動の行は有利が当てるタイミングで変動するため判定しない。パニカンでクランプルになる技も対象外（PC_CRUMPLE 参照）。
+    if (jc === null && !move.noHit && move.cat !== "throw") {
+      const L = LINK[move.id];
+      if (L && L.onHit != null && !L.jump && !(pi === 0 && counter0 === "pc" && PC_CRUMPLE[move.id])) {
+        let adv = L.onHit;
+        if (pi === 0 && counter0 !== "none" && !move.saLv) adv += counter0 === "pc" ? 4 : 2; // カウンター+2F／パニッシュカウンター+4F（打撃のみ）
+        if ((pick.rush === "raw" || pick.rush === "cdr") && (move.cat === "normal" || move.cat === "command" || move.cat === "target")) adv += 4; // ドライブラッシュ中の通常技・特殊技・TCはヒット時有利+4F（SuperCombo「Gauges」）
+        row.linkAdv = adv;
+      }
+    }
+    row.after = { drive, sa, stock };
+    rows.push(row);
+  }
+  return { rows, total, flow, end: { drive, sa, stock }, juggleInvalid, endJc: jc, endLinkAdv: rows.length ? rows[rows.length - 1].linkAdv : null };
+}
+
+</script>
+<script>
+
+const EXCLUDED = new Set(["throw_f", "throw_b", "veil", "veil_od", "flare_l", "sflare_l", "di",
+  "sa2_1", "sa2_2", "sa2_3", "sa3", "ca"]);
+const JUMP = new Set(["jlp", "jlk", "jmp", "jmk", "jhp", "jhk", "tc_leap"]);
+
+const SHORT = {
+  "5lp": "立ち弱P", "5lk": "立ち弱K", "5mp": "立ち中P", "5mk": "立ち中K", "5hp": "立ち強P", "5hk": "立ち強K",
+  "2lp": "しゃがみ弱P", "2lk": "しゃがみ弱K", "2mp": "しゃがみ中P", "2mk": "しゃがみ中K", "2hp": "しゃがみ強P", "2hk": "しゃがみ強K",
+  "6mp": "サンブライト", "6hp": "前強P",
+  "tc_airy": "エアリートス", "tc_glow": "グロータッチ", "tc_lumi": "ルミナス",
+  "shoot_l": "弱シュート", "shoot_m": "中シュート", "shoot_h": "強シュート", "shoot_od": "ODシュート",
+  "flare_l": "弱フレア", "flare_m": "中フレア", "flare_h": "強フレア", "flare_od": "ODフレア",
+  "sflare_l": "弱ソーラー", "sflare_m": "中ソーラー", "sflare_h": "強ソーラー", "sflare_od": "ODソーラー",
+  "rise_l": "弱ライズ", "rise_m": "中ライズ", "rise_h": "強ライズ", "rise_od": "ODライズ",
+  "vanish_u": "上バニッシュ", "vanish_f": "前バニッシュ",
+  "sa1_1": "SA1", "sa1_2": "SA1 Lv2", "sa1_3": "SA1 Lv3",
+};
+function seqLabel(picks) {
+  return picks.map(p => {
+    const base = SHORT[p.id] || p.id;
+    if (p.rush === "cdr") return "ラッシュ" + base;
+    if (p.rush === "raw") return "R" + base;
+    return base;
+  }).join("＞");
+}
+
+
+const hasSp = id => (CANCEL[id] || []).includes("Sp");
+const hasSA = id => (CANCEL[id] || []).includes("SA");
+
+function makeCandidatesFor(init) {
+  const COUNTER = init.counter;
+  return function candidatesFor(picks, res) {
+    const prev = picks.length ? picks[picks.length - 1] : null;
+    const prevId = prev ? prev.id : null;
+    const out = [];
+    if (!prev) return out;
+    const prevMove = MOVE_BY_ID[prevId];
+    if (prevMove.cat === "sa") return out;
+    if (prevId === "flare_l" || prevId === "sflare_l") return out;
+    if (prevId === "vanish_f") return out;
+    if (prevId === "rise_m") return out;                       // 中ライズは締め（ユーザー裁定）
+    if (prevId === "rise_od") {                                 // ODライズ後はSA2/SA3のみ
+      for (const mv of MOVES) if (mv.cat === "sa" && (mv.id === "sa2_1" || mv.id === "sa2_2" || mv.id === "sa2_3" || mv.id === "sa3")) { /* SA2/3はクイズ対象外 */ }
+      return out;
+    }
+    const grounded = res.endJc === null || res.endJc === undefined;
+    const prevLink = LINK[prevId];
+    const prevEnder = grounded && (!prevLink || prevLink.onHit === null || prevLink.onHit === undefined);
+    for (const mv of MOVES) {
+      if (EXCLUDED.has(mv.id)) continue;
+      if (JUMP.has(mv.id) && prevId !== "rise_h" && prevId !== "flare_od") continue; // ジャンプ攻撃は強ライズ/ODフレア後のみ
+      if (prevEnder && !(mv.cat === "sa" && prevMove.cat === "special")) continue;
+      if (mv.id.startsWith("sflare") && grounded) continue;
+      if (mv.id.startsWith("sflare") && prevId && prevId.startsWith("sflare")) continue;
+      if (mv.id.startsWith("sflare") && !grounded && prevId !== "flare_od" && prevId !== "rise_h" && prevId !== "6hp") continue;
+      if (grounded && mv.cat === "special" && prevMove.cat !== "special" && !hasSp(prevId) && !(COUNTER === "pc" && picks.length === 1 && prevId === "5hk")) continue;
+      if (grounded && mv.cat === "sa" && !hasSA(prevId)) continue;
+      if (mv.id === "tc_airy" && prevId !== "5mp") continue;
+      const rushOptions = ["none"];
+      if (mv.cat === "normal" || mv.cat === "command" || mv.cat === "target") {
+        if (!grounded) rushOptions.push("raw");
+        else if (hasSp(prevId)) rushOptions.push("cdr");
+      }
+      for (const rush of rushOptions) {
+        if (jugCandidateBlocked(mv, res.endJc, res.end.stock, rush)) continue;
+        const ctx = { adv: res.endLinkAdv, prevId, rush, currentId: null };
+        if (linkCandidateBlocked(mv, ctx)) continue;
+        out.push({ id: mv.id, rush, sp: false });
+      }
+    }
+    return out;
+  };
+}
+
+function tryExtend(init, picks, cand) {
+  const np = picks.concat([cand]);
+  const res = computeCombo(MOVES, init, np);
+  const last = res.rows[res.rows.length - 1];
+  if (!last) return null;
+  if (res.juggleInvalid) return null;
+  if (last.warn && last.warn.length) return null;
+  if (last.jwarn && last.jwarn.length) return null;
+  if (res.end.drive < 0 || res.end.stock < 0 || res.end.sa < 0) return null;
+  return { picks: np, res };
+}
+
+// 始動を指定して最大ルートを探索する
+function searchFrom(starterPick, init, depth = 9) {
+  const candidatesFor = makeCandidatesFor(init);
+  const startRes = computeCombo(MOVES, init, [starterPick]);
+  if (startRes.rows[0].warn.length || startRes.juggleInvalid) return [];
+  let beam = [{ picks: [starterPick], res: startRes }];
+  const all = [...beam];
+  const BEAM = 2000;
+  function selectBeam(nodes) {
+    nodes.sort((a, b) => (b.res.total - a.res.total) || (b.res.end.drive - a.res.end.drive));
+    const picked = new Set(); const out = [];
+    for (const n of nodes.slice(0, 400)) { picked.add(n); out.push(n); }
+    const byLast = new Map();
+    for (const n of nodes) {
+      const k = n.picks[n.picks.length - 1].id;
+      if (!byLast.has(k)) byLast.set(k, []);
+      byLast.get(k).push(n);
+    }
+    for (const arr of byLast.values()) for (const n of arr.slice(0, 40)) if (!picked.has(n)) { picked.add(n); out.push(n); }
+    return out.slice(0, BEAM);
+  }
+  for (let d = 1; d < depth; d++) {
+    const next = [];
+    for (const node of beam) {
+      for (const cand of candidatesFor(node.picks, node.res)) {
+        const ext = tryExtend(init, node.picks, cand);
+        if (!ext) continue;
+        next.push(ext);
+        if (cand.id.startsWith("sa1")) all.push(ext);
+      }
+    }
+    if (!next.length) break;
+    beam = selectBeam(next);
+    all.push(...beam);
+  }
+  const seen = new Set(); const uniq = [];
+  for (const n of all) {
+    const key = n.picks.map(p => p.id + ":" + p.rush).join(",");
+    if (seen.has(key)) continue;
+    seen.add(key); uniq.push(n);
+  }
+  uniq.sort((a, b) => (b.res.total - a.res.total) || (b.res.end.drive - a.res.end.drive));
+  return uniq;
+}
+
+// ルートを検証する: 各ステップが候補フィルタを通るか＋エンジンの警告/資源をチェック。
+// 失敗時は { ok:false, step, reason } を返す（理由はクイズのフィードバック表示用）
+const STARTUP = { "5lp": 4, "2lp": 4, "5lk": 5, "2lk": 5, "5mp": 6, "2mp": 7, "5mk": 8, "2mk": 8, "5hk": 9, "5hp": 12, "2hp": 12, "sa1_1": 11, "sa1_2": 11, "sa1_3": 11, "flare_l": 21, "flare_m": 18, "flare_h": 18, "flare_od": 18, "sflare_m": 22, "sflare_h": 22, "sflare_od": 22, "6hp": 17, "6mp": 21, "rise_l": 14, "rise_m": 16, "rise_h": 18, "di": 26 };
+function validate(picks, init, gapAbs) {
+  if (gapAbs !== null && gapAbs !== undefined) {
+    const st = STARTUP[picks[0].id];
+    if (st !== undefined && st > gapAbs) return { ok: false, step: 0, reason: "starter", total: null };
+  }
+  const candidatesFor = makeCandidatesFor(init);
+  let cur = [];
+  let res = null;
+  for (let i = 0; i < picks.length; i++) {
+    if (i > 0) {
+      const cands = candidatesFor(cur, res);
+      if (!cands.some(c => c.id === picks[i].id && c.rush === picks[i].rush)) {
+        return { ok: false, step: i, reason: "illegal", total: null };
+      }
+    }
+    cur.push(picks[i]);
+    res = computeCombo(MOVES, init, cur);
+    const row = res.rows[res.rows.length - 1];
+    if (row.warn && row.warn.length) return { ok: false, step: i, reason: "resource", detail: row.warn.join("/"), total: null };
+    if (row.jwarn && row.jwarn.length) return { ok: false, step: i, reason: "juggle", total: null };
+    if (res.juggleInvalid) return { ok: false, step: i, reason: "juggle", total: null };
+  }
+  if (res.end.drive < 0 || res.end.sa < 0 || res.end.stock < 0) return { ok: false, step: picks.length - 1, reason: "resource", total: null };
+  return { ok: true, total: res.total, end: res.end, res };
+}
+
+// validate に trust オプションを追加したページ共用版は build_combo_quiz.py 側で上書きする
+
+</script>
+<script>
+const QUESTIONS = [{"char": "ザンギエフ", "move": "マシンガンチョップ3段目（5MP~MP~MP）", "gif": "https://static.frame-search.com/tn_img_8_32.gif", "onblock": "−17", "gap": 17, "position": "中央", "drive": [3, 6], "sa": [1, 3], "stock": [0, 4], "routes": [{"display": "立ち強K＞立ち中P＞ODサンフレア＞上バニッシュ＞ラッシュ立ち中P＞エアリートス＞SA1", "picks": [{"id": "5hk", "rush": "none", "sp": false}, {"id": "5mp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "5mp", "rush": "raw", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "立ち強K＞ODサンフレア＞ラッシュルミナス＞ODサンフレア＞上バニッシュ＞SA1", "picks": [{"id": "5hk", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "tc_lumi", "rush": "raw", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "立ち強K＞立ち中P＞ODサンフレア＞ODソーラーフレア＞グロータッチ＞SA1", "picks": [{"id": "5hk", "rush": "none", "sp": false}, {"id": "5mp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "sflare_od", "rush": "none", "sp": false}, {"id": "tc_glow", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "しゃがみ強P＞強サンライズ＞中サンフレア＞SA1", "picks": [{"id": "2hp", "rush": "none", "sp": false}, {"id": "rise_h", "rush": "none", "sp": false}, {"id": "flare_m", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "強サンフレア＞ラッシュルミナス＞ODサンフレア＞上バニッシュ＞SA1", "picks": [{"id": "flare_h", "rush": "none", "sp": false}, {"id": "tc_lumi", "rush": "raw", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}], "fixedFail": {"kind": "starter", "text": "始動の強サンフレアは発生18F。この技の隙（17F）には間に合わない"}}, {"display": "しゃがみ強P＞ODサンフレア＞ルミナス＞ODソーラーフレア＞SA1", "picks": [{"id": "2hp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "tc_lumi", "rush": "none", "sp": false}, {"id": "sflare_od", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}], "fixedFail": {"kind": "illegal", "text": "ルミナスの後にソーラーフレアは繋がらない（ソーラーは空中でODフレア・強ライズの直後だけ）"}}]}, {"char": "キンバリー", "move": "ターゲットコンボ最終段（~HP~HK）", "gif": "https://static.frame-search.com/tn_img_18_27.gif", "onblock": "−12", "gap": 12, "position": "中央", "drive": [3, 6], "sa": [0, 3], "stock": [0, 4], "routes": [{"display": "しゃがみ強P＞ODサンフレア＞ラッシュルミナス＞ODサンフレア＞上バニッシュ＞SA1", "picks": [{"id": "2hp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "tc_lumi", "rush": "raw", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "立ち強K＞立ち中P＞ODサンフレア＞上バニッシュ＞ラッシュ立ち中P＞エアリートス＞SA1", "picks": [{"id": "5hk", "rush": "none", "sp": false}, {"id": "5mp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "5mp", "rush": "raw", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "しゃがみ強P＞強サンライズ＞ジャンプ中P＞ODサンフレア＞前ワープ", "picks": [{"id": "2hp", "rush": "none", "sp": false}, {"id": "rise_h", "rush": "none", "sp": false}, {"id": "jmp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_f", "rush": "none", "sp": false}]}, {"display": "立ち中P＞エアリートス＞ODサンフレア＞ジャンプ強K＞中サンライズ", "picks": [{"id": "5mp", "rush": "none", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "jhk", "rush": "none", "sp": false}, {"id": "rise_m", "rush": "none", "sp": false}]}, {"display": "立ち強K＞立ち弱P＞ラッシュ立ち弱P＞立ち中P＞エアリートス＞ODサンフレア＞強サンライズ＞中ソーラーフレア＞SA1", "picks": [{"id": "5hk", "rush": "none", "sp": false}, {"id": "5lp", "rush": "none", "sp": false}, {"id": "5lp", "rush": "cdr", "sp": false}, {"id": "5mp", "rush": "none", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "rise_h", "rush": "none", "sp": false}, {"id": "sflare_m", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "前強P＞ODサンフレア＞しゃがみ強P＞強サンライズ＞中サンフレア＞SA1", "picks": [{"id": "6hp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "2hp", "rush": "none", "sp": false}, {"id": "rise_h", "rush": "none", "sp": false}, {"id": "flare_m", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}], "fixedFail": {"kind": "starter", "text": "始動の前強Pは発生17F。この技の隙（12F）には間に合わない"}}]}, {"char": "リュウ", "move": "中波動拳（236中P）", "gif": "https://static.frame-search.com/tn_img_0_28.gif", "onblock": "−7", "gap": 7, "position": "中央", "drive": [2, 6], "sa": [0, 3], "stock": [0, 4], "routes": [{"display": "立ち中P＞エアリートス＞ODサンフレア＞上バニッシュ＞中サンライズ", "picks": [{"id": "5mp", "rush": "none", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "rise_m", "rush": "none", "sp": false}]}, {"display": "立ち中P＞エアリートス＞ODサンフレア＞ラッシュしゃがみ強P＞強サンライズ", "picks": [{"id": "5mp", "rush": "none", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "2hp", "rush": "raw", "sp": false}, {"id": "rise_h", "rush": "none", "sp": false}]}, {"display": "しゃがみ中P＞ラッシュしゃがみ強P＞強サンライズ＞中ソーラーフレア", "picks": [{"id": "2mp", "rush": "none", "sp": false}, {"id": "2hp", "rush": "cdr", "sp": false}, {"id": "rise_h", "rush": "none", "sp": false}, {"id": "sflare_m", "rush": "none", "sp": false}]}, {"display": "しゃがみ中P＞立ち中P＞エアリートス＞中サンライズ", "picks": [{"id": "2mp", "rush": "none", "sp": false}, {"id": "5mp", "rush": "none", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "rise_m", "rush": "none", "sp": false}]}, {"display": "立ち強K＞立ち中P＞ODサンフレア＞上バニッシュ＞ラッシュ立ち中P＞エアリートス＞SA1", "picks": [{"id": "5hk", "rush": "none", "sp": false}, {"id": "5mp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "5mp", "rush": "raw", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}], "fixedFail": {"kind": "starter", "text": "始動の立ち強Kは発生9F。この技の隙（7F）には間に合わない"}}, {"display": "しゃがみ強P＞強サンライズ＞中サンフレア＞SA1", "picks": [{"id": "2hp", "rush": "none", "sp": false}, {"id": "rise_h", "rush": "none", "sp": false}, {"id": "flare_m", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}], "fixedFail": {"kind": "starter", "text": "始動のしゃがみ強Pは発生12F。この技の隙（7F）には間に合わない"}}]}, {"char": "マノン", "move": "ランヴェルセ（236P）", "gif": "https://static.frame-search.com/tn_img_11_38.gif", "onblock": "−23〜−16", "gap": 16, "position": "画面端", "drive": [3, 6], "sa": [0, 3], "stock": [0, 4], "routes": [{"display": "立ち強K＞立ち中P＞ODサンフレア＞ルミナス＞ODサンフレア＞上バニッシュ＞SA1", "picks": [{"id": "5hk", "rush": "none", "sp": false}, {"id": "5mp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "tc_lumi", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "しゃがみ強P＞ODサンフレア＞ルミナス＞ODサンフレア＞上バニッシュ＞SA1", "picks": [{"id": "2hp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "tc_lumi", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "しゃがみ強P＞強サンライズ＞ジャンプ中P＞ODサンフレア＞前ワープ＞弱サンライズ", "picks": [{"id": "2hp", "rush": "none", "sp": false}, {"id": "rise_h", "rush": "none", "sp": false}, {"id": "jmp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_f", "rush": "none", "sp": false}, {"id": "rise_l", "rush": "none", "sp": false}], "trust": true}, {"display": "立ち強K＞立ち中P＞ODサンフレア＞上バニッシュ＞ラッシュ立ち中P＞エアリートス＞SA1", "picks": [{"id": "5hk", "rush": "none", "sp": false}, {"id": "5mp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "5mp", "rush": "raw", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}]}, {"display": "強サンフレア＞ルミナス＞ODサンフレア＞上バニッシュ＞SA1", "picks": [{"id": "flare_h", "rush": "none", "sp": false}, {"id": "tc_lumi", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}], "fixedFail": {"kind": "starter", "text": "始動の強サンフレアは発生18F。この技の隙（16F）には間に合わない"}}, {"display": "しゃがみ強P＞ODサンフレア＞ルミナス＞ODソーラーフレア＞SA1", "picks": [{"id": "2hp", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "tc_lumi", "rush": "none", "sp": false}, {"id": "sflare_od", "rush": "none", "sp": false}, {"id": "sa1_1", "rush": "none", "sp": false}], "fixedFail": {"kind": "illegal", "text": "ルミナスの後にソーラーフレアは繋がらない（ソーラーは空中でODフレア・強ライズの直後だけ）"}}]}, {"char": "春麗", "move": "強気功拳（[4]6強P）", "gif": "https://static.frame-search.com/tn_img_20_36.gif", "onblock": "−6", "gap": 6, "position": "中央", "drive": [2, 6], "sa": [0, 3], "stock": [0, 4], "routes": [{"display": "立ち中P＞エアリートス＞ODサンフレア＞上バニッシュ＞中サンライズ", "picks": [{"id": "5mp", "rush": "none", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "rise_m", "rush": "none", "sp": false}]}, {"display": "立ち中P＞エアリートス＞強サンフレア＞強シュート＞弱サンライズ", "picks": [{"id": "5mp", "rush": "none", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "flare_h", "rush": "none", "sp": false}, {"id": "shoot_h", "rush": "none", "sp": false}, {"id": "rise_l", "rush": "none", "sp": false}]}, {"display": "立ち中P＞エアリートス＞中サンフレア＞ラッシュ前強P＞中サンフレア", "picks": [{"id": "5mp", "rush": "none", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "flare_m", "rush": "none", "sp": false}, {"id": "6hp", "rush": "raw", "sp": false}, {"id": "flare_m", "rush": "none", "sp": false}]}, {"display": "立ち中P＞エアリートス＞中サンライズ", "picks": [{"id": "5mp", "rush": "none", "sp": false}, {"id": "tc_airy", "rush": "none", "sp": false}, {"id": "rise_m", "rush": "none", "sp": false}]}, {"display": "しゃがみ中P＞ラッシュしゃがみ強P＞強サンライズ＞中ソーラーフレア", "picks": [{"id": "2mp", "rush": "none", "sp": false}, {"id": "2hp", "rush": "cdr", "sp": false}, {"id": "rise_h", "rush": "none", "sp": false}, {"id": "sflare_m", "rush": "none", "sp": false}], "fixedFail": {"kind": "starter", "text": "始動のしゃがみ中Pは発生7F。この技の隙（6F）に1F足りない"}}, {"display": "立ち強K＞立ち中K＞ODサンフレア＞上バニッシュ＞中サンライズ", "picks": [{"id": "5hk", "rush": "none", "sp": false}, {"id": "5mk", "rush": "none", "sp": false}, {"id": "flare_od", "rush": "none", "sp": false}, {"id": "vanish_u", "rush": "none", "sp": false}, {"id": "rise_m", "rush": "none", "sp": false}], "fixedFail": {"kind": "starter", "text": "始動の立ち強Kは発生9F。この技の隙（6F）には間に合わない"}}]}];
+let qzOrder = [], qzIdx = 0, qzScore = { maru: 0, sankaku: 0, batsu: 0 }, qzReview = [], qzCurrent = null;
+
+function shuffle(a) { const arr = a.slice(); for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
+function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
+function failText(kind, detail) {
+  if (kind === 'starter') return '始動の発生が、この技の隙に間に合わない';
+  if (kind === 'juggle') return 'コンボカウントの都合で、途中で繋がらない';
+  if (kind === 'illegal') return 'その繋ぎは成立しない';
+  if (kind === 'resource') {
+    const d = detail || '';
+    if (d.includes('ドライブ')) return 'ドライブゲージが足りず、途中で止まる';
+    if (d.includes('SA')) return 'SAゲージが足りず、途中で止まる';
+    if (d.includes('ストック')) return 'サンボルストックが足りず、途中で止まる';
+    return 'ゲージが足りず、途中で止まる';
+  }
+  return '繋がらない';
+}
+
+function evaluateRoute(r, init, gap) {
+  if (r.fixedFail) return { ok: false, kind: r.fixedFail.kind, text: r.fixedFail.text };
+  if (r.trust) {
+    const st = STARTUP[r.picks[0].id];
+    if (st !== undefined && st > gap) return { ok: false, kind: 'starter', text: failText('starter') };
+    const res = computeCombo(MOVES, init, r.picks);
+    const badRow = res.rows.find(x => (x.warn && x.warn.length) || (x.jwarn && x.jwarn.length));
+    if (res.juggleInvalid) return { ok: false, kind: 'juggle', text: failText('juggle') };
+    if (badRow) {
+      if (badRow.jwarn && badRow.jwarn.length) return { ok: false, kind: 'juggle', text: failText('juggle') };
+      return { ok: false, kind: 'resource', text: failText('resource', (badRow.warn || []).join('/')) };
+    }
+    if (res.end.drive < 0 || res.end.sa < 0 || res.end.stock < 0) return { ok: false, kind: 'resource', text: failText('resource', '') };
+    return { ok: true, total: res.total };
+  }
+  const v = validate(r.picks, init, gap);
+  if (v.ok) return { ok: true, total: v.total };
+  return { ok: false, kind: v.reason, text: v.reason === 'starter' ? failText('starter') : (v.reason === 'resource' ? failText('resource', v.detail || '') : failText(v.reason)) };
+}
+
+function rollQuestion(q) {
+  for (let attempt = 0; attempt < 300; attempt++) {
+    const resources = { drive: randInt(q.drive[0], q.drive[1]), sa: randInt(q.sa[0], q.sa[1]), stock: randInt(q.stock[0], q.stock[1]) };
+    const init = { ...resources, counter: 'pc', pp: false, wall: false, modern: false };
+    const evals = q.routes.map(r => evaluateRoute(r, init, q.gap));
+    const oks = evals.filter(e => e.ok);
+    if (!oks.length) continue;
+    const maxTotal = Math.max(...oks.map(e => e.total));
+    if (oks.filter(e => e.total === maxTotal).length !== 1) continue;
+    return { q, resources, evals, maxTotal };
+  }
+  const resources = { drive: q.drive[1], sa: q.sa[1], stock: q.stock[1] };
+  const init = { ...resources, counter: 'pc', pp: false, wall: false, modern: false };
+  const evals = q.routes.map(r => evaluateRoute(r, init, q.gap));
+  const oks = evals.filter(e => e.ok);
+  return { q, resources, evals, maxTotal: oks.length ? Math.max(...oks.map(e => e.total)) : 0 };
+}
+
+function segsHTML(n, total, cls) {
+  let s = '<span class="segs">';
+  for (let i = 0; i < total; i++) s += `<span class="seg ${cls}${i < n ? ' on' : ''}"></span>`;
+  return s + '</span>';
+}
+function dotsHTML(n, total) {
+  let s = '<span class="dots">';
+  for (let i = 0; i < total; i++) s += i < n ? '●' : '<span class="off">●</span>';
+  return s + '</span>';
+}
+
+function showQuestion() {
+  const { q, resources } = qzCurrent;
+  document.getElementById('q-progress').textContent = `第${qzIdx + 1}問 / ${qzOrder.length}問`;
+  document.getElementById('q-score').textContent = `○ ${qzScore.maru}　△ ${qzScore.sankaku}　✗ ${qzScore.batsu}`;
+  document.getElementById('q-char').textContent = '相手：' + q.char;
+  document.getElementById('q-gif').src = q.gif;
+  document.getElementById('q-move').textContent = q.move;
+  document.getElementById('q-res').innerHTML =
+    `<div class="res-row"><span class="lbl">ドライブ</span>${segsHTML(resources.drive, 6, '')}<b>${resources.drive}本</b></div>` +
+    `<div class="res-row"><span class="lbl">SA</span>${segsHTML(resources.sa, 3, ' sa')}<b>${resources.sa}本</b></div>` +
+    `<div class="res-row"><span class="lbl">ストック</span>${dotsHTML(resources.stock, 4)}<b>${resources.stock}個</b></div>` +
+    `<div class="res-row"><span class="lbl">位置</span><b>${q.position}</b></div>`;
+  const box = document.getElementById('q-choices');
+  box.innerHTML = '';
+  qzCurrent.shuffled = shuffle(q.routes.map((r, i) => i));
+  for (const ri of qzCurrent.shuffled) {
+    const b = document.createElement('button');
+    b.className = 'choice';
+    b.textContent = q.routes[ri].display;
+    b.addEventListener('click', () => answer(ri, b));
+    box.appendChild(b);
+  }
+  document.getElementById('feedback').classList.add('hidden');
+}
+
+function answer(ri, btn) {
+  const { q, evals, maxTotal } = qzCurrent;
+  const ev = evals[ri];
+  let verdict, cls, symbol;
+  if (ev.ok && ev.total === maxTotal) { verdict = '○ 正解！'; cls = 'maru'; symbol = '○'; qzScore.maru++; }
+  else if (ev.ok) { verdict = '△ 完走するけど、最大じゃない'; cls = 'sankaku'; symbol = '△'; qzScore.sankaku++; }
+  else { verdict = '✗ 繋がらない'; cls = 'batsu'; symbol = '✗'; qzScore.batsu++; }
+  qzReview.push({ q, symbol, maxRoute: q.routes[evals.findIndex(e => e.ok && e.total === maxTotal)], maxTotal, picked: q.routes[ri], pickedEv: ev });
+
+  const buttons = document.querySelectorAll('#q-choices .choice');
+  buttons.forEach(b => { b.disabled = true; });
+  btn.classList.add('picked');
+  qzCurrent.shuffled.forEach((routeIdx, pos) => {
+    if (evals[routeIdx].ok && evals[routeIdx].total === maxTotal) buttons[pos].classList.add('is-max');
+    if (!evals[routeIdx].ok) buttons[pos].classList.add('is-bad');
+  });
+
+  const fb = document.getElementById('feedback');
+  document.getElementById('fb-verdict').textContent = verdict;
+  document.getElementById('fb-verdict').className = 'verdict ' + cls;
+  let meta = `ガード時 ${q.onblock}`;
+  if (ev.ok) meta += ` ／ あなたのコンボ：${ev.total}ダメージ`;
+  document.getElementById('fb-meta').textContent = meta;
+  const ul = document.getElementById('fb-routes');
+  ul.innerHTML = '';
+  q.routes.forEach((r, i) => {
+    const e = evals[i];
+    const li = document.createElement('li');
+    let rt;
+    if (e.ok) rt = `<span class="ok">${e.total}</span>` + (e.total === maxTotal ? ' <span class="best">（最大）</span>' : '');
+    else rt = `<span class="ng">✗ ${e.text}</span>`;
+    li.innerHTML = `<span class="rt">${rt}</span><br>${r.display}${i === ri ? ' ← あなたの回答' : ''}`;
+    ul.appendChild(li);
+  });
+  document.getElementById('next-btn').textContent = qzIdx + 1 >= qzOrder.length ? '結果を見る' : '次の問題へ';
+  fb.classList.remove('hidden');
+  document.getElementById('q-score').textContent = `○ ${qzScore.maru}　△ ${qzScore.sankaku}　✗ ${qzScore.batsu}`;
+}
+
+function showResult() {
+  document.getElementById('quiz-card').classList.add('hidden');
+  document.getElementById('result-score').textContent = `結果：○ ${qzScore.maru}　△ ${qzScore.sankaku}　✗ ${qzScore.batsu}（${qzOrder.length}問）`;
+  const box = document.getElementById('result-review');
+  box.innerHTML = '';
+  for (const r of qzReview) {
+    const div = document.createElement('div');
+    div.className = 'review-item';
+    div.innerHTML = `<b>${r.symbol}</b> ${r.q.char}：${r.q.move}<br>最大：${r.maxRoute.display}（${r.maxTotal}）`;
+    box.appendChild(div);
+  }
+  document.getElementById('result-card').classList.remove('hidden');
+}
+
+function startQuiz() {
+  qzOrder = shuffle(QUESTIONS.map((_, i) => i));
+  qzIdx = 0; qzScore = { maru: 0, sankaku: 0, batsu: 0 }; qzReview = [];
+  document.getElementById('start-card').classList.add('hidden');
+  document.getElementById('result-card').classList.add('hidden');
+  document.getElementById('quiz-card').classList.remove('hidden');
+  qzCurrent = rollQuestion(QUESTIONS[qzOrder[0]]);
+  showQuestion();
+}
+
+document.getElementById('start-btn').addEventListener('click', startQuiz);
+document.getElementById('retry-btn').addEventListener('click', startQuiz);
+document.getElementById('next-btn').addEventListener('click', () => {
+  qzIdx++;
+  if (qzIdx >= qzOrder.length) { showResult(); return; }
+  qzCurrent = rollQuestion(QUESTIONS[qzOrder[qzIdx]]);
+  showQuestion();
+});
+</script>
+</body>
+</html>
