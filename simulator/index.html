@@ -67,7 +67,7 @@
 <body>
 <main>
   <h1>コンボダメージシミュレーター（イングリッド）</h1>
-  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。コンボカウントも判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補に表示されなくなる。地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補に表示されなくなる。キャンセルの可否も判定し、地上でキャンセルできない必殺技やSAも候補に表示されなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。エアリートスは立ち中Pの次の行でのみ候補に表示される（立ち中Pからのタゲコン派生として扱う）。弱サンフレア・弱ソーラーフレア（溜め）は候補に表示されない（攻撃判定がなく、SA2の光弾が飛んでいる間など長い猶予がある場面でしか溜められないため）。中サンライズの後に続く技はなく、ODサンライズの後はSA2・SA3へのキャンセルのみ候補に残る。1段目の行では始動条件として、スタンやドライブインパクト（クリーンヒット／壁ドン）後の追撃も選べる（その場合、補正は80%から始まる）。</p>
+  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。コンボカウントも判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補に表示されなくなる。地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補に表示されなくなる。キャンセルの可否も判定し、地上でキャンセルできない必殺技やSAも候補に表示されなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。エアリートスは立ち中Pの次の行でのみ候補に表示される（立ち中Pからのタゲコン派生として扱う）。弱サンフレア・弱ソーラーフレア（溜め）は候補に表示されない（攻撃判定がなく、SA2の光弾が飛んでいる間など長い猶予がある場面でしか溜められないため）。中サンライズの後に続く技はなく、ODサンライズの後はSA2・SA3へのキャンセルのみ候補に残る。ジャンプ攻撃は、始動として選ぶ場合と強サンライズ・ODサンフレアの直後でのみ候補に表示される。1段目の行では始動条件として、スタンやドライブインパクト（クリーンヒット／壁ドン）後の追撃も選べる（その場合、補正は80%から始まる）。</p>
 
   <h2>初期条件</h2>
   <div class="panel">
@@ -251,11 +251,23 @@ function jugFirstHitJl(move, stock, rush) {
   const rushedNormal = (rush === "raw" || rush === "cdr") && (move.cat === "normal" || move.cat === "command" || move.cat === "target");
   return rushedNormal ? jl + 3 : jl;
 }
+// ジャンプ攻撃かどうか（LINK の jump フラグ、または空中TCのリープ）。
+// ジャンプ攻撃の空中ヒットは当てる高さとタイミングで決まり、フレーム表の JL（地上への跳び込み用）では
+// 判定できない。実演ルート（ODフレア＞ジャンプ強K #13/#113、強ライズ＞ジャンプ中P #51ほか）でも
+// JL を超えた接続が確認できるため、ジャグル判定（候補フィルタ・行の警告とも）の対象外にする。
+// リンク判定でジャンプ攻撃を対象外にしているのと同じ扱い。
+function isJumpAttack(move) {
+  if (!move) return false;
+  if (move.id === "tc_leap") return true;
+  const L = LINK[move.id];
+  return !!(L && L.jump);
+}
 // その行の開始時点のジャグル状態（jcBefore）で、その技を選べなくすべきかを返す。
 // 除外するのは「相手が空中（JC が数値）で、第1段の JL < JC」の場合だけ。
 // 地上（jcBefore === null）、JC 不明（"unknown"）、判定材料の無い技は除外しない。
 // 第1段は当たるが後段が当たらない技（部分ヒット）は除外せず、行の警告（jwarn）で扱う。
 function jugCandidateBlocked(move, jcBefore, stock, rush) {
+  if (isJumpAttack(move)) return false; // ジャンプ攻撃はジャグル判定の対象外（当てる高さ・タイミングで決まる）
   if (jcBefore === null || jcBefore === "unknown") return false;
   const jl = jugFirstHitJl(move, stock, rush);
   if (jl === null) return false;
@@ -453,6 +465,7 @@ function computeCombo(db, init, picks) {
               if (h[2] == null || h[2] >= jc) { connected++; lastConnJs = h[0]; }
               else whiffs.push(hi);
             });
+            if (isJumpAttack(move)) { connected = hits.length; whiffs.length = 0; lastConnJs = hits.length ? hits[hits.length - 1][0] : null; } // ジャンプ攻撃は対象外: 全段当たるものとして JC だけ進める
             if (connected === 0) {
               row.jwarn.push("コンボカウント: " + atk.label + " が当たらない（全段のJLが JC " + jc + " 未満）— 実機ではこのルートは成立しない");
               row.juggleInvalid = true; juggleInvalid = true;
@@ -519,6 +532,8 @@ const CAT_ORDER = ["normal","command","target","throw","special","sa","system"];
 // ピッカーに表示しない技: 投げとサンヴェール（当て身）はコンボの継ぎとして成立しないため候補に出さない。
 // エンジンの技データ・計算からは外さない。選択中の行では従来の保護どおり残す。
 const PICKER_EXCLUDED = { throw_f: true, throw_b: true, veil: true, veil_od: true, flare_l: true, sflare_l: true };
+// ジャンプ攻撃: 候補に出すのは始動として選ぶ場合と、強サンライズ・ODサンフレアの直後だけ
+const JUMP_ATTACKS = { jlp: true, jlk: true, jmp: true, jmk: true, jhp: true, jhk: true, tc_leap: true };
 let picks = []; // {id, rush, sp}
 let counterMode = "none"; // 始動条件: 'none'|'ch'|'pc'|'stun'|'di'|'splat'|'wall'（コンボの1段目の行で選ぶ。ここが単一の情報源。当たり方と追撃始動は排他）
 
@@ -564,6 +579,8 @@ function moveOptions(select, avail, jug, lnk) {
       if (PICKER_EXCLUDED[m.id] && m.id !== (jug && jug.currentId) && m.id !== (lnk && lnk.currentId)) continue;
       // エアリートスは立ち中Pからのタゲコン派生（2段目）としてのみ候補に出す（選択中の技は外さない）
       if (m.id === "tc_airy" && m.id !== (jug && jug.currentId) && m.id !== (lnk && lnk.currentId) && (!lnk || lnk.prevId !== "5mp")) continue;
+      // ジャンプ攻撃: 繋がるのは始動として選ぶ場合と、強サンライズ・ODサンフレアの直後だけ（選択中の技は外さない）
+      if (JUMP_ATTACKS[m.id] && lnk && lnk.prevId && lnk.prevId !== "rise_h" && lnk.prevId !== "flare_od" && m.id !== (jug && jug.currentId) && m.id !== lnk.currentId) continue;
       const o = document.createElement("option");
       o.value = m.id;
       o.textContent = m.name + "（" + m.cmd + "）";
