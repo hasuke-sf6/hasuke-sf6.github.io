@@ -132,6 +132,7 @@
     <li>弱サンフレア・弱ソーラーフレア（溜め）は候補に表示されない（攻撃判定がなく、SA2の光弾が飛んでいる間など長い猶予がある場面でしか溜められないため）。</li>
     <li>中サンライズの後に続く技はなく、ODサンライズの後はSA2・SA3へのキャンセルのみ候補に残る。</li>
     <li>ジャンプ攻撃は、始動として選ぶ場合と強サンライズ・ODサンフレアの直後でのみ候補に表示される。</li>
+    <li>前バニッシュ（前方）の後に続く技はない（攻撃が当たった場合、その後の追撃はできない）。</li>
   </ul>
 
   <p><a href="../index.html">← トップへ戻る</a></p>
@@ -362,6 +363,7 @@ function cancelCandidateBlocked(move, ctx) {
 function enderCandidateBlocked(move, ctx) {
   if (!move || !ctx || !ctx.prevId) return false;
   if (ctx.prevId === "rise_m") return true;
+  if (ctx.prevId === "vanish_f") return true;
   if (ctx.prevId === "rise_od") {
     const lv = saLevelOf(move.id);
     return !(move.cat === "sa" && (lv === 2 || lv === 3));
