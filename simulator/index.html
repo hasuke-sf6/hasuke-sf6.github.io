@@ -458,6 +458,9 @@ function computeCombo(db, init, picks) {
 const $ = id => document.getElementById(id);
 const CAT_LABEL = { normal:"通常技", command:"特殊技", target:"ターゲットコンボ", throw:"投げ", special:"必殺技", sa:"スーパーアーツ", system:"システム" };
 const CAT_ORDER = ["normal","command","target","throw","special","sa","system"];
+// ピッカーに表示しない技: 投げとサンヴェール（当て身）はコンボの継ぎとして成立しないため候補に出さない。
+// エンジンの技データ・計算からは外さない。選択中の行では従来の保護どおり残す。
+const PICKER_EXCLUDED = { throw_f: true, throw_b: true, veil: true, veil_od: true };
 let picks = []; // {id, rush, sp}
 let counterMode = "none"; // 始動条件: 'none'|'ch'|'pc'|'stun'|'di'|'splat'（コンボの1段目の行で選ぶ。ここが単一の情報源。当たり方と追撃始動は排他）
 
@@ -499,6 +502,8 @@ function moveOptions(select, avail, jug, lnk) {
     const g = document.createElement("optgroup"); g.label = CAT_LABEL[cat];
     for (const m of MOVES) {
       if (m.cat !== cat) continue;
+      // 投げ・サンヴェールは候補に出さない（選択中の技は外さない）
+      if (PICKER_EXCLUDED[m.id] && m.id !== (jug && jug.currentId) && m.id !== (lnk && lnk.currentId)) continue;
       const o = document.createElement("option");
       o.value = m.id;
       o.textContent = m.name + "（" + m.cmd + "）";
