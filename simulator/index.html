@@ -84,14 +84,6 @@
         <select id="init-stock"></select>
       </div>
       <div>
-        <label for="init-counter">始動の当たり方</label>
-        <select id="init-counter">
-          <option value="none">通常ヒット</option>
-          <option value="ch">カウンターヒット（初段×1.2）</option>
-          <option value="pc">パニッシュカウンター（初段×1.2／投げ×1.7）</option>
-        </select>
-      </div>
-      <div>
         <label for="init-control">操作タイプ</label>
         <select id="init-control">
           <option value="classic">クラシック</option>
@@ -439,6 +431,7 @@ const $ = id => document.getElementById(id);
 const CAT_LABEL = { normal:"通常技", command:"特殊技", target:"ターゲットコンボ", throw:"投げ", special:"必殺技", sa:"スーパーアーツ", system:"システム" };
 const CAT_ORDER = ["normal","command","target","throw","special","sa","system"];
 let picks = []; // {id, rush, sp}
+let counterMode = "none"; // 始動の当たり方: 'none'|'ch'|'pc'（コンボの1段目の行で選ぶ。ここが単一の情報源）
 
 const PRESETS = {
   weak:  [ {id:"2lk"}, {id:"5lp"}, {id:"5lk"}, {id:"rise_m"} ],
@@ -466,7 +459,7 @@ function getInit() {
     drive: parseFloat($("init-drive").value),
     sa: parseInt($("init-sa").value, 10),
     stock: parseInt($("init-stock").value, 10),
-    counter: $("init-counter").value,
+    counter: counterMode,
     pp: $("init-pp").checked,
     wall: $("init-wall").checked,
     modern: $("init-control").value === "modern",
@@ -542,6 +535,16 @@ function render() {
       render();
     });
     div.appendChild(sel);
+    if (i === 0) {
+      // 始動の当たり方（1段目の行で選ぶ。値は counterMode が保持するので、行の追加・削除では消えない）
+      const cl = document.createElement("span"); cl.className = "res"; cl.textContent = "始動の当たり方："; div.appendChild(cl);
+      const cs = document.createElement("select"); cs.className = "counter";
+      const co = [["none","通常ヒット"],["ch","カウンターヒット（初段×1.2）"],["pc","パニッシュカウンター（初段×1.2／投げ×1.7）"]];
+      for (const [v, t] of co) { const o = document.createElement("option"); o.value = v; o.textContent = t; cs.appendChild(o); }
+      cs.value = counterMode;
+      cs.addEventListener("change", () => { counterMode = cs.value; render(); });
+      div.appendChild(cs);
+    }
     if (pick) {
       const move = MOVE_BY_ID[pick.id];
       // ラッシュ選択
@@ -602,7 +605,7 @@ document.querySelectorAll(".preset-btn[data-preset]").forEach(b => {
     $("init-drive").value = "6";
     $("init-sa").value = "3";
     $("init-stock").value = "1";
-    $("init-counter").value = "none";
+    counterMode = "none";
     $("init-control").value = "classic";
     $("init-pp").checked = false;
     $("init-wall").checked = false;
@@ -611,7 +614,7 @@ document.querySelectorAll(".preset-btn[data-preset]").forEach(b => {
   });
 });
 $("btn-reset").addEventListener("click", () => { picks = []; render(); });
-for (const id of ["init-drive","init-sa","init-stock","init-counter","init-control","init-pp","init-wall"]) {
+for (const id of ["init-drive","init-sa","init-stock","init-control","init-pp","init-wall"]) {
   $(id).addEventListener("change", render);
 }
 initOptions();
