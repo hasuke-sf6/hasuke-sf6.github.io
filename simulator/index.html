@@ -66,7 +66,7 @@
 <body>
 <main>
   <h1>コンボダメージシミュレーター（イングリッド）</h1>
-  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。ジャグル（コンボカウント）も判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補から選べなくなる。地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補から選べなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。</p>
+  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。コンボカウントも判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補から選べなくなる。地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補から選べなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。1段目の行では始動条件として、スタンやドライブインパクト（クランプル／壁ドン）後の追撃も選べる（その場合、補正は80%から始まる）。</p>
 
   <h2>初期条件</h2>
   <div class="panel">
@@ -216,7 +216,7 @@ function resolveLv(move, stock) {
   };
 }
 
-// init: {drive, sa, stock, counter:'none'|'ch'|'pc', pp:bool, wall:bool, modern:bool}
+// init: {drive, sa, stock, counter:'none'|'ch'|'pc', start:'none'|'stun'|'di'|'splat', pp:bool, wall:bool, modern:bool}
 // picks: [{id, rush:'none'|'raw'|'cdr', sp:bool}]
 
 // === ジャグル判定用データ（SuperCombo Cargo API: SF6_FrameData の jugStart/jugIncrease/jugLimit） ===
@@ -299,6 +299,13 @@ function computeCombo(db, init, picks) {
   let prevHitCat = null;     // 直前に当たった技のカテゴリ（SA3キャンセル判定用）
   let jc = null; // ジャグルカウント: null=地上 / 数値=空中 / "unknown"=空中だがカウント不明
   let juggleInvalid = false;
+  // 始動条件（スタン／DIクランプル／DI壁ドン）: そのイベントが始動補正20%を負い、追撃は 80% -> 70% -> 60% と進行する
+  // （SuperCombo「Game Data」Damage Scaling の Drive Impact 項。スタンも同項のバーンアウトスタンが該当）。
+  // 壁ドン後は相手がフリージャグル状態（コンボカウント0）になる（DI の jugStart=0、Cargo 由来）。
+  const startMode = init.start || "none";
+  if (startMode === "stun" || startMode === "di" || startMode === "splat") { P = 20; atkIndex = 1; firstStarter = 20; }
+  if (startMode === "splat") jc = 0;
+  const counter0 = startMode !== "none" ? "none" : (init.counter || "none"); // 始動条件がある場合、当たり方はそのイベント側で消費済みとして扱う
   let total = 0;
   const rows = [];
   const flow = [];
@@ -360,8 +367,8 @@ function computeCombo(db, init, picks) {
       let rate = Math.floor((100 - Pi) * mult + 1e-9);
       if (move.saLv) rate = Math.max(rate, SA_MIN[move.saLv]);
       let dmg = Math.floor(atk.dmg * rate / 100 + 1e-9);
-      if (atkIndex === 1 && init.counter !== "none") {
-        if (move.isThrow) { if (init.counter === "pc") dmg = Math.floor(dmg * 1.7 + 1e-9); }
+      if (atkIndex === 1 && counter0 !== "none") {
+        if (move.isThrow) { if (counter0 === "pc") dmg = Math.floor(dmg * 1.7 + 1e-9); }
         else if (!move.saLv) { dmg = Math.floor(dmg * 1.2 + 1e-9); }
       }
       row.attacks.push({ label: atk.label, rate, dmg });
@@ -389,15 +396,15 @@ function computeCombo(db, init, picks) {
               else whiffs.push(hi);
             });
             if (connected === 0) {
-              row.jwarn.push("ジャグル: " + atk.label + " が当たらない（全段のJLが JC " + jc + " 未満）— 実機ではこのルートは成立しない");
+              row.jwarn.push("コンボカウント: " + atk.label + " が当たらない（全段のJLが JC " + jc + " 未満）— 実機ではこのルートは成立しない");
               row.juggleInvalid = true; juggleInvalid = true;
             } else {
               if (whiffs.length) {
                 if (whiffs.indexOf(hits.length - 1) >= 0 && prof.launch) {
-                  row.jwarn.push("ジャグル: " + atk.label + " の最終段が当たらない（JL < JC " + jc + "）— 浮かせが成立せず、実機ではこのルートは成立しない");
+                  row.jwarn.push("コンボカウント: " + atk.label + " の最終段が当たらない（JL < JC " + jc + "）— 浮かせが成立せず、実機ではこのルートは成立しない");
                   row.juggleInvalid = true; juggleInvalid = true;
                 } else {
-                  row.jwarn.push("ジャグル: " + atk.label + " の " + whiffs.map(i => (i + 1) + "段目").join("・") + " が当たらない（JL < JC " + jc + "）— 部分ヒットになり、実ダメージは表示より下がる");
+                  row.jwarn.push("コンボカウント: " + atk.label + " の " + whiffs.map(i => (i + 1) + "段目").join("・") + " が当たらない（JL < JC " + jc + "）— 部分ヒットになり、実ダメージは表示より下がる");
                 }
               }
               if (prof.vanish || prof.sa2) jc = 0;
@@ -430,9 +437,9 @@ function computeCombo(db, init, picks) {
     // ジャンプ攻撃始動の行は有利が当てるタイミングで変動するため判定しない。パニカンでクランプルになる技も対象外（PC_CRUMPLE 参照）。
     if (jc === null && !move.noHit && move.cat !== "throw") {
       const L = LINK[move.id];
-      if (L && L.onHit != null && !L.jump && !(pi === 0 && init.counter === "pc" && PC_CRUMPLE[move.id])) {
+      if (L && L.onHit != null && !L.jump && !(pi === 0 && counter0 === "pc" && PC_CRUMPLE[move.id])) {
         let adv = L.onHit;
-        if (pi === 0 && init.counter !== "none" && !move.saLv) adv += init.counter === "pc" ? 4 : 2; // カウンター+2F／パニッシュカウンター+4F（打撃のみ）
+        if (pi === 0 && counter0 !== "none" && !move.saLv) adv += counter0 === "pc" ? 4 : 2; // カウンター+2F／パニッシュカウンター+4F（打撃のみ）
         if ((pick.rush === "raw" || pick.rush === "cdr") && (move.cat === "normal" || move.cat === "command" || move.cat === "target")) adv += 4; // ドライブラッシュ中の通常技・特殊技・TCはヒット時有利+4F（SuperCombo「Gauges」）
         row.linkAdv = adv;
       }
@@ -452,7 +459,7 @@ const $ = id => document.getElementById(id);
 const CAT_LABEL = { normal:"通常技", command:"特殊技", target:"ターゲットコンボ", throw:"投げ", special:"必殺技", sa:"スーパーアーツ", system:"システム" };
 const CAT_ORDER = ["normal","command","target","throw","special","sa","system"];
 let picks = []; // {id, rush, sp}
-let counterMode = "none"; // 始動の当たり方: 'none'|'ch'|'pc'（コンボの1段目の行で選ぶ。ここが単一の情報源）
+let counterMode = "none"; // 始動条件: 'none'|'ch'|'pc'|'stun'|'di'|'splat'（コンボの1段目の行で選ぶ。ここが単一の情報源。当たり方と追撃始動は排他）
 
 const PRESETS = {
   weak:  [ {id:"2lk"}, {id:"5lp"}, {id:"5lk"}, {id:"rise_m"} ],
@@ -480,7 +487,8 @@ function getInit() {
     drive: parseFloat($("init-drive").value),
     sa: parseInt($("init-sa").value, 10),
     stock: parseInt($("init-stock").value, 10),
-    counter: counterMode,
+    counter: (counterMode === "ch" || counterMode === "pc") ? counterMode : "none",
+    start: (counterMode === "stun" || counterMode === "di" || counterMode === "splat") ? counterMode : "none",
     pp: $("init-pp").checked,
     wall: $("init-wall").checked,
     modern: $("init-control").value === "modern",
@@ -562,10 +570,10 @@ function render() {
     });
     div.appendChild(sel);
     if (i === 0) {
-      // 始動の当たり方（1段目の行で選ぶ。値は counterMode が保持するので、行の追加・削除では消えない）
-      const cl = document.createElement("span"); cl.className = "res"; cl.textContent = "始動の当たり方："; div.appendChild(cl);
+      // 始動条件（1段目の行で選ぶ。値は counterMode が保持するので、行の追加・削除では消えない。当たり方と追撃始動は排他）
+      const cl = document.createElement("span"); cl.className = "res"; cl.textContent = "始動条件："; div.appendChild(cl);
       const cs = document.createElement("select"); cs.className = "counter";
-      const co = [["none","通常ヒット"],["ch","カウンターヒット（初段×1.2）"],["pc","パニッシュカウンター（初段×1.2／投げ×1.7）"]];
+      const co = [["none","通常ヒット"],["ch","カウンターヒット（初段×1.2）"],["pc","パニッシュカウンター（初段×1.2／投げ×1.7）"],["stun","スタン（気絶）後の追撃（補正80%から）"],["di","DIクランプル後の追撃（補正80%から）"],["splat","DI壁ドン後の追撃（補正80%から・コンボカウント0）"]];
       for (const [v, t] of co) { const o = document.createElement("option"); o.value = v; o.textContent = t; cs.appendChild(o); }
       cs.value = counterMode;
       cs.addEventListener("change", () => { counterMode = cs.value; render(); });
