@@ -66,7 +66,7 @@
 <body>
 <main>
   <h1>コンボダメージシミュレーター（イングリッド）</h1>
-  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。コンボカウントも判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補から選べなくなる。地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補から選べなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。1段目の行では始動条件として、スタンやドライブインパクト（クリーンヒット／壁ドン）後の追撃も選べる（その場合、補正は80%から始まる）。</p>
+  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。コンボカウントも判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補に表示されなくなる。地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補に表示されなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。1段目の行では始動条件として、スタンやドライブインパクト（クリーンヒット／壁ドン）後の追撃も選べる（その場合、補正は80%から始まる）。</p>
 
   <h2>初期条件</h2>
   <div class="panel">
@@ -508,13 +508,13 @@ function moveOptions(select, avail, jug, lnk) {
         if (m.sa && m.sa > avail.sa) o.disabled = true;
         if (m.stock && m.stock > avail.stock) o.disabled = true;
       }
-      // ジャグル: 空中で最初のヒットが当たらない技は選べなくする（選択中の技は外さない。不成立になった場合は行の警告で示す）
-      if (jug && m.id !== jug.currentId && jugCandidateBlocked(m, jug.jc, jug.stock, jug.rush)) o.disabled = true;
-      // リンク: 前の技のヒット時有利で繋がらない通常技は選べなくする（選択中の技は外さない）
-      if (lnk && m.id !== lnk.currentId && linkCandidateBlocked(m, lnk)) o.disabled = true;
+      // ジャグル: 空中で最初のヒットが当たらない技は候補に表示しない（選択中の技は外さない。不成立になった場合は行の警告で示す）
+      if (jug && m.id !== jug.currentId && jugCandidateBlocked(m, jug.jc, jug.stock, jug.rush)) continue;
+      // リンク: 前の技のヒット時有利で繋がらない通常技は候補に表示しない（選択中の技は外さない）
+      if (lnk && m.id !== lnk.currentId && linkCandidateBlocked(m, lnk)) continue;
       g.appendChild(o);
     }
-    select.appendChild(g);
+    if (g.children.length) select.appendChild(g);
   }
 }
 function renderGauges(end) {
