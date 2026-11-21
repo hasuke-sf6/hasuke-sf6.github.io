@@ -66,7 +66,7 @@
 <body>
 <main>
   <h1>コンボダメージシミュレーター（イングリッド）</h1>
-  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。コンボが実際に繋がるかの判定はしない（リソース不足の技だけ選べなくなる）。</p>
+  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。ジャグル（コンボカウント）も判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補から選べなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。</p>
 
   <h2>初期条件</h2>
   <div class="panel">
@@ -142,6 +142,7 @@
     <li>SA3/CAをキャンセル以外で組み込んだ場合の追加補正は出典が割れている（追加なし説／1段階進む説／即時20%説）。ここでは実例のある「追加なし」を採用し、キャンセルかどうかを行ごとのチェックで切り替えられるようにした（初期状態はオン）。</li>
     <li>検証状況: 練習カード5本と公開コンボリスト（dood.gg）の33本で照合し、29本が完全一致。不一致の内訳は、出典値がどの補正配分でも再現できない2本（2強K絡み、出典側の誤記の疑い）と、長いコンボ1本（−39）。また「ラッシュ立ち強K＞立ち中P＞ODサンフレアLv3＞サンバニッシュ（上方）＞ラッシュ立ち中P＞エアリートス＞SA1」は実測報告4,609に対し本モデルでは4,543となり、差+66はラッシュ立ち中P〜エアリートスの区間に絞られたが原因は未特定（他のコンボを壊さずに再現する補正値の組み合わせは存在しなかった）。</li>
     <li>ゲージの増加（技を当てた時のドライブ/SA回復）は計算していない。消費とストック生成のみ。</li>
+    <li>ジャグル判定: SuperCombo の技データ（Juggle Start/Increase/Limit）でジャグルカウントを追跡し、相手が空中にある間は、最初のヒットが当たらない技（第1段の Juggle Limit が現在のカウント未満）を次の一手の候補から選べなくしている。第1段は当たるが後段が当たらなくなる技は選べるままで、行に警告を出す（部分ヒット。ダメージは全段当たったものとして計算するので、実ダメージは表示より下がる）。追跡の仮定: 浮かせた直後のカウントはその技の最終段の Juggle Start／浮かせ技が空中で当たった後のカウントは最後に当たった段の Juggle Start（浮かせない技の空中ヒットでは増えない）／バニッシュ系が当たると 0 に戻る／ラッシュ通常技は Juggle Limit +3。ジャグル値が未公開の技（強サンフレア Lv1、サンヴェールなど）が絡む区間はカウント不明として、候補の制限も警告もしない。クランプル、着地でのリセット、タイミング・間合いは判定していない。</li>
     <li>サンバニッシュ（前方）の固有補正値は未確認のため補正なしとして扱っている。サンヴェールは当身成功時の反撃ダメージで計算する。</li>
     <li>スタン（気絶）中の相手へのコンボ開始補正（80%開始説）は進行方法が未検証のため未実装。</li>
   </ul>
@@ -242,6 +243,50 @@ function resolveLv(move, stock) {
 
 // init: {drive, sa, stock, counter:'none'|'ch'|'pc', pp:bool, wall:bool, modern:bool}
 // picks: [{id, rush:'none'|'raw'|'cdr', sp:bool}]
+
+// === ジャグル判定用データ（SuperCombo Cargo API: SF6_FrameData の jugStart/jugIncrease/jugLimit） ===
+// hits: [JS, JI, JL] の配列（段ごと）。null = 出典に値なし（その段は判定スキップ）。
+// launch: 地上の相手に当てると浮かせてジャグルが始まる技か（Cargo の hitAdv が KD/HKD 表記かどうかで判定）。
+// jsGround: 地上ヒット時の JS が別表記の場合の地上値。seg: TCの段ごと。lv: ストック自動LvのLvごと。
+// vanish: バニッシュ系。相手を叩き落としてバウンドさせる性質上、当たった後は JC=0 に戻るものとして扱う（仮定A4）。
+// sa2: SA2。当たった後は JC=0 とする（仮定A2）。missing: 出典に行が無いLv（判定せず、浮いた後は JC 不明として扱う）。
+const JUGGLE = {"5lp": {"launch": false, "hits": [[1, 1, 0]]}, "5lk": {"launch": false, "hits": [[1, 1, 0]]}, "5mp": {"launch": false, "hits": [[1, 1, 0]]}, "5mk": {"launch": false, "hits": [[1, 1, 0]]}, "5hp": {"launch": false, "hits": [[1, 1, 0]]}, "5hk": {"launch": false, "hits": [[1, 1, 0], [1, 1, 1]]}, "2lp": {"launch": false, "hits": [[1, 1, 0]]}, "2lk": {"launch": false, "hits": [[1, 1, 0]]}, "2mp": {"launch": false, "hits": [[1, 1, 0]]}, "2mk": {"launch": false, "hits": [[1, 1, 0]]}, "2hp": {"launch": false, "hits": [[1, 1, 0]]}, "2hk": {"launch": true, "hits": [[1, 1, 2]]}, "jlp": {"launch": false, "hits": [[1, 1, 0]]}, "jlk": {"launch": false, "hits": [[1, 1, 0]]}, "jmp": {"launch": false, "hits": [[1, 5, 1]]}, "jmk": {"launch": false, "hits": [[1, 1, 0]]}, "jhp": {"launch": false, "hits": [[1, 0, 1]]}, "jhk": {"launch": false, "hits": [[1, 1, 0]]}, "6mp": {"launch": false, "hits": [[1, 1, 0]]}, "6hp": {"launch": true, "hits": [[0, 1, 0]]}, "shoot_l": {"launch": false, "hits": [[1, 1, 3]]}, "shoot_m": {"launch": false, "hits": [[1, 1, 3]]}, "shoot_h": {"launch": false, "hits": [[1, 1, 3]]}, "shoot_od": {"launch": true, "hits": [[0, 1, 3], [1, 1, 6]]}, "flare_m": {"launch": true, "hits": [[1, 1, 1]]}, "sflare_m": {"launch": true, "hits": [[1, 1, 5]]}, "rise_l": {"launch": true, "hits": [[1, 1, 10]]}, "rise_m": {"launch": true, "hits": [[1, 1, 5], [0, 1, 10]]}, "rise_h": {"launch": true, "hits": [[1, 0, 0], [1, 0, 0], [0, 1, 1], [0, 1, 7]]}, "rise_od": {"launch": true, "hits": [[1, 1, 5], [1, 1, 5], [1, 0, 7], [0, 1, 10]]}, "sa1_1": {"launch": true, "hits": [[1, 1, 99]]}, "sa1_2": {"launch": true, "hits": [[1, 1, 99]]}, "sa1_3": {"launch": true, "hits": [[1, 1, 99]]}, "sa3": {"launch": true, "hits": [[null, null, 99]]}, "ca": {"launch": true, "hits": [[null, null, 99]]}, "di": {"launch": true, "hits": [[0, 1, 0]]}, "tc_airy": {"seg": [{"launch": false, "hits": [[1, 1, 0]]}, {"launch": false, "hits": [[1, 0, 1]]}]}, "tc_glow": {"seg": [{"launch": false, "hits": [[1, 1, 0]]}, {"launch": true, "hits": [[1, 0, 3]]}]}, "tc_lumi": {"seg": [{"launch": true, "hits": [[0, 0, 0]]}, {"launch": true, "hits": [[1, 1, 0]]}]}, "flare_h": {"lv": [{"missing": true, "launch": true}, {"launch": true, "hits": [[0, 0, 1], [2, 2, 1]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [2, 1, 99]]}]}, "flare_od": {"lv": [{"launch": true, "hits": [[0, 0, 1], [2, 2, 1]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [2, 1, 99]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [1, 0, 99], [0, 1, 99]], "jsGround": 0}]}, "sflare_h": {"lv": [{"missing": true, "launch": true}, {"launch": true, "hits": [[1, 0, 99], [2, 1, 99]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [2, 1, 99]]}]}, "sflare_od": {"lv": [{"launch": true, "hits": [[1, 0, 99], [2, 1, 99]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [2, 1, 99]]}, {"launch": true, "hits": [[1, 0, 99], [1, 0, 99], [1, 0, 99], [0, 0, 99]]}]}, "vanish_u": {"launch": true, "hits": [[1, 1, 10]], "vanish": true}, "vanish_f": {"launch": true, "hits": [[1, 1, 10]], "vanish": true}, "tc_leap": {"launch": true, "hits": [[1, 0, 1]]}, "sa2_1": {"launch": true, "jsGround": 0, "sa2": true, "hits": [[0, 0, 100]]}, "sa2_2": {"launch": true, "jsGround": 0, "sa2": true, "hits": [[0, 0, 100]]}, "sa2_3": {"launch": true, "jsGround": 0, "sa2": true, "hits": [[0, 0, 100]]}};
+// ジャグル値が未公開だが地上ヒットで浮かせる技（当て身）。当たった後は JC「不明」として扱う。
+const JUG_UNKNOWN_LAUNCH = { veil: true, veil_od: true };
+function jugProfile(move, lvIdx, segIdx) {
+  const j = JUGGLE[move.id];
+  if (!j) return null;
+  if (j.lv) return j.lv[lvIdx] || null;
+  if (j.seg) return j.seg[segIdx] || null;
+  return j;
+}
+// === ジャグル候補フィルタ（UIの次の一手の候補を絞る判定。エンジン本体の警告判定と同じデータ・同じ決め方を使う） ===
+// 技の「最初の攻撃の第1段」の実効 JL を返す。判定材料が無い場合は null。
+// - ストック自動Lv技は、その行の開始時点のストックで決まる Lv のプロファイルを使う（resolveLv と同じ決め方）。
+// - ラッシュを付けた通常技・特殊技・TC は JL+3（エンジン本体の判定と同じ）。
+// - プロファイルが無い技（投げ・溜め技・当て身など）、出典に行が無い Lv、第1段の JL が未公開の場合は null。
+function jugFirstHitJl(move, stock, rush) {
+  if (!move) return null;
+  let lvIdx = 0;
+  if (move.stockAuto) lvIdx = Math.min(Math.max(stock, 0), 2);
+  const prof = jugProfile(move, lvIdx, 0);
+  if (!prof || prof.missing || !prof.hits || prof.hits.length === 0) return null;
+  const jl = prof.hits[0][2];
+  if (jl == null) return null;
+  const rushedNormal = (rush === "raw" || rush === "cdr") && (move.cat === "normal" || move.cat === "command" || move.cat === "target");
+  return rushedNormal ? jl + 3 : jl;
+}
+// その行の開始時点のジャグル状態（jcBefore）で、その技を選べなくすべきかを返す。
+// 除外するのは「相手が空中（JC が数値）で、第1段の JL < JC」の場合だけ。
+// 地上（jcBefore === null）、JC 不明（"unknown"）、判定材料の無い技は除外しない。
+// 第1段は当たるが後段が当たらない技（部分ヒット）は除外せず、行の警告（jwarn）で扱う。
+function jugCandidateBlocked(move, jcBefore, stock, rush) {
+  if (jcBefore === null || jcBefore === "unknown") return false;
+  const jl = jugFirstHitJl(move, stock, rush);
+  if (jl === null) return false;
+  return jl < jcBefore;
+}
+
 function computeCombo(db, init, picks) {
   const byId = {};
   for (const m of db) byId[m.id] = m;
@@ -251,6 +296,8 @@ function computeCombo(db, init, picks) {
   let atkIndex = 0;          // 当たった攻撃の通し番号（TCは各段カウント、溜め技は数えない）
   let firstStarter = 0;      // 初段の始動補正
   let prevHitCat = null;     // 直前に当たった技のカテゴリ（SA3キャンセル判定用）
+  let jc = null; // ジャグルカウント: null=地上 / 数値=空中 / "unknown"=空中だがカウント不明
+  let juggleInvalid = false;
   let total = 0;
   const rows = [];
   const flow = [];
@@ -259,7 +306,7 @@ function computeCombo(db, init, picks) {
     const pick = picks[pi];
     const move = byId[pick.id];
     const row = { pickIndex: pi, moveId: pick.id, name: move ? move.name : "(未選択)",
-                  attacks: [], dmg: 0, warn: [],
+                  attacks: [], dmg: 0, warn: [], jwarn: [], jcBefore: jc,
                   before: { drive, sa, stock }, after: null, lvLabel: "" };
     if (!move) { row.after = { drive, sa, stock }; rows.push(row); continue; }
 
@@ -298,7 +345,7 @@ function computeCombo(db, init, picks) {
                    starter: move.starter || 0, immediate: move.immediate || 0 }];
     }
 
-    for (const atk of attacks) {
+    for (let ai = 0; ai < attacks.length; ai++) { const atk = attacks[ai];
       atkIndex++;
       let Pi = P;
       if (atkIndex >= 2 && atk.immediate) Pi += atk.immediate;
@@ -319,6 +366,55 @@ function computeCombo(db, init, picks) {
       row.attacks.push({ label: atk.label, rate, dmg });
       flow.push(rate + "%");
       row.dmg += dmg; total += dmg;
+      // --- ジャグル判定（警告のみ。ダメージ計算には影響させない） ---
+      {
+        const prof = jugProfile(move, lvInfo ? lvInfo.lv - 1 : 0, ai);
+        const rushedNormal = (pick.rush === "raw" || pick.rush === "cdr") && (move.cat === "normal" || move.cat === "command" || move.cat === "target");
+        if (prof && !prof.missing) {
+          let hits = prof.hits;
+          if (rushedNormal) hits = hits.map(h => [0, 0, h[2] == null ? null : h[2] + 3]); // ラッシュ通常技は JS/JI=0・JL+3（SuperCombo Glossary）
+          if (jc === null) {
+            if (prof.launch) {
+              const jsA = prof.jsGround != null ? prof.jsGround : (hits.length ? hits[hits.length - 1][0] : null);
+              jc = jsA == null ? "unknown" : jsA;
+            }
+          } else if (jc === "unknown") {
+            if (prof.vanish || prof.sa2) jc = 0;
+            else if (hits.length && hits[hits.length - 1][0] != null) jc = rushedNormal ? 0 : hits[hits.length - 1][0];
+          } else {
+            let connected = 0, lastConnJs = null; const whiffs = [];
+            hits.forEach((h, hi) => {
+              if (h[2] == null || h[2] >= jc) { connected++; lastConnJs = h[0]; }
+              else whiffs.push(hi);
+            });
+            if (connected === 0) {
+              row.jwarn.push("ジャグル: " + atk.label + " が当たらない（全段のJLが JC " + jc + " 未満）— 実機ではこのルートは成立しない");
+              row.juggleInvalid = true; juggleInvalid = true;
+            } else {
+              if (whiffs.length) {
+                if (whiffs.indexOf(hits.length - 1) >= 0 && prof.launch) {
+                  row.jwarn.push("ジャグル: " + atk.label + " の最終段が当たらない（JL < JC " + jc + "）— 浮かせが成立せず、実機ではこのルートは成立しない");
+                  row.juggleInvalid = true; juggleInvalid = true;
+                } else {
+                  row.jwarn.push("ジャグル: " + atk.label + " の " + whiffs.map(i => (i + 1) + "段目").join("・") + " が当たらない（JL < JC " + jc + "）— 部分ヒットになり、実ダメージは表示より下がる");
+                }
+              }
+              if (prof.vanish || prof.sa2) jc = 0;
+              else if (lastConnJs != null) {
+                if (rushedNormal) jc = 0;
+                else if (prof.launch) jc = lastConnJs; // 浮かせ技は相手の状態を作り直すので JS で置き換え
+                else jc = Math.min(lastConnJs, jc); // 浮かせない技の空中ヒットは JC を増やさない（仮定A3: 実演ルート群からの帰納）
+              }
+            }
+          }
+        } else if (prof && prof.missing) {
+          if (jc === null && prof.launch) jc = "unknown";
+        } else if (move.cat === "throw") {
+          jc = null; // 投げでコンボは終わる。以後の手は当て直しとして扱う
+        } else if (JUG_UNKNOWN_LAUNCH[move.id]) {
+          jc = "unknown";
+        }
+      }
       // --- 次の攻撃へ向けた P の更新 ---
       if (atkIndex === 1) { P = atk.starter; firstStarter = atk.starter; }
       else {
@@ -331,7 +427,7 @@ function computeCombo(db, init, picks) {
     row.after = { drive, sa, stock };
     rows.push(row);
   }
-  return { rows, total, flow, end: { drive, sa, stock } };
+  return { rows, total, flow, end: { drive, sa, stock }, juggleInvalid, endJc: jc };
 }
 // === ENGINE END ===
 </script>
@@ -376,7 +472,7 @@ function getInit() {
     modern: $("init-control").value === "modern",
   };
 }
-function moveOptions(select, avail) {
+function moveOptions(select, avail, jug) {
   for (const cat of CAT_ORDER) {
     const g = document.createElement("optgroup"); g.label = CAT_LABEL[cat];
     for (const m of MOVES) {
@@ -390,6 +486,8 @@ function moveOptions(select, avail) {
         if (m.sa && m.sa > avail.sa) o.disabled = true;
         if (m.stock && m.stock > avail.stock) o.disabled = true;
       }
+      // ジャグル: 空中で最初のヒットが当たらない技は選べなくする（選択中の技は外さない。不成立になった場合は行の警告で示す）
+      if (jug && m.id !== jug.currentId && jugCandidateBlocked(m, jug.jc, jug.stock, jug.rush)) o.disabled = true;
       g.appendChild(o);
     }
     select.appendChild(g);
@@ -428,7 +526,10 @@ function render() {
     const idx = document.createElement("span"); idx.className = "idx"; idx.textContent = (i + 1) + "."; div.appendChild(idx);
     const sel = document.createElement("select"); sel.className = "move";
     const ph = document.createElement("option"); ph.value = ""; ph.textContent = "技を選択"; sel.appendChild(ph);
-    moveOptions(sel, avail);
+    const jugCtx = isSlot
+      ? { jc: result.endJc, stock: result.end.stock, rush: "none", currentId: null }
+      : { jc: rowRes.jcBefore, stock: rowRes.before.stock, rush: pick.rush || "none", currentId: pick.id };
+    moveOptions(sel, avail, jugCtx);
     if (pick) sel.value = pick.id;
     sel.addEventListener("change", () => {
       if (isSlot) {
@@ -484,6 +585,9 @@ function render() {
       div.appendChild(st);
       for (const w of rowRes.warn) {
         const wd = document.createElement("div"); wd.className = "warn"; wd.textContent = "⚠ " + w + "（この技は選べないはずの状態）"; div.appendChild(wd);
+      }
+      for (const w of (rowRes.jwarn || [])) {
+        const wd = document.createElement("div"); wd.className = "warn"; wd.textContent = "⚠ " + w; div.appendChild(wd);
       }
     }
     container.appendChild(div);
