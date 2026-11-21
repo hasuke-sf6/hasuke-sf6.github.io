@@ -79,7 +79,7 @@
 <p class="crumb"><a href="../index.html">hasuke-sf6 トップ</a></p>
 <h1>確定反撃クイズ（イングリッド）</h1>
 
-<p><a href="../quickref/">確定反撃＆キャラ対策早見表</a>のデータを、そのまま4択クイズにしたドリルです。相手の技（GIF付き）とガード時のフレームが出るので、イングリッドのベスト反撃を選んでください。早見表の全31キャラ・294問からランダムに出題します。調べるだけでは身につかないので、反射で出てくるまで繰り返す用です。</p>
+<p><a href="../quickref/">確定反撃＆キャラ対策早見表</a>のデータを、そのまま4択クイズにしたドリルです。相手の技（GIF付き）が出るので、イングリッドのベスト反撃を選んでください。ガード時のフレームは回答後に表示されます。早見表の全31キャラ・294問からランダムに出題します。調べるだけでは身につかないので、反射で出てくるまで繰り返す用です。</p>
 <p>なお、ガード時−20F以下で反撃が分かりやすい技と、通常技キャンセルで隙を消せる技は、出題から外しています。</p>
 <p>区分：<span class="tag tag-ok">確定</span> フレーム・距離の両方で反撃が成立 ／ <span class="tag tag-cond">条件付き</span> 密着ガード時など、条件を満たしたときだけ届く</p>
 
@@ -100,7 +100,6 @@
   <p class="q-char" id="q-char"></p>
   <div class="q-gif"><img id="q-img" src="" alt=""></div>
   <p class="q-move" id="q-move"></p>
-  <p class="q-frame">ガード時 <b id="q-frame"></b></p>
   <p class="q-ask">この技をガードしたときのベスト反撃は？</p>
   <div class="choices" id="choices"></div>
   <div class="feedback" id="feedback"></div>
@@ -195,7 +194,6 @@ function showQuestion() {
   const img = document.getElementById('q-img');
   img.src = row.gif; img.alt = row.move;
   document.getElementById('q-move').textContent = row.move;
-  document.getElementById('q-frame').textContent = row.onblock;
   const fb = document.getElementById('feedback');
   fb.className = 'feedback'; fb.innerHTML = '';
   document.getElementById('next-btn').hidden = true;
