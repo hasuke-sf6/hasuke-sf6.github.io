@@ -133,6 +133,7 @@
     <li>中サンライズの後に続く技はなく、ODサンライズの後はSA2・SA3へのキャンセルのみ候補に残る。</li>
     <li>ジャンプ攻撃は、始動として選ぶ場合と強サンライズ・ODサンフレアの直後でのみ候補に表示される。</li>
     <li>前バニッシュ（前方）の後に続く技はない（攻撃が当たった場合、その後の追撃はできない）。</li>
+    <li>ソーラーフレアはジャンプ攻撃と同じ扱いで、空中ではODサンフレア・強サンライズの直後でのみ候補に表示される。</li>
   </ul>
 
   <p><a href="../index.html">← トップへ戻る</a></p>
@@ -594,6 +595,8 @@ function moveOptions(select, avail, jug, lnk) {
       if (m.id === "tc_airy" && m.id !== (jug && jug.currentId) && m.id !== (lnk && lnk.currentId) && (!lnk || lnk.prevId !== "5mp")) continue;
       // ジャンプ攻撃: 繋がるのは始動として選ぶ場合と、強サンライズ・ODサンフレアの直後だけ（選択中の技は外さない）
       if (JUMP_ATTACKS[m.id] && lnk && lnk.prevId && lnk.prevId !== "rise_h" && lnk.prevId !== "flare_od" && m.id !== (jug && jug.currentId) && m.id !== lnk.currentId) continue;
+      // ソーラーフレア: ジャンプ攻撃と同じで、空中ではODサンフレア・強サンライズの直後だけ（地上キャンセル・始動は対象外。選択中の技は外さない）
+      if (m.id.startsWith("sflare") && lnk && lnk.prevId && jug && jug.jc !== null && lnk.prevId !== "flare_od" && lnk.prevId !== "rise_h" && m.id !== (jug && jug.currentId) && m.id !== lnk.currentId) continue;
       const o = document.createElement("option");
       o.value = m.id;
       o.textContent = m.name + "（" + m.cmd + "）";
