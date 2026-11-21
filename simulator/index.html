@@ -127,6 +127,7 @@
   <ul class="notes">
     <li>コンボカウントも判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補に表示されなくなる。</li>
     <li>地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補に表示されなくなる。</li>
+    <li>ドライブラッシュキャンセルで繋がる通常技も候補に表示される。その技を選ぶと、その行にキャンセルラッシュ（ドライブ-3本）が自動で付く。前の技がドライブラッシュキャンセルできない場合は候補に出ない。空き行で先にラッシュを選ぶこともできる。</li>
     <li>キャンセルの可否も判定し、地上でキャンセルできない必殺技やSAも候補に表示されなくなる。</li>
     <li>エアリートスは立ち中Pの次の行でのみ候補に表示される（立ち中Pからのタゲコン派生として扱う）。</li>
     <li>弱サンフレア・弱ソーラーフレア（溜め）は候補に表示されない（攻撃判定がなく、SA2の光弾が飛んでいる間など長い猶予がある場面でしか溜められないため）。</li>
@@ -357,6 +358,26 @@ function cancelCandidateBlocked(move, ctx) {
   }
   return false;
 }
+// 前の技からドライブラッシュキャンセルできるか（cancel 欄に Sp があること。キャンセル候補フィルタの cdr 判定と同じ基準）。
+function drCancelPossible(prevId) {
+  if (!prevId) return false;
+  const tokens = CANCEL[prevId];
+  return !!tokens && tokens.indexOf("Sp") >= 0;
+}
+// その候補が「ラッシュなしでは繋がらないが、キャンセルラッシュなら繋がる」通常技・特殊技・TC かを返す。
+// ctx: { adv, prevId, jc, stock } — adv/jc/stock は候補の行の開始時点の状態。
+// リンクで弾かれる場合と、空中でラッシュの JL+3 があれば当たる場合の両方を見る。
+// ジャンプ攻撃は当てる高さで決まるため対象外（cdr の自動付与もしない）。
+function cdrWouldConnect(move, ctx) {
+  if (!move || !ctx || !drCancelPossible(ctx.prevId)) return false;
+  if (isJumpAttack(move)) return false;
+  if (move.cat !== "normal" && move.cat !== "command" && move.cat !== "target") return false;
+  const linkBlocked = linkCandidateBlocked(move, { adv: ctx.adv, prevId: ctx.prevId, rush: "none" });
+  const jugBlocked = jugCandidateBlocked(move, ctx.jc, ctx.stock, "none");
+  const jugHelped = jugBlocked && !jugCandidateBlocked(move, ctx.jc, ctx.stock, "cdr");
+  return linkBlocked || jugHelped;
+}
+
 // === 終了候補フィルタ（その技でコンボが終わるため、次の一手そのものを出さない） ===
 // 中サンライズは相手を叩き落とすので、その後は続かない。ODサンライズも同様だが、SA2/SA3への
 // キャンセルだけは可能（cancel 欄: SA2 SA3、3段目のみ）。強サンライズは浮かせるので対象外。
@@ -549,6 +570,7 @@ const PICKER_EXCLUDED = { throw_f: true, throw_b: true, veil: true, veil_od: tru
 // ジャンプ攻撃: 候補に出すのは始動として選ぶ場合と、強サンライズ・ODサンフレアの直後だけ
 const JUMP_ATTACKS = { jlp: true, jlk: true, jmp: true, jmk: true, jhp: true, jhk: true, tc_leap: true };
 let picks = []; // {id, rush, sp}
+let slotRush = "none"; // 末尾の空き行で先に選んだラッシュ（技を選ぶとその行のラッシュになる）
 let counterMode = "none"; // 始動条件: 'none'|'ch'|'pc'|'stun'|'di'|'splat'|'wall'（コンボの1段目の行で選ぶ。ここが単一の情報源。当たり方と追撃始動は排他）
 
 const PRESETS = {
@@ -607,9 +629,11 @@ function moveOptions(select, avail, jug, lnk) {
         if (m.stock && m.stock > avail.stock) o.disabled = true;
       }
       // ジャグル: 空中で最初のヒットが当たらない技は候補に表示しない（選択中の技は外さない。不成立になった場合は行の警告で示す）
-      if (jug && m.id !== jug.currentId && jugCandidateBlocked(m, jug.jc, jug.stock, jug.rush)) continue;
+      // ただしキャンセルラッシュなら当たる通常技は残す（選ぶとその行にキャンセルラッシュが自動で付く）
+      if (jug && m.id !== jug.currentId && jugCandidateBlocked(m, jug.jc, jug.stock, jug.rush) && !cdrWouldConnect(m, { adv: lnk ? lnk.adv : null, prevId: lnk ? lnk.prevId : null, jc: jug.jc, stock: jug.stock })) continue;
       // リンク: 前の技のヒット時有利で繋がらない通常技は候補に表示しない（選択中の技は外さない）
-      if (lnk && m.id !== lnk.currentId && linkCandidateBlocked(m, lnk)) continue;
+      // ただしキャンセルラッシュで繋がる通常技は残す（選ぶとその行にキャンセルラッシュが自動で付く）
+      if (lnk && m.id !== lnk.currentId && linkCandidateBlocked(m, lnk) && !cdrWouldConnect(m, { adv: lnk.adv, prevId: lnk.prevId, jc: jug ? jug.jc : null, stock: jug ? jug.stock : 0 })) continue;
       // キャンセル: 地上でキャンセルできない接続の技は候補に表示しない（選択中の技は外さない）
       if (jug && lnk && m.id !== jug.currentId && m.id !== lnk.currentId && cancelCandidateBlocked(m, { grounded: jug.jc === null, prevId: lnk.prevId, rush: lnk.rush, pc5hk: lnk.pc5hk })) continue;
       // 終了: 中ライズの後は続かない。ODライズの後はSA2/SA3キャンセルのみ（選択中の技は外さない）
@@ -653,24 +677,42 @@ function render() {
     const sel = document.createElement("select"); sel.className = "move";
     const ph = document.createElement("option"); ph.value = ""; ph.textContent = "技を選択"; sel.appendChild(ph);
     const jugCtx = isSlot
-      ? { jc: result.endJc, stock: result.end.stock, rush: "none", currentId: null }
+      ? { jc: result.endJc, stock: result.end.stock, rush: slotRush, currentId: null }
       : { jc: rowRes.jcBefore, stock: rowRes.before.stock, rush: pick.rush || "none", currentId: pick.id };
     const lnkCtx = isSlot
-      ? { adv: result.endLinkAdv, prevId: picks.length ? picks[picks.length - 1].id : null, rush: "none", currentId: null, pc5hk: counterMode === "pc" && picks.length === 1 && picks[0].id === "5hk" }
+      ? { adv: result.endLinkAdv, prevId: picks.length ? picks[picks.length - 1].id : null, rush: slotRush, currentId: null, pc5hk: counterMode === "pc" && picks.length === 1 && picks[0].id === "5hk" }
       : { adv: i > 0 ? result.rows[i - 1].linkAdv : null, prevId: i > 0 ? picks[i - 1].id : null, rush: pick.rush || "none", currentId: pick.id, pc5hk: counterMode === "pc" && i === 1 && picks.length > 0 && picks[0].id === "5hk" };
     moveOptions(sel, avail, jugCtx, lnkCtx);
     if (pick) sel.value = pick.id;
     sel.addEventListener("change", () => {
       if (isSlot) {
-        if (sel.value) picks.push({ id: sel.value, rush: "none", sp: init.modern });
+        if (sel.value) {
+          // ラッシュなしでは繋がらずキャンセルラッシュなら繋がる技を選んだら、その行にキャンセルラッシュを自動で付ける
+          let rush = slotRush || "none";
+          if (rush === "none" && cdrWouldConnect(MOVE_BY_ID[sel.value], { adv: lnkCtx.adv, prevId: lnkCtx.prevId, jc: jugCtx.jc, stock: jugCtx.stock })) rush = "cdr";
+          picks.push({ id: sel.value, rush, sp: init.modern });
+          slotRush = "none";
+        }
       } else if (sel.value) {
         picks[i].id = sel.value;
+        // 既存の行でも同じ自動付与（その行のラッシュが未指定で、キャンセルラッシュなら繋がる技に変えた場合）
+        if ((picks[i].rush || "none") === "none" && cdrWouldConnect(MOVE_BY_ID[sel.value], { adv: lnkCtx.adv, prevId: lnkCtx.prevId, jc: jugCtx.jc, stock: jugCtx.stock })) picks[i].rush = "cdr";
       } else {
         picks.splice(i, 1);
       }
       render();
     });
     div.appendChild(sel);
+    if (isSlot) {
+      // 空き行でも先にラッシュを選べる（選んだ状態で候補が絞られ、技を選ぶとそのラッシュが付く）
+      const rs = document.createElement("select");
+      const ro = [["none","ラッシュなし"],["raw","生ラッシュ（D-1）"],["cdr","キャンセルラッシュ（D-3）"]];
+      for (const [v, t] of ro) { const o = document.createElement("option"); o.value = v; o.textContent = t; rs.appendChild(o); }
+      if (i === 0) rs.querySelector('option[value="cdr"]').disabled = true;
+      rs.value = slotRush;
+      rs.addEventListener("change", () => { slotRush = rs.value; render(); });
+      div.appendChild(rs);
+    }
     if (i === 0) {
       // 始動条件（1段目の行で選ぶ。値は counterMode が保持するので、行の追加・削除では消えない。当たり方と追撃始動は排他）
       const cl = document.createElement("span"); cl.className = "res"; cl.textContent = "始動条件："; div.appendChild(cl);
@@ -743,13 +785,14 @@ document.querySelectorAll(".preset-btn[data-preset]").forEach(b => {
     $("init-sa").value = "3";
     $("init-stock").value = "1";
     counterMode = "none";
+    slotRush = "none";
     $("init-control").value = "classic";
     $("init-pp").checked = false;
     picks = PRESETS[b.dataset.preset].map(p => ({ id: p.id, rush: p.rush || "none", sp: getInit().modern }));
     render();
   });
 });
-$("btn-reset").addEventListener("click", () => { picks = []; render(); });
+$("btn-reset").addEventListener("click", () => { picks = []; slotRush = "none"; render(); });
 for (const id of ["init-drive","init-sa","init-stock","init-control","init-pp"]) {
   $(id).addEventListener("change", render);
 }
