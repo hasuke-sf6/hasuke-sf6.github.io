@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>確定反撃クイズ 合体編（サンプル） | ストリートファイター6 攻略ノート</title>
-<meta name="description" content="初段判断（四択）→通常コンボ編（三択）→最大コン編（三択・挽回）の3ステージで反撃を判断するクイズ（サンプル版）。">
+<meta name="description" content="初段判断（四択）→通常コンボ編（三択）の2ステージで反撃を判断するクイズ（サンプル版）。">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SW34Z97RXY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -69,14 +69,13 @@
 <main>
   <p class="site-name">hasuke-sf6</p>
   <h1>確定反撃クイズ 合体編（サンプル）</h1>
-  <p class="sub">1つの技に対して、初段判断→通常コンボ→（間違えたら）最大コンのステージを通して判断するクイズです。</p>
+  <p class="sub">1つの技に対して、初段判断→通常コンボの2ステージを通して判断するクイズです。</p>
 
   <div class="card" id="start-card">
-    <p>相手の技をガードした場面を、3つのステージで判断します。</p>
+    <p>相手の技をガードした場面を、2つのステージで判断します。</p>
     <ul>
       <li><b>ステージ1 初段判断（四択）</b>：ベストな反撃の始動を選ぶ（反撃編と同じ形式）</li>
       <li><b>ステージ2 通常コンボ編（三択）</b>：ドライブ／SA／ストックの条件のもとで、自分のリソースの中でできる最大のコンボを選ぶ。完走するけど最大じゃないと△</li>
-      <li><b>ステージ3 最大コン編（三択）</b>：ステージ1・2のどちらかで間違えたセットにだけ出てくる挽回ステージ。新しい資源条件のもとで、やはりリソース内でできる最大のコンボを選ぶ。両ステージとも正解したセットでは出てきません</li>
     </ul>
     <p style="font-weight:bold;color:#c62828;">全ステージ共通の絶対ルール：バーンアウトするコンボは選んではいけません。ダメージが最大でも、バーンアウトするコンボは不正解です。</p>
     <p>資源の条件はステージごとに変わります。反撃はパニッシュカウンター扱いで、ダメージと完走可否はコンボシミュレーターと同じ計算で判定しています。ガード時のフレームは各ステージの回答後に表示されます。全5セットのサンプル版です。</p>
@@ -942,13 +941,11 @@ function answerStage1(text, btn) {
 function showComboStage(stage) {
   const q = QUESTIONS[qzOrder[qzSet]];
   const rolled = rollCombo(q);
-  setHeader(stage === 2 ? 'ステージ2 通常コンボ編（三択）' : 'ステージ3 最大コン編（三択）・挽回');
+  setHeader('ステージ2 通常コンボ編（三択）');
   const res = document.getElementById('q-res');
   res.innerHTML = resHTML(q, rolled.resources);
   res.classList.remove('hidden');
-  document.getElementById('q-prompt').textContent = stage === 2
-    ? 'この条件で、バーンアウトせずにできる最大のコンボは？'
-    : '挽回チャンス：この条件で、バーンアウトせずにできる最大のコンボは？';
+  document.getElementById('q-prompt').textContent = 'この条件で、バーンアウトせずにできる最大のコンボは？';
   const chosen = pick3(rolled.evals, rolled.answerIdx);
   const box = document.getElementById('q-choices');
   box.innerHTML = '';
@@ -976,7 +973,7 @@ function answerCombo(ri, btn) {
   else qzScore.batsu++;
   const ss = qzStageScore[kind];
   if (symbol === '○') ss.maru++; else if (symbol === '△') ss.sankaku++; else ss.batsu++;
-  qzReview.push({ set: qzSet + 1, stage: kind === 2 ? '通常' : '最大コン', q, symbol, answerText: q.routes[answerIdx].display, answerTotal: maxTotal });
+  qzReview.push({ set: qzSet + 1, stage: '通常', q, symbol, answerText: q.routes[answerIdx].display, answerTotal: maxTotal });
 
   const buttons = document.querySelectorAll('#q-choices .choice');
   buttons.forEach(b => { b.disabled = true; });
@@ -1007,9 +1004,7 @@ function answerCombo(ri, btn) {
     ul.appendChild(li);
   }
   const lastSet = qzSet + 1 >= qzOrder.length;
-  document.getElementById('next-btn').textContent = kind === 2
-    ? (qzSetMissed ? '最大コン編（挽回）へ' : (lastSet ? '結果を見る' : '次のセットへ'))
-    : (lastSet ? '結果を見る' : '次のセットへ');
+  document.getElementById('next-btn').textContent = lastSet ? '結果を見る' : '次のセットへ';
   document.getElementById('q-score').textContent = scoreText();
   fb.classList.remove('hidden');
 }
@@ -1019,7 +1014,7 @@ function showResult() {
   document.getElementById('result-score').textContent = `結果：○ ${qzScore.maru}　△ ${qzScore.sankaku}　✗ ${qzScore.batsu}（全${qzReview.length}問）`;
   const s = qzStageScore;
   document.getElementById('result-stages').textContent =
-    `初段判断：○ ${s[1].maru} ／ ✗ ${s[1].batsu}　通常コンボ編：○ ${s[2].maru} ／ △ ${s[2].sankaku} ／ ✗ ${s[2].batsu}　最大コン編：○ ${s[3].maru} ／ △ ${s[3].sankaku} ／ ✗ ${s[3].batsu}`;
+    `初段判断：○ ${s[1].maru} ／ ✗ ${s[1].batsu}　通常コンボ編：○ ${s[2].maru} ／ △ ${s[2].sankaku} ／ ✗ ${s[2].batsu}`;
   const box = document.getElementById('result-review');
   box.innerHTML = '';
   for (const r of qzReview) {
@@ -1048,7 +1043,6 @@ document.getElementById('start-btn').addEventListener('click', startQuiz);
 document.getElementById('retry-btn').addEventListener('click', startQuiz);
 document.getElementById('next-btn').addEventListener('click', () => {
   if (qzCurrent.kind === 1) { showComboStage(2); return; }
-  if (qzCurrent.kind === 2 && qzSetMissed) { showComboStage(3); return; }
   qzSet++;
   if (qzSet >= qzOrder.length) { showResult(); return; }
   qzSetMissed = false;
