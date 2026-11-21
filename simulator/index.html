@@ -57,6 +57,7 @@
   .total-box { text-align: center; padding: 10px 0 2px; }
   .total-num { font-size: 2.6rem; font-weight: bold; color: #d97c06; line-height: 1.2; }
   .flow { font-size: 0.88rem; color: #6b675c; text-align: center; word-break: break-all; }
+  .end-gauges { font-size: 0.92rem; color: #6b675c; text-align: right; margin: 4px 2px 0; }
   .preset-btn { margin: 2px 4px 2px 0; font-size: 0.88rem; }
   .notes { font-size: 0.88rem; color: #3c3f47; }
   .notes li { margin: 0.35em 0; }
@@ -92,7 +93,6 @@
       </div>
       <div>
         <label class="chk"><input type="checkbox" id="init-pp"> ジャストパリィ始動（全体×0.5）</label>
-        <label class="chk"><input type="checkbox" id="init-wall"> 端DIガード壁やられ追撃（全体×0.8）</label>
       </div>
     </div>
   </div>
@@ -115,6 +115,7 @@
     <button class="preset-btn" id="btn-reset">リセット</button>
   </div>
   <div id="rows"></div>
+  <div class="end-gauges" id="end-gauges"></div>
 
   <div class="panel total-box">
     <div style="font-size:0.9rem;color:#8a8578;">合計ダメージ</div>
@@ -462,7 +463,7 @@ const CAT_ORDER = ["normal","command","target","throw","special","sa","system"];
 // エンジンの技データ・計算からは外さない。選択中の行では従来の保護どおり残す。
 const PICKER_EXCLUDED = { throw_f: true, throw_b: true, veil: true, veil_od: true };
 let picks = []; // {id, rush, sp}
-let counterMode = "none"; // 始動条件: 'none'|'ch'|'pc'|'stun'|'di'|'splat'（コンボの1段目の行で選ぶ。ここが単一の情報源。当たり方と追撃始動は排他）
+let counterMode = "none"; // 始動条件: 'none'|'ch'|'pc'|'stun'|'di'|'splat'|'wall'（コンボの1段目の行で選ぶ。ここが単一の情報源。当たり方と追撃始動は排他）
 
 const PRESETS = {
   weak:  [ {id:"2lk"}, {id:"5lp"}, {id:"5lk"}, {id:"rise_m"} ],
@@ -493,7 +494,7 @@ function getInit() {
     counter: (counterMode === "ch" || counterMode === "pc") ? counterMode : "none",
     start: (counterMode === "stun" || counterMode === "di" || counterMode === "splat") ? counterMode : "none",
     pp: $("init-pp").checked,
-    wall: $("init-wall").checked,
+    wall: counterMode === "wall",
     modern: $("init-control").value === "modern",
   };
 }
@@ -578,7 +579,7 @@ function render() {
       // 始動条件（1段目の行で選ぶ。値は counterMode が保持するので、行の追加・削除では消えない。当たり方と追撃始動は排他）
       const cl = document.createElement("span"); cl.className = "res"; cl.textContent = "始動条件："; div.appendChild(cl);
       const cs = document.createElement("select"); cs.className = "counter";
-      const co = [["none","通常ヒット"],["ch","カウンターヒット（初段×1.2）"],["pc","パニッシュカウンター（初段×1.2／投げ×1.7）"],["stun","スタン（気絶）後の追撃（補正80%から）"],["di","DIクリーンヒット後の追撃（補正80%から）"],["splat","DI壁ドン後の追撃（補正80%から・コンボカウント0）"]];
+      const co = [["none","通常ヒット"],["ch","カウンターヒット（初段×1.2）"],["pc","パニッシュカウンター（初段×1.2／投げ×1.7）"],["stun","スタン（気絶）後の追撃（補正80%から）"],["di","DIクリーンヒット後の追撃（補正80%から）"],["splat","DI壁ドン後の追撃（補正80%から・コンボカウント0）"],["wall","DIガード壁ドン後の追撃（全体×0.8）"]];
       for (const [v, t] of co) { const o = document.createElement("option"); o.value = v; o.textContent = t; cs.appendChild(o); }
       cs.value = counterMode;
       cs.addEventListener("change", () => { counterMode = cs.value; render(); });
@@ -635,6 +636,7 @@ function render() {
     container.appendChild(div);
   }
   $("total").textContent = result.total.toLocaleString();
+  $("end-gauges").textContent = "残り ドライブ " + result.end.drive.toFixed(1) + " 本／SA " + result.end.sa + " 本／ストック " + result.end.stock + " 個";
   $("flow").textContent = result.flow.length ? "補正率の流れ: " + result.flow.join(" → ") : "";
   renderGauges(result.end);
 }
@@ -647,13 +649,12 @@ document.querySelectorAll(".preset-btn[data-preset]").forEach(b => {
     counterMode = "none";
     $("init-control").value = "classic";
     $("init-pp").checked = false;
-    $("init-wall").checked = false;
     picks = PRESETS[b.dataset.preset].map(p => ({ id: p.id, rush: p.rush || "none", sp: getInit().modern }));
     render();
   });
 });
 $("btn-reset").addEventListener("click", () => { picks = []; render(); });
-for (const id of ["init-drive","init-sa","init-stock","init-control","init-pp","init-wall"]) {
+for (const id of ["init-drive","init-sa","init-stock","init-control","init-pp"]) {
   $(id).addEventListener("change", render);
 }
 initOptions();
