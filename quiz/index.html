@@ -164,13 +164,56 @@ function shuffle(a) {
 
 let questions = [], idx = 0, score = 0, missed = [], answered = false;
 
+function normText(s) { return s.replace(/\s+/g, '').replace(/−/g, '-'); }
+function bigramSet(s) {
+  const n = normText(s); const set = new Set();
+  for (let i = 0; i < n.length - 1; i++) set.add(n.slice(i, i + 2));
+  return set;
+}
+function textSim(a, b) {
+  const A = bigramSet(a), B = bigramSet(b);
+  let inter = 0;
+  for (const x of A) if (B.has(x)) inter++;
+  return inter / (A.size + B.size - inter);
+}
+function starterKey(s) {
+  const m = normText(s).match(/^[^。．・\/／（(、,〜~]+/);
+  return m ? m[0] : normText(s);
+}
+
 function makeChoices(row) {
   const correct = row.punish;
+  const correctKey = starterKey(correct);
   const sameChar = shuffle([...new Set(DATA.filter(r => r.char === row.char && r.punish !== correct).map(r => r.punish))]);
   const globalPool = shuffle([...new Set(DATA.filter(r => r.punish !== correct).map(r => r.punish))]);
-  const picks = [];
-  for (const t of sameChar) { if (picks.length < 3) picks.push(t); }
-  for (const t of globalPool) { if (picks.length >= 3) break; if (!picks.includes(t)) picks.push(t); }
+  const candidates = [...sameChar];
+  for (const t of globalPool) if (!candidates.includes(t)) candidates.push(t);
+
+  function tryPick(simLimit, useKeys) {
+    const picks = [];
+    let sameKeyUsed = 0;
+    const usedKeys = new Set();
+    for (const t of candidates) {
+      if (picks.length >= 3) break;
+      if (textSim(t, correct) >= simLimit) continue;
+      if (picks.some(p => textSim(t, p) >= simLimit)) continue;
+      if (useKeys) {
+        const k = starterKey(t);
+        if (usedKeys.has(k)) continue;
+        if (k === correctKey) { if (sameKeyUsed >= 1) continue; sameKeyUsed++; }
+        usedKeys.add(k);
+      }
+      picks.push(t);
+    }
+    return picks;
+  }
+
+  let picks = tryPick(0.55, true);
+  if (picks.length < 3) picks = tryPick(0.55, false);
+  if (picks.length < 3) picks = tryPick(0.8, false);
+  if (picks.length < 3) {
+    for (const t of candidates) { if (picks.length >= 3) break; if (!picks.includes(t)) picks.push(t); }
+  }
   return shuffle([correct, ...picks]);
 }
 
