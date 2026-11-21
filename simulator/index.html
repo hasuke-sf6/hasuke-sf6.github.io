@@ -67,7 +67,7 @@
 <body>
 <main>
   <h1>コンボダメージシミュレーター（イングリッド）</h1>
-  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。コンボカウントも判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補に表示されなくなる。地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補に表示されなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。エアリートスは立ち中Pの次の行でのみ候補に表示される（立ち中Pからのタゲコン派生として扱う）。1段目の行では始動条件として、スタンやドライブインパクト（クリーンヒット／壁ドン）後の追撃も選べる（その場合、補正は80%から始まる）。</p>
+  <p class="sub">SF6の補正計算（始動補正・コンボ補正・ドライブラッシュ補正・モダン補正・SA最低保証）を再現するプロトタイプ。技をつなぐと補正率とダメージ、ゲージ残量が連動して変わる。コンボカウントも判定し、空中で最初のヒットが当たらなくなる技は次の一手の候補に表示されなくなる。地上の通常技同士の繋ぎ（リンク）もフレーム表で判定し、繋がらない通常技は候補に表示されなくなる。キャンセルの可否も判定し、地上でキャンセルできない必殺技やSAも候補に表示されなくなる。部分ヒットになるルートには警告が出る（タイミングや間合いまでは判定しない）。エアリートスは立ち中Pの次の行でのみ候補に表示される（立ち中Pからのタゲコン派生として扱う）。弱サンフレア・弱ソーラーフレア（溜め）は候補に表示されない（攻撃判定がなく、SA2の光弾が飛んでいる間など長い猶予がある場面でしか溜められないため）。中サンライズの後に続く技はなく、ODサンライズの後はSA2・SA3へのキャンセルのみ候補に残る。1段目の行では始動条件として、スタンやドライブインパクト（クリーンヒット／壁ドン）後の追撃も選べる（その場合、補正は80%から始まる）。</p>
 
   <h2>初期条件</h2>
   <div class="panel">
@@ -289,6 +289,63 @@ function linkCandidateBlocked(move, ctx) {
   return L.startup > ctx.adv;
 }
 
+// === キャンセル判定用データ（SuperCombo Cargo API: SF6_FrameData の cancel 欄） ===
+// 各技の cancel 欄をトークン列にしたもの。Sp = 必殺技キャンセル可、SA = SAキャンセル可（全レベル）、
+// SA2/SA3 = そのレベルのSAのみ可、Chn = 連打キャンセル、TC = ターゲットコンボ派生。
+// データが無い技（弱フレア等の溜め技）は CANCEL に含めない（判定しない）。
+const CANCEL = {"5lp": ["Chn", "Sp", "SA"], "5lk": ["Sp", "SA"], "5mp": ["Sp", "SA", "TC"], "5mk": ["Sp", "SA"], "5hp": [], "5hk": ["SA"], "2lp": ["Chn", "Sp", "SA"], "2lk": ["Chn"], "2mp": ["Sp", "SA"], "2mk": ["Sp", "SA"], "2hp": ["Sp", "SA"], "2hk": [], "jlp": [], "jlk": [], "jmp": [], "jmk": [], "jhp": [], "jhk": ["TC"], "6mp": [], "6hp": ["Sp"], "tc_airy": ["Sp", "SA"], "shoot_l": ["SA3"], "shoot_m": ["SA3"], "shoot_h": ["SA3"], "shoot_od": ["SA2", "SA3"], "flare_m": ["SA3"], "sflare_m": [], "rise_l": [], "rise_m": [], "rise_h": [], "rise_od": ["SA2", "SA3"], "sa1_1": [], "sa1_2": [], "sa1_3": [], "sa3": [], "ca": [], "di": [], "tc_glow": [], "tc_lumi": ["TC"], "tc_leap": [], "flare_h": ["SA3"], "flare_od": ["SA2", "SA3"], "sflare_h": [], "sflare_od": [], "vanish_u": [], "vanish_f": [], "veil": [], "veil_od": []};
+function saLevelOf(id) {
+  if (!id) return 0;
+  if (id.indexOf("sa1") === 0) return 1;
+  if (id.indexOf("sa2") === 0) return 2;
+  if (id === "sa3" || id === "ca") return 3;
+  return 0;
+}
+// === キャンセル候補フィルタ（地上ヒット中の接続がキャンセルになる場合の可否。リンクフィルタと併用する） ===
+// ctx: { grounded, prevId, rush } — grounded は前の行の開始時点のジャグル状態が地上（jcBefore === null）かどうか。
+// 除外するのは「相手が地上で、前の技が通常技・特殊技・TC・必殺技のいずれかで、接続がキャンセルになる場合」だけ:
+// - 必殺技の候補: 前の技（通常技・特殊技・TC）の cancel 欄に Sp が無ければ除外。必殺技の後の拾いは判定しない
+//   （飛び道具の着弾タイミングで決まるため。例: 強シュート＞弱ライズ）。立ち強K(PC)の後は相手が浮くので
+//   ジャグル接続として扱い除外しない（いおりのコンボガイドで 立ち強K(PC)＞中ライズ が実演されている）。
+// - SAの候補: 前の技の cancel 欄に SA（全レベル可）か、そのSAのレベルの記載が無ければ除外。
+// - ラッシュ（cdr）指定の通常技・特殊技・TC: ドライブラッシュキャンセルにも Sp が必要。
+// 空中（ジャグル中）の拾いはキャンセルではないので判定しない。前の技がSA・投げ・DI等の場合も判定しない。
+function cancelCandidateBlocked(move, ctx) {
+  if (!move || !ctx || !ctx.grounded || !ctx.prevId) return false;
+  const prev = MOVE_BY_ID[ctx.prevId];
+  if (!prev) return false;
+  if (prev.cat !== "normal" && prev.cat !== "command" && prev.cat !== "target" && prev.cat !== "special") return false;
+  const tokens = CANCEL[ctx.prevId];
+  if (!tokens) return false;
+  if (ctx.rush === "cdr" && (move.cat === "normal" || move.cat === "command" || move.cat === "target")) {
+    return tokens.indexOf("Sp") < 0;
+  }
+  if (move.cat === "special") {
+    if (prev.cat === "special") return false; // 必殺技の後はキャンセルではなく着弾タイミングで決まる拾いなので判定しない
+    if (ctx.pc5hk && ctx.prevId === "5hk") return false; // 立ち強K(PC)は相手を浮かせるためジャグル接続として扱う
+    return tokens.indexOf("Sp") < 0;
+  }
+  if (move.cat === "sa") {
+    const lv = saLevelOf(move.id);
+    if (!lv) return false;
+    return tokens.indexOf("SA") < 0 && tokens.indexOf("SA" + lv) < 0;
+  }
+  return false;
+}
+// === 終了候補フィルタ（その技でコンボが終わるため、次の一手そのものを出さない） ===
+// 中サンライズは相手を叩き落とすので、その後は続かない。ODサンライズも同様だが、SA2/SA3への
+// キャンセルだけは可能（cancel 欄: SA2 SA3、3段目のみ）。強サンライズは浮かせるので対象外。
+// 弱サンライズは相手が高く浮いている場合のみ続くため、ジャグル判定に任せて対象外にする。
+function enderCandidateBlocked(move, ctx) {
+  if (!move || !ctx || !ctx.prevId) return false;
+  if (ctx.prevId === "rise_m") return true;
+  if (ctx.prevId === "rise_od") {
+    const lv = saLevelOf(move.id);
+    return !(move.cat === "sa" && (lv === 2 || lv === 3));
+  }
+  return false;
+}
+
 function computeCombo(db, init, picks) {
   const byId = {};
   for (const m of db) byId[m.id] = m;
@@ -461,7 +518,7 @@ const CAT_LABEL = { normal:"通常技", command:"特殊技", target:"ターゲ�
 const CAT_ORDER = ["normal","command","target","throw","special","sa","system"];
 // ピッカーに表示しない技: 投げとサンヴェール（当て身）はコンボの継ぎとして成立しないため候補に出さない。
 // エンジンの技データ・計算からは外さない。選択中の行では従来の保護どおり残す。
-const PICKER_EXCLUDED = { throw_f: true, throw_b: true, veil: true, veil_od: true };
+const PICKER_EXCLUDED = { throw_f: true, throw_b: true, veil: true, veil_od: true, flare_l: true, sflare_l: true };
 let picks = []; // {id, rush, sp}
 let counterMode = "none"; // 始動条件: 'none'|'ch'|'pc'|'stun'|'di'|'splat'|'wall'（コンボの1段目の行で選ぶ。ここが単一の情報源。当たり方と追撃始動は排他）
 
@@ -503,7 +560,7 @@ function moveOptions(select, avail, jug, lnk) {
     const g = document.createElement("optgroup"); g.label = CAT_LABEL[cat];
     for (const m of MOVES) {
       if (m.cat !== cat) continue;
-      // 投げ・サンヴェールは候補に出さない（選択中の技は外さない）
+      // 投げ・サンヴェール・溜め技（弱フレア/弱ソーラー）は候補に出さない（選択中の技は外さない）
       if (PICKER_EXCLUDED[m.id] && m.id !== (jug && jug.currentId) && m.id !== (lnk && lnk.currentId)) continue;
       // エアリートスは立ち中Pからのタゲコン派生（2段目）としてのみ候補に出す（選択中の技は外さない）
       if (m.id === "tc_airy" && m.id !== (jug && jug.currentId) && m.id !== (lnk && lnk.currentId) && (!lnk || lnk.prevId !== "5mp")) continue;
@@ -520,6 +577,10 @@ function moveOptions(select, avail, jug, lnk) {
       if (jug && m.id !== jug.currentId && jugCandidateBlocked(m, jug.jc, jug.stock, jug.rush)) continue;
       // リンク: 前の技のヒット時有利で繋がらない通常技は候補に表示しない（選択中の技は外さない）
       if (lnk && m.id !== lnk.currentId && linkCandidateBlocked(m, lnk)) continue;
+      // キャンセル: 地上でキャンセルできない接続の技は候補に表示しない（選択中の技は外さない）
+      if (jug && lnk && m.id !== jug.currentId && m.id !== lnk.currentId && cancelCandidateBlocked(m, { grounded: jug.jc === null, prevId: lnk.prevId, rush: lnk.rush, pc5hk: lnk.pc5hk })) continue;
+      // 終了: 中ライズの後は続かない。ODライズの後はSA2/SA3キャンセルのみ（選択中の技は外さない）
+      if (lnk && m.id !== lnk.currentId && enderCandidateBlocked(m, lnk)) continue;
       g.appendChild(o);
     }
     if (g.children.length) select.appendChild(g);
@@ -562,8 +623,8 @@ function render() {
       ? { jc: result.endJc, stock: result.end.stock, rush: "none", currentId: null }
       : { jc: rowRes.jcBefore, stock: rowRes.before.stock, rush: pick.rush || "none", currentId: pick.id };
     const lnkCtx = isSlot
-      ? { adv: result.endLinkAdv, prevId: picks.length ? picks[picks.length - 1].id : null, rush: "none", currentId: null }
-      : { adv: i > 0 ? result.rows[i - 1].linkAdv : null, prevId: i > 0 ? picks[i - 1].id : null, rush: pick.rush || "none", currentId: pick.id };
+      ? { adv: result.endLinkAdv, prevId: picks.length ? picks[picks.length - 1].id : null, rush: "none", currentId: null, pc5hk: counterMode === "pc" && picks.length === 1 && picks[0].id === "5hk" }
+      : { adv: i > 0 ? result.rows[i - 1].linkAdv : null, prevId: i > 0 ? picks[i - 1].id : null, rush: pick.rush || "none", currentId: pick.id, pc5hk: counterMode === "pc" && i === 1 && picks.length > 0 && picks[0].id === "5hk" };
     moveOptions(sel, avail, jugCtx, lnkCtx);
     if (pick) sel.value = pick.id;
     sel.addEventListener("change", () => {
