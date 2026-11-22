@@ -62,11 +62,13 @@
   .choice:active { background: #f0ebdd; }
   .choice.correct { border-color: #43a047; background: #e3f1e4; font-weight: bold; }
   .choice.wrong { border-color: #d93025; background: #fdecea; }
+  .choice.partial { border-color: #e8a33d; background: #fdf3e0; }
   .choice:disabled { cursor: default; color: #26282e; opacity: 1; }
   .feedback { display: none; border-radius: 8px; padding: 12px 16px; margin-top: 1em; font-size: 0.95rem; }
   .feedback.show { display: block; }
   .feedback.good { background: #e3f1e4; border: 1px solid #43a047; }
   .feedback.bad { background: #fdecea; border: 1px solid #d93025; }
+  .feedback.mid { background: #fdf3e0; border: 1px solid #e8a33d; }
   .feedback .verdict-line { font-weight: bold; font-size: 1.05rem; }
   .missed-list { font-size: 0.92rem; line-height: 1.65; }
   .missed-list li { margin: 0.45em 0; }
@@ -81,6 +83,7 @@
 
 <p><a href="../quickref/">確定反撃＆キャラ対策早見表</a>のデータを、そのまま4択クイズにしたドリルです。相手の技（GIF付き）が出るので、イングリッドのベスト反撃を選んでください。ガード時のフレームは回答後に表示されます。早見表の全31キャラ・301問からランダムに出題します。調べるだけでは身につかないので、反射で出てくるまで繰り返す用です。</p>
 <p>なお、ガード時−20F以下で反撃が分かりやすい技と、通常技キャンセルで隙を消せる技は、出題から外しています。</p>
+<p>選んだ反撃がその技の隙でも繋がる場合は「△（部分点）」になります。ベストの反撃との差を確認してみてください。</p>
 <p>区分：<span class="tag tag-ok">確定</span> フレーム・距離の両方で反撃が成立 ／ <span class="tag tag-cond">条件付き</span> 密着ガード時など、条件を満たしたときだけ届く</p>
 
 <div class="setup-box" id="setup">
@@ -162,7 +165,7 @@ function shuffle(a) {
   return arr;
 }
 
-let questions = [], idx = 0, score = 0, missed = [], answered = false;
+let questions = [], idx = 0, score = 0, partial = 0, missed = [], answered = false;
 
 function normText(s) { return s.replace(/\s+/g, '').replace(/−/g, '-'); }
 function bigramSet(s) {
@@ -264,7 +267,7 @@ function startQuiz() {
   const c = charSelect.value;
   let pool = c ? DATA.filter(r => r.char === c) : DATA.slice();
   questions = shuffle(pool).slice(0, Math.min(numQuestions, pool.length));
-  idx = 0; score = 0; missed = [];
+  idx = 0; score = 0; partial = 0; missed = [];
   document.getElementById('setup').hidden = true;
   document.getElementById('result').hidden = true;
   document.getElementById('quiz').hidden = false;
@@ -275,7 +278,7 @@ function showQuestion() {
   answered = false;
   const row = questions[idx];
   document.getElementById('q-progress').textContent = '第' + (idx + 1) + '問 / ' + questions.length + '問';
-  document.getElementById('q-score').textContent = '正解 ' + score;
+  document.getElementById('q-score').textContent = '正解 ' + score + (partial ? '・△ ' + partial : '');
   document.getElementById('q-char').textContent = '相手：' + row.char;
   const img = document.getElementById('q-img');
   img.src = row.gif; img.alt = row.move;
@@ -299,20 +302,28 @@ function answer(btn, text, row) {
   if (answered) return;
   answered = true;
   const ok = text === row.punish;
-  if (ok) score++; else missed.push(row);
+  let part = false;
+  if (ok) { score++; }
+  else {
+    const st = starterOf(text);
+    const gapAbs = parseGapAbs(row.onblock);
+    part = !!(st && gapAbs !== null && st.startup <= gapAbs);
+    if (part) partial++;
+    missed.push({ row: row, partial: part });
+  }
   document.querySelectorAll('.choice').forEach(b => {
     b.disabled = true;
     if (b.textContent === row.punish) b.classList.add('correct');
-    else if (b === btn) b.classList.add('wrong');
+    else if (b === btn) b.classList.add(part ? 'partial' : 'wrong');
   });
   const fb = document.getElementById('feedback');
   const tag = row.verdict === '確定'
     ? '<span class="tag tag-ok">確定</span>'
     : '<span class="tag tag-cond">条件付き</span>';
-  fb.className = 'feedback show ' + (ok ? 'good' : 'bad');
-  fb.innerHTML = '<span class="verdict-line">' + (ok ? '正解！' : '不正解…') + '</span><br>'
+  fb.className = 'feedback show ' + (ok ? 'good' : part ? 'mid' : 'bad');
+  fb.innerHTML = '<span class="verdict-line">' + (ok ? '正解！' : part ? '△ 部分点。その反撃も繋がります' : '不正解…') + '</span><br>'
     + tag + ' ガード時 ' + row.onblock + '<br>ベスト反撃：<b>' + row.punish + '</b>';
-  document.getElementById('q-score').textContent = '正解 ' + score;
+  document.getElementById('q-score').textContent = '正解 ' + score + (partial ? '・△ ' + partial : '');
   const nb = document.getElementById('next-btn');
   nb.textContent = idx + 1 < questions.length ? '次の問題へ' : '結果を見る';
   nb.hidden = false;
@@ -328,8 +339,8 @@ function showResult() {
   const r = document.getElementById('result');
   r.hidden = false;
   const total = questions.length;
-  document.getElementById('score-line').textContent = score + ' / ' + total + ' 問正解';
-  const rate = score / total;
+  document.getElementById('score-line').textContent = score + ' / ' + total + ' 問正解' + (partial ? '（△ ' + partial + '問）' : '');
+  const rate = (score + partial * 0.5) / total;
   document.getElementById('score-comment').textContent =
     rate === 1 ? '全問正解です。この調子で実戦でも反射で出していきましょう。' :
     rate >= 0.8 ? 'かなり仕上がっています。間違えた問題だけ復習すれば十分です。' :
@@ -342,9 +353,10 @@ function showResult() {
     wrap.hidden = true;
   } else {
     wrap.hidden = false;
-    for (const row of missed) {
+    for (const m of missed) {
+      const row = m.row;
       const li = document.createElement('li');
-      li.innerHTML = '<b>' + row.char + '：' + row.move + '</b>（ガード時 ' + row.onblock + '）→ ' + row.punish;
+      li.innerHTML = (m.partial ? '△ ' : '× ') + '<b>' + row.char + '：' + row.move + '</b>（ガード時 ' + row.onblock + '）→ ' + row.punish;
       ul.appendChild(li);
     }
   }
