@@ -349,7 +349,7 @@ function cancelCandidateBlocked(move, ctx) {
   }
   if (move.cat === "special") {
     if (prev.cat === "special") return false; // 必殺技の後はキャンセルではなく着弾タイミングで決まる拾いなので判定しない
-    if (ctx.pc5hk && ctx.prevId === "5hk") return false; // 立ち強K(PC)は相手を浮かせるためジャグル接続として扱う
+    if (ctx.pc5hk && ctx.prevId === "5hk" && move.id === "rise_m") return false; // 立ち強K(PC)は相手を浮かせるためジャグル接続として扱う。実績は中ライズ（#120）だけ
     return tokens.indexOf("Sp") < 0;
   }
   if (move.cat === "sa") {
