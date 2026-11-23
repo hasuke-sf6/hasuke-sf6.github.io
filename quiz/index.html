@@ -224,12 +224,15 @@ function starterKey(s) {
 function makeChoices(row) {
   const correct = row.punish;
   const correctKey = starterKey(correct);
+  const correctStarterObj = starterOf(correct);
+  const correctStarterName = correctStarterObj ? correctStarterObj.name : null;
   const gapAbs = parseGapAbs(row.onblock);
-  // 前提の違う答え文（ジャンプ回避・前ジャンプ始動・空振り前提）は、正解が同じ前提でない限り
+  // 前提の違う答え文（ジャンプ回避・前ジャンプ始動・空振り前提・着地前提）は、正解が同じ前提でない限り
   // 選択肢に混ぜない。「避ければ最大反撃」と読めてしまう齟齬と、括弧違いの酷似ペアを防ぐ
   const avoidPremise = t => /ジャンプで回避|前ジャンプ|垂直ジャンプ|回避すれば/.test(t);
   const whiffPremise = t => t.includes('空振り');
-  const okPremise = t => (avoidPremise(correct) || !avoidPremise(t)) && (whiffPremise(correct) || !whiffPremise(t));
+  const landPremise = t => t.includes('着地');
+  const okPremise = t => (avoidPremise(correct) || !avoidPremise(t)) && (whiffPremise(correct) || !whiffPremise(t)) && (landPremise(correct) || !landPremise(t));
   const sameChar = shuffle([...new Set(DATA.filter(r => r.char === row.char && r.punish !== correct).map(r => r.punish))].filter(okPremise));
   const globalPool = shuffle([...new Set(DATA.filter(r => r.punish !== correct).map(r => r.punish))].filter(okPremise));
   const candidates = [...sameChar];
@@ -258,6 +261,14 @@ function makeChoices(row) {
         if (usedKeys.has(k)) continue;
         if (k === correctKey) { if (sameKeyUsed >= 1) continue; sameKeyUsed++; }
         usedKeys.add(k);
+        // 実際の始動技名での上限：条件接頭辞（着地が近ければ／OD版：等）で文頭キーを
+        // すり抜ける同一始動バリエーションを、正解込みで2つまでに制限する
+        const stObj = starterOf(t);
+        if (stObj) {
+          let cnt = (correctStarterName !== null && stObj.name === correctStarterName) ? 1 : 0;
+          for (const p of picks) { const ps = starterOf(p); if (ps && ps.name === stObj.name) cnt++; }
+          if (cnt >= 2) continue;
+        }
       }
       picks.push(t);
     }
