@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /burnout-plan/
 Disallow: /quiz-combo/
+Disallow: /general-tech/
 
 Sitemap: https://hasuke-sf6.github.io/sitemap.xml
