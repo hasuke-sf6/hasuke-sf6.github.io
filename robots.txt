@@ -4,6 +4,7 @@ Disallow: /burnout-plan/
 Disallow: /quiz-combo/
 Disallow: /general-tech/
 Disallow: /coaching/
+Allow: /coaching/v3/
 Disallow: /admin/
 
 Sitemap: https://hasuke-sf6.github.io/sitemap.xml
