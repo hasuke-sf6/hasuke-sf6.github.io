@@ -58,11 +58,17 @@
   .qr-table { table-layout: fixed; font-size: 0.84rem; }
   .qr-table td, .qr-table th { word-break: break-word; }
   .qr-table .gif-cell { width: 88px; }
-  .qr-table .move-cell { width: 34%; }
+  .qr-table .move-cell { width: 30%; }
   .move-name { display: block; font-weight: bold; margin-bottom: 4px; }
-  .qr-table .frame-cell { width: 20%; font-weight: bold; }
+  .qr-table .frame-cell { width: 24%; font-weight: bold; font-size: 0.8rem; }
+  .qr-table.di-table .frame-cell { width: 26%; }
+  .fsub { font-size: 0.82em; font-weight: normal; color: #57606e; }
+.plus { color: #b03030; }
+.qr-table.plus-table .move-cell { width: 42%; }
+.qr-table.plus-table .frame-cell { width: 32%; }
+.qr-table.plus-table .shimmy-cell { width: 26%; }
   .qr-table img { width: 76px; height: auto; display: block; border-radius: 4px; border: 1px solid #e3ded2; background: #10182b; }
-  .tag { display: inline-block; font-size: 0.72rem; font-weight: bold; line-height: 1.5; padding: 0 7px; border-radius: 999px; margin-bottom: 3px; }
+  .tag { display: inline-block; font-size: 0.72rem; font-weight: bold; line-height: 1.5; padding: 0 7px; border-radius: 999px; margin-bottom: 3px; white-space: nowrap; }
   .tag-ok { background: #e3f1e4; color: #2e7d32; border: 1px solid #43a047; }
   .tag-cond { background: #fdf3e0; color: #9a6a00; border: 1px solid #e0a83c; }
   .tag-read { background: #e9edf4; color: #2b4a8b; border: 1px solid #2b4a8b; }
@@ -163,12 +169,12 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ライジングアッパー（623P）</span><img src="https://static.frame-search.com/tn_img_22_56.gif" alt="ライジングアッパー" loading="lazy"></td>
-<td class="frame-cell">弱 −27／中 −29／強 −33／OD −40（−43）</td>
+<td class="frame-cell">弱 −27／<br>中 −29／<br>強 −33／<br>OD −40<br><span class="fsub">（−43）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">アベンジャー＞ノーチェイサー（236K~P）</span><img src="https://static.frame-search.com/tn_img_22_52.gif" alt="アベンジャー＞ノーチェイサー" loading="lazy"></td>
-<td class="frame-cell">−6（密着）〜+3（先端）</td>
+<td class="frame-cell">−6<br><span class="fsub">（密着）〜+3</span><br><span class="fsub">（先端）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>中PTC（密着時）</td>
 </tr>
 <tr>
@@ -184,9 +190,56 @@
 </tbody>
 </table>
 
+
+
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">強フラッシュナックル（溜め）（214強P長押し）</span><img src="https://static.frame-search.com/tn_img_22_42.gif" alt="強フラッシュナックル（溜め）（214強P長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODアベンジャー＞インペイラー（236KK~K）</span><img src="https://static.frame-search.com/tn_img_22_55.gif" alt="ODアベンジャー＞インペイラー（236KK~K）" loading="lazy"></td>
+<td class="frame-cell">−3<br><span class="fsub">持続当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODアベンジャー＞ノーチェイサー（236KK~P）</span><img src="https://static.frame-search.com/tn_img_1_89.gif" alt="ODアベンジャー＞ノーチェイサー（236KK~P）" loading="lazy"></td>
+<td class="frame-cell">−6<br><span class="fsub">遅当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">アベンジャー＞ノーチェイサー（236K~P）</span><img src="https://static.frame-search.com/tn_img_1_87.gif" alt="アベンジャー＞ノーチェイサー（236K~P）" loading="lazy"></td>
+<td class="frame-cell">−6<br><span class="fsub">遅当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">しゃがみ中P（2MP）</span><img src="https://static.frame-search.com/tn_img_22_9.gif" alt="しゃがみ中P（2MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強K（5HK）</span><img src="https://static.frame-search.com/tn_img_22_6.gif" alt="立ち強K（5HK）" loading="lazy"></td>
+<td class="frame-cell">−5<br><span class="fsub">持続当て <span class="plus">+1</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">空中フラッシュナックル（ジャンプ中に214P）</span><img src="https://static.frame-search.com/tn_img_22_47.gif" alt="空中フラッシュナックル（ジャンプ中に214P）" loading="lazy"></td>
+<td class="frame-cell">−12<br><span class="fsub">低め当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -299,37 +352,37 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">乱酔旋（6HK~4HK~P／Lv4・近距離版）</span><span class="tag tag-cancel">キャンセル可</span><img src="https://static.frame-search.com/tn_img_21_36.gif" alt="乱酔旋" loading="lazy"></td>
-<td class="frame-cell">−13（中距離版は −9）</td>
+<td class="frame-cell">−13<br><span class="fsub">（中距離版は −9）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>近距離版：しゃがみ強P始動／中距離版：立ち強K・しゃがみ中K</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">流酔拳 1段目（236P）</span><img src="https://static.frame-search.com/tn_img_21_40.gif" alt="流酔拳 1段目" loading="lazy"></td>
-<td class="frame-cell">弱・中・強 −6（Lv0〜3）／−3（Lv4・2段化）／OD −3（Lv4 −1）</td>
+<td class="frame-cell">弱・中・強 −6<br><span class="fsub">（Lv0〜3）／</span><br>−3<br><span class="fsub">（Lv4・2段化）／</span><br>OD −3<br><span class="fsub">（Lv4 −1）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>中PTC（Lv0〜3・密着時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">流酔拳 2段目（236P~6P）</span><img src="https://static.frame-search.com/tn_img_21_48.gif" alt="流酔拳 2段目" loading="lazy"></td>
-<td class="frame-cell">弱 −13／中 −11／強 −9（Lv4版は −10）</td>
+<td class="frame-cell">弱 −13／<br>中 −11／<br>強 −9<br><span class="fsub">（Lv4版は −10）</span></td>
 <td><span class="tag tag-ok">確定</span><br>弱：しゃがみ強P始動／中：立ち強K／強：しゃがみ中K</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">流酔拳 3段目（236P~6P~6P）</span><img src="https://static.frame-search.com/tn_img_21_54.gif" alt="流酔拳 3段目" loading="lazy"></td>
-<td class="frame-cell">弱 −17／中 −15／強 −13（Lv4版 −14）／OD −13（Lv4 −14）</td>
+<td class="frame-cell">弱 −17／<br>中 −15／<br>強 −13<br><span class="fsub">（Lv4版 −14）／</span><br>OD −13<br><span class="fsub">（Lv4 −14）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">流酔脚 1段目（236P~6K）</span><img src="https://static.frame-search.com/tn_img_21_60.gif" alt="流酔脚 1段目" loading="lazy"></td>
-<td class="frame-cell">−15（全版共通）</td>
+<td class="frame-cell">−15<br><span class="fsub">（全版共通）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">流酔脚 2段目・飲み締め（236P~6K~6K）</span><img src="https://static.frame-search.com/tn_img_21_64.gif" alt="流酔脚 2段目・飲み締め" loading="lazy"></td>
-<td class="frame-cell">−49（Lv3〜は弱 −25／中・強・OD −26）</td>
+<td class="frame-cell">−49<br><span class="fsub">（Lv3〜は弱 −25／</span><br>中・強・OD −26）</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">酔疾歩（214P）</span><img src="https://static.frame-search.com/tn_img_21_68.gif" alt="酔疾歩" loading="lazy"></td>
-<td class="frame-cell">弱 −6／中 −6（深当て）〜+2（先端）／強 −3〜+5／OD −1〜+7</td>
+<td class="frame-cell">弱 −6／<br>中 −6<br><span class="fsub">（深当て）〜+2</span><br><span class="fsub">（先端）／</span><br>強 −3〜+5／<br>OD −1〜+7</td>
 <td><span class="tag tag-cond">条件付き</span><br>中PTC（弱・中の深当て時）</td>
 </tr>
 <tr>
@@ -339,25 +392,65 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">張弓腿（623K）</span><img src="https://static.frame-search.com/tn_img_21_72.gif" alt="張弓腿" loading="lazy"></td>
-<td class="frame-cell">弱 −44／中 −43／強 −43／OD −43</td>
+<td class="frame-cell">弱 −44／<br>中 −43／<br>強 −43／<br>OD −43</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">爆廻（236K／Lv2〜）</span><img src="https://static.frame-search.com/tn_img_21_80.gif" alt="爆廻" loading="lazy"></td>
-<td class="frame-cell">弱 −12／中 −16／強 −17／OD −43</td>
+<td class="frame-cell">弱 −12／<br>中 −16／<br>強 −17／<br>OD −43</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">無影蹴（空中214K／Lv1〜）</span><img src="https://static.frame-search.com/tn_img_21_76.gif" alt="無影蹴" loading="lazy"></td>
-<td class="frame-cell">通常 −8（低当て +2）／OD −4（低当て +3）</td>
+<td class="frame-cell">通常 −8<br><span class="fsub">（低当て +2）／</span><br>OD −4<br><span class="fsub">（低当て +3）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち中K始動（高い位置でガード時）</td>
+</tr>
+</tbody>
+</table>
+
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">弱・中スワッガーステップ（214弱P・中P）</span><img src="https://static.frame-search.com/tn_img_21_68.gif" alt="弱・中スワッガーステップ（214弱P・中P）" loading="lazy"></td>
+<td class="frame-cell">−6<br><span class="fsub">持続当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強スワッガーステップ（214強P）</span><img src="https://static.frame-search.com/tn_img_21_70.gif" alt="強スワッガーステップ（214強P）" loading="lazy"></td>
+<td class="frame-cell">−3<br><span class="fsub">持続当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODスワッガーステップ（214PP）</span><img src="https://static.frame-search.com/tn_img_21_71.gif" alt="ODスワッガーステップ（214PP）" loading="lazy"></td>
+<td class="frame-cell">−1<br><span class="fsub">持続当て <span class="plus">+7</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中P（5MP）</span><img src="https://static.frame-search.com/tn_img_21_3.gif" alt="立ち中P（5MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">無影蹴（ジャンプ中に214K）</span><img src="https://static.frame-search.com/tn_img_21_77.gif" alt="無影蹴（ジャンプ中に214K）" loading="lazy"></td>
+<td class="frame-cell">−8<br><span class="fsub">低め当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD無影蹴（ジャンプ中に214KK）</span><img src="https://static.frame-search.com/tn_img_21_79.gif" alt="OD無影蹴（ジャンプ中に214KK）" loading="lazy"></td>
+<td class="frame-cell">−4<br><span class="fsub">低め当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">不明</td>
 </tr>
 </tbody>
 </table>
 
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -524,9 +617,29 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">ランヴェルセ（236P~K）</span><img src="https://static.frame-search.com/tn_img_11_38.gif" alt="ランヴェルセ（236P~K）" loading="lazy"></td>
+<td class="frame-cell">−3<br><span class="fsub">持続当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">レベランス（4HP）</span><img src="https://static.frame-search.com/tn_img_11_19.gif" alt="レベランス（4HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -582,7 +695,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">流転一文字 弱／流転一文字（236弱P）</span><img src="https://static.frame-search.com/tn_img_18_53.gif" alt="流転一文字 弱／流転一文字" loading="lazy"></td>
-<td class="frame-cell">−4（先端 −2）</td>
+<td class="frame-cell">−4<br><span class="fsub">（先端 −2）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>弱P（密着時）</td>
 </tr>
 <tr>
@@ -592,12 +705,12 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">疾駆け＞影すくい（236K~中K）</span><img src="https://static.frame-search.com/tn_img_18_43.gif" alt="疾駆け＞影すくい" loading="lazy"></td>
-<td class="frame-cell">−12（持続当て −1）</td>
+<td class="frame-cell">−12<br><span class="fsub">（持続当て −1）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動（浅当て時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">OD疾駆け＞影すくい（236KK~中K）</span><img src="https://static.frame-search.com/tn_img_18_44.gif" alt="OD疾駆け＞影すくい" loading="lazy"></td>
-<td class="frame-cell">−10（持続当て −7）</td>
+<td class="frame-cell">−10<br><span class="fsub">（持続当て −7）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち中K始動（浅当て時）</td>
 </tr>
 <tr>
@@ -622,7 +735,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">水切り蹴り／スライディング（3MK）</span><img src="https://static.frame-search.com/tn_img_18_19.gif" alt="水切り蹴り／スライディング" loading="lazy"></td>
-<td class="frame-cell">−5（持続当て 0）</td>
+<td class="frame-cell">−5<br><span class="fsub">（持続当て 0）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>弱P／弱K（密着・浅当て時）</td>
 </tr>
 <tr>
@@ -632,7 +745,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ターゲットコンボ最終段（5LP~MP~HP／~HP~HK／~2HP~HK／~2HP~2HK）</span><img src="https://static.frame-search.com/tn_img_18_27.gif" alt="ターゲットコンボ最終段" loading="lazy"></td>
-<td class="frame-cell">−10／−12</td>
+<td class="frame-cell">−10／<br>−12</td>
 <td><span class="tag tag-ok">確定</span><br>−10 の分岐：立ち中K始動／−12 の分岐：しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -647,7 +760,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">SA2 武神天翔亢竜（214214P）</span><img src="https://static.frame-search.com/tn_img_18_71.gif" alt="SA2 武神天翔亢竜" loading="lazy"></td>
-<td class="frame-cell">−26（−20）</td>
+<td class="frame-cell">−26<br><span class="fsub">（−20）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -658,9 +771,49 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">疾駆け＞胴刎ね（236K~弱K）</span><img src="https://static.frame-search.com/tn_img_18_41.gif" alt="疾駆け＞胴刎ね（236K~弱K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD疾駆け＞胴刎ね（236KK~弱K）</span><img src="https://static.frame-search.com/tn_img_18_42.gif" alt="OD疾駆け＞胴刎ね（236KK~弱K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">しゃがみ中K（2MK）</span><img src="https://static.frame-search.com/tn_img_18_10.gif" alt="しゃがみ中K（2MK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強K（5HK）</span><img src="https://static.frame-search.com/tn_img_18_6.gif" alt="立ち強K（5HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">空中武神旋風脚（ジャンプ中に214K・KK）</span><img src="https://static.frame-search.com/tn_img_18_31.gif" alt="空中武神旋風脚（ジャンプ中に214K・KK）" loading="lazy"></td>
+<td class="frame-cell">−1<br><span class="fsub">低め当て <span class="plus">+4</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">肘落とし（ジャンプ中に2MP）</span><img src="https://static.frame-search.com/tn_img_18_23.gif" alt="肘落とし（ジャンプ中に2MP）" loading="lazy"></td>
+<td class="frame-cell">−3<br><span class="fsub">低め当て <span class="plus">+1</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -800,7 +953,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">スクトゥム（214K）</span><img src="https://static.frame-search.com/tn_img_10_66.gif" alt="スクトゥム" loading="lazy"></td>
-<td class="frame-cell">―（構え技・ガード対象外）</td>
+<td class="frame-cell">―<br><span class="fsub">（構え技・ガード対象外）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>構えの空振り・解除後の硬直に：しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -815,12 +968,12 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">エンフォルド（スクトゥム中に弱P+弱K）</span><img src="https://static.frame-search.com/tn_img_10_73.gif" alt="エンフォルド（スクトゥム中に弱P+弱K）" loading="lazy"></td>
-<td class="frame-cell">―（コマンド投げ・ガード不能）</td>
+<td class="frame-cell">―<br><span class="fsub">（コマンド投げ・ガード不能）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>全体61Fの硬直にしゃがみ強P始動／発生5Fの前にジャンプで回避（空振り時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">SA1 マリーザジャベリン（236236P）</span><img src="https://static.frame-search.com/tn_img_10_74.gif" alt="SA1 マリーザジャベリン" loading="lazy"></td>
-<td class="frame-cell">−43（溜め版 −42）</td>
+<td class="frame-cell">−43<br><span class="fsub">（溜め版 −42）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>前ジャンプ強攻撃始動／確実なのはサンフレア Lv2・Lv3・SA3</td>
 </tr>
 <tr>
@@ -836,9 +989,84 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">弱・中・強グラディウス（溜め）（236P長押し）</span><img src="https://static.frame-search.com/tn_img_10_47.gif" alt="弱・中・強グラディウス（溜め）（236P長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODグラディウス（溜め）（236PP長押し）</span><img src="https://static.frame-search.com/tn_img_10_48.gif" alt="ODグラディウス（溜め）（236PP長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">マレウスブレイカー（溜め）（3HP長押し）</span><img src="https://static.frame-search.com/tn_img_10_37.gif" alt="マレウスブレイカー（溜め）（3HP長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">マグナバンカー（溜め）（4HP長押し）</span><img src="https://static.frame-search.com/tn_img_10_32.gif" alt="マグナバンカー（溜め）（4HP長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強P（溜め）（5HP長押し）</span><img src="https://static.frame-search.com/tn_img_10_6.gif" alt="立ち強P（溜め）（5HP長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+5</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強K（溜め）（5HK長押し）</span><img src="https://static.frame-search.com/tn_img_10_8.gif" alt="立ち強K（溜め）（5HK長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">弱〜強ファランクス（623P）</span><img src="https://static.frame-search.com/tn_img_10_59.gif" alt="弱〜強ファランクス（623P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span><br><span class="fsub">しゃがみガード時 <span class="plus">+4</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODファランクス（623PP）</span><img src="https://static.frame-search.com/tn_img_10_61.gif" alt="ODファランクス（623PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span><br><span class="fsub">状況により <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ファルクスクラッシャー（溜め）（6HK長押し）</span><img src="https://static.frame-search.com/tn_img_10_40.gif" alt="ファルクスクラッシャー（溜め）（6HK長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強クアドリガ（236強K）</span><img src="https://static.frame-search.com/tn_img_10_64.gif" alt="強クアドリガ（236強K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ジャンプ強P（溜め）（ジャンプ中にHP長押し）</span><img src="https://static.frame-search.com/tn_img_10_22.gif" alt="ジャンプ強P（溜め）（ジャンプ中にHP長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+12</span><br><span class="fsub">低め当て <span class="plus">+18</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ジャンプ強K（溜め）（ジャンプ中にHK長押し）</span><img src="https://static.frame-search.com/tn_img_10_24.gif" alt="ジャンプ強K（溜め）（ジャンプ中にHK長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+13</span><br><span class="fsub">低め当て <span class="plus">+18</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">カエルムアーク（垂直ジャンプ中に2HP）</span><img src="https://static.frame-search.com/tn_img_10_29.gif" alt="カエルムアーク（垂直ジャンプ中に2HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+7</span><br><span class="fsub">溜め <span class="plus">+14</span>／低め当てで最大 <span class="plus">+18</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -944,7 +1172,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">コンドルウィンド（弱・溜め版／214弱P長押し）</span></td>
-<td class="frame-cell">―（攻撃判定なし）</td>
+<td class="frame-cell">―<br><span class="fsub">（攻撃判定なし）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>近〜中距離で溜めを見たら：前進しての打撃／遠距離は サンフレア Lv2／Lv3で溜めを咎める</td>
 </tr>
 <tr>
@@ -959,7 +1187,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">弱・中・強・ODコンドルスパイア（236K）【風なし】</span><img src="https://static.frame-search.com/tn_img_7_30.gif" alt="弱コンドルスパイア" loading="lazy"></td>
-<td class="frame-cell">−8（先端当ては最大+4まで変動）</td>
+<td class="frame-cell">−8<br><span class="fsub">（先端当ては最大+4まで変動）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>密着〜通常当て：立ち中K始動</td>
 </tr>
 <tr>
@@ -974,12 +1202,12 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">コンドルダイブ／ODコンドルダイブ（通常／風纏い）</span><img src="https://static.frame-search.com/tn_img_7_48.gif" alt="コンドルダイブ／ODコンドルダイブ" loading="lazy"></td>
-<td class="frame-cell">−24（浅当て −19）</td>
+<td class="frame-cell">−24<br><span class="fsub">（浅当て −19）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>深当て：しゃがみ強P始動／浅当て・先端：ドライブラッシュ＞しゃがみ中K等の8F技</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">メキシカンタイフーン（360P／全強度・OD）</span><img src="https://static.frame-search.com/tn_img_7_52.gif" alt="メキシカンタイフーン" loading="lazy"></td>
-<td class="frame-cell">―（投げ・ガード不能）</td>
+<td class="frame-cell">―<br><span class="fsub">（投げ・ガード不能）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>空振りさせれば：しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -994,20 +1222,55 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">SA2 スカイサンダーバード（ジャンプ中に236236K）</span><img src="https://static.frame-search.com/tn_img_7_59.gif" alt="SA2 スカイサンダーバード" loading="lazy"></td>
-<td class="frame-cell">−54（風纏い −51）</td>
+<td class="frame-cell">−54<br><span class="fsub">（風纏い −51）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>着地位置が近ければしゃがみ強P始動／遠ければ サンフレア Lv2／Lv3 で着地を狙う</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">SA3 レイジングタイフーン（214214P）</span><img src="https://static.frame-search.com/tn_img_7_61.gif" alt="SA3 レイジングタイフーン" loading="lazy"></td>
-<td class="frame-cell">―（投げ・ガード不能）</td>
+<td class="frame-cell">―<br><span class="fsub">（投げ・ガード不能）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>暗転見て垂直ジャンプで回避すれば：着地後にしゃがみ強P始動</td>
+</tr>
+</tbody>
+</table>
+
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">弱・中・強コンドルスパイア（236K）</span><img src="https://static.frame-search.com/tn_img_7_36.gif" alt="弱・中・強コンドルスパイア（236K）" loading="lazy"></td>
+<td class="frame-cell">−8<br><span class="fsub">先端当て <span class="plus">+4</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODコンドルスパイア（236KK）</span><img src="https://static.frame-search.com/tn_img_7_38.gif" alt="ODコンドルスパイア（236KK）" loading="lazy"></td>
+<td class="frame-cell">−8<br><span class="fsub">先端当て <span class="plus">+4</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">風纏いコンドルスパイア（風纏い中に236K）</span><img src="https://static.frame-search.com/tn_img_7_35.gif" alt="風纏いコンドルスパイア（風纏い中に236K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span><br><span class="fsub">3段目のみ当て <span class="plus">+7</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">風纏いODコンドルスパイア（風纏い中に236KK）</span><img src="https://static.frame-search.com/tn_img_7_38.gif" alt="風纏いODコンドルスパイア（風纏い中に236KK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span><br><span class="fsub">3段目のみ当て <span class="plus">+8</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">グレートスピン（ジャンプ中に2HP）</span><img src="https://static.frame-search.com/tn_img_7_21.gif" alt="グレートスピン（ジャンプ中に2HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+7</span><br><span class="fsub">低め当て <span class="plus">+11</span></span></td>
+<td class="shimmy-cell">不明</td>
 </tr>
 </tbody>
 </table>
 
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -1087,17 +1350,17 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ヴィーハト設置（214P、弱＝近／中／強＝遠）</span><img src="https://static.frame-search.com/tn_img_9_38.gif" alt="ヴィーハト設置" loading="lazy"></td>
-<td class="frame-cell">―（ガード対象外）</td>
+<td class="frame-cell">―<br><span class="fsub">（ガード対象外）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>設置モーション中：近〜中距離なら接近して打撃／距離が合えば ODサンフレア</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ODヴィーハト設置（214PP、2か所）</span><img src="https://static.frame-search.com/tn_img_9_40.gif" alt="ODヴィーハト設置" loading="lazy"></td>
-<td class="frame-cell">―（ガード対象外）</td>
+<td class="frame-cell">―<br><span class="fsub">（ガード対象外）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>設置モーション中：近〜中距離なら接近して打撃／距離が合えば ODサンフレア（ただし全体40Fと短く、咎めにくい）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ヴィーハト・アクノ（設置中に214弱P／中P、ワープ）</span><img src="https://static.frame-search.com/tn_img_9_43.gif" alt="ヴィーハト・アクノ" loading="lazy"></td>
-<td class="frame-cell">―（着地硬直のみ）</td>
+<td class="frame-cell">―<br><span class="fsub">（着地硬直のみ）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>出現位置を対空で落とす／着地が目の前なら小技</td>
 </tr>
 <tr>
@@ -1112,17 +1375,17 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">アブニマーチ（214K、コマンド投げ弾）／ODアブニマーチ（214KK）</span><img src="https://static.frame-search.com/tn_img_9_51.gif" alt="アブニマーチ／ODアブニマーチ" loading="lazy"></td>
-<td class="frame-cell">―（ガード不可）</td>
+<td class="frame-cell">―<br><span class="fsub">（ガード不可）</span></td>
 <td><span class="tag tag-ok">確定</span><br>空振りへ：近ければ しゃがみ強P始動／離れれば サンフレア Lv2／Lv3・SA3</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ODアムネジア（22KK、当身）</span><img src="https://static.frame-search.com/tn_img_9_45.gif" alt="ODアムネジア" loading="lazy"></td>
-<td class="frame-cell">―（ガード対象外）</td>
+<td class="frame-cell">―<br><span class="fsub">（ガード対象外）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>空振りへ：近距離なら しゃがみ強P始動（ただし小技を当てて発動させてから投げる手も有効）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">SA1 チェルノボーグ（236236P）</span><img src="https://static.frame-search.com/tn_img_9_53.gif" alt="SA1 チェルノボーグ" loading="lazy"></td>
-<td class="frame-cell">−33（−23）</td>
+<td class="frame-cell">−33<br><span class="fsub">（−23）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -1152,7 +1415,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ヴィリーナ（6HK）</span><span class="tag tag-cancel">キャンセル可</span><img src="https://static.frame-search.com/tn_img_9_21.gif" alt="ヴィリーナ" loading="lazy"></td>
-<td class="frame-cell">−5（しゃがみガード時 −8）</td>
+<td class="frame-cell">−5<br><span class="fsub">（しゃがみガード時 −8）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ちガード時：弱P／弱K。しゃがみガード時：立ち中K始動</td>
 </tr>
 <tr>
@@ -1163,9 +1426,49 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">デパーチャー：シャドウ（214P~214HP）</span><img src="https://static.frame-search.com/tn_img_9_39.gif" alt="デパーチャー：シャドウ（214P~214HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+9</span><br><span class="fsub">持続当て <span class="plus">+11</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODデパーチャー：シャドウ（214PP~214HP）</span><img src="https://static.frame-search.com/tn_img_9_42.gif" alt="ODデパーチャー：シャドウ（214PP~214HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+39</span><br><span class="fsub">持続当て <span class="plus">+40</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODトリグラフ（22PP）</span><img src="https://static.frame-search.com/tn_img_9_30.gif" alt="ODトリグラフ（22PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強ストリボーグ（236強P）</span><img src="https://static.frame-search.com/tn_img_9_35.gif" alt="強ストリボーグ（236強P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODストリボーグ（236PP）</span><img src="https://static.frame-search.com/tn_img_9_36.gif" alt="ODストリボーグ（236PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強K（5HK）</span><img src="https://static.frame-search.com/tn_img_9_6.gif" alt="立ち強K（5HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -1318,7 +1621,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">疾空閃（前ジャンプ中214K）</span><img src="https://static.frame-search.com/tn_img_17_66.gif" alt="疾空閃" loading="lazy"></td>
-<td class="frame-cell">−10（深当て）〜−3（先端）</td>
+<td class="frame-cell">−10<br><span class="fsub">（深当て）〜−3</span><br><span class="fsub">（先端）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち中K始動／先端は確反なし（深当て時）</td>
 </tr>
 <tr>
@@ -1359,9 +1662,24 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中P（5MP）</span><img src="https://static.frame-search.com/tn_img_17_5.gif" alt="立ち中P（5MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -1451,7 +1769,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">クイックローリングソバット（236中K）</span><img src="https://static.frame-search.com/tn_img_12_41.gif" alt="クイックローリングソバット" loading="lazy"></td>
-<td class="frame-cell">−6（先端 −4）</td>
+<td class="frame-cell">−6<br><span class="fsub">（先端 −4）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>中PTC（密着〜近距離時）</td>
 </tr>
 <tr>
@@ -1491,7 +1809,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">しゃがみ強K（2HK）</span><img src="https://static.frame-search.com/tn_img_12_12.gif" alt="しゃがみ強K" loading="lazy"></td>
-<td class="frame-cell">−11（先端 −2）</td>
+<td class="frame-cell">−11<br><span class="fsub">（先端 −2）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち中K始動（密着〜中距離時）</td>
 </tr>
 <tr>
@@ -1522,9 +1840,49 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">ジョスクール＞ワニングムーン（214K~中K）</span><img src="https://static.frame-search.com/tn_img_12_52.gif" alt="ジョスクール＞ワニングムーン（214K~中K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強P（5HP）</span><img src="https://static.frame-search.com/tn_img_12_5.gif" alt="立ち強P（5HP）" loading="lazy"></td>
+<td class="frame-cell">−4<br><span class="fsub">持続当て <span class="plus">+1</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中P（5MP）</span><img src="https://static.frame-search.com/tn_img_12_3.gif" alt="立ち中P（5MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">サンライズヒール（6MK）</span><img src="https://static.frame-search.com/tn_img_12_20.gif" alt="サンライズヒール（6MK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span><br><span class="fsub">持続当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ニーショット（ジャンプ中に2弱K）</span><img src="https://static.frame-search.com/tn_img_12_19.gif" alt="ニーショット（ジャンプ中に2弱K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span><br><span class="fsub">低め当てで最大 <span class="plus">+8</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODエアスラッシャー（タメ46PP）</span><img src="https://static.frame-search.com/tn_img_12_34.gif" alt="ODエアスラッシャー（タメ46PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -1634,7 +1992,7 @@
 <tbody>
 <tr>
 <td class="move-cell"><span class="move-name">弱・中・強スパイラルアロー（236K）</span><img src="https://static.frame-search.com/tn_img_6_24.gif" alt="弱スパイラルアロー" loading="lazy"></td>
-<td class="frame-cell">−14〜−12（先端 −1〜0）</td>
+<td class="frame-cell">−14〜−12<br><span class="fsub">（先端 −1〜0）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動（深当て時）</td>
 </tr>
 <tr>
@@ -1644,22 +2002,22 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">キャノンスパイク（623K）</span><img src="https://static.frame-search.com/tn_img_6_29.gif" alt="キャノンスパイク" loading="lazy"></td>
-<td class="frame-cell">弱・中・強 −36／ホールド・OD −40</td>
+<td class="frame-cell">弱・中・強 −36／<br>ホールド・OD −40</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">キャノンストライク（前ジャンプ中 214K）</span><img src="https://static.frame-search.com/tn_img_6_38.gif" alt="キャノンストライク" loading="lazy"></td>
-<td class="frame-cell">−8〜+5（当てる高さ依存）</td>
+<td class="frame-cell">−8〜+5<br><span class="fsub">（当てる高さ依存）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち中K始動（高めにした時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">フーリガン＞キャノンストライク（236P〜K）</span><img src="https://static.frame-search.com/tn_img_6_46.gif" alt="フーリガン＞キャノンストライク" loading="lazy"></td>
-<td class="frame-cell">通常版 −7〜+3／ホールド・OD版 0〜+5（当てる高さ依存）</td>
+<td class="frame-cell">通常版 −7〜+3／<br>ホールド・OD版 0〜+5<br><span class="fsub">（当てる高さ依存）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ中P始動（高めにガード時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">リバースエッジ（236P〜2K）</span><img src="https://static.frame-search.com/tn_img_6_49.gif" alt="リバースエッジ" loading="lazy"></td>
-<td class="frame-cell">通常版 −4〜−1／ホールド・OD版 −2（当てる高さ依存）</td>
+<td class="frame-cell">通常版 −4〜−1／<br>ホールド・OD版 −2<br><span class="fsub">（当てる高さ依存）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>弱P（深当て時）</td>
 </tr>
 <tr>
@@ -1710,9 +2068,64 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">強アクセルスピンナックル（214強P）</span><img src="https://static.frame-search.com/tn_img_6_36.gif" alt="強アクセルスピンナックル（214強P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODアクセルスピンナックル（214PP）</span><img src="https://static.frame-search.com/tn_img_6_37.gif" alt="ODアクセルスピンナックル（214PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span><br><span class="fsub">めくり当て −2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">フーリガンコンビネーション＞キャノンストライク（236P~K）</span><img src="https://static.frame-search.com/tn_img_6_46.gif" alt="フーリガンコンビネーション＞キャノンストライク（236P~K）" loading="lazy"></td>
+<td class="frame-cell">−7<br><span class="fsub">低め当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">フーリガンコンビネーション（溜め・OD）＞キャノンストライク（236強P長押し~K／236PP~K）</span><img src="https://static.frame-search.com/tn_img_6_47.gif" alt="フーリガンコンビネーション（溜め・OD）＞キャノンストライク（236強P長押し~K／236PP~K）" loading="lazy"></td>
+<td class="frame-cell">0<br><span class="fsub">低め当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">フーリガンコンビネーション＞レイザーズエッジスライサー（236P~入力なし）</span><img src="https://static.frame-search.com/tn_img_6_43.gif" alt="フーリガンコンビネーション＞レイザーズエッジスライサー（236P~入力なし）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">しゃがみ強P（2HP）</span><img src="https://static.frame-search.com/tn_img_6_11.gif" alt="しゃがみ強P（2HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">リフトアッパー（4MP）</span><img src="https://static.frame-search.com/tn_img_6_19.gif" alt="リフトアッパー（4MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">キャノンストライク（ジャンプ中に214K）</span><img src="https://static.frame-search.com/tn_img_6_38.gif" alt="キャノンストライク（ジャンプ中に214K）" loading="lazy"></td>
+<td class="frame-cell">−8<br><span class="fsub">低め当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODキャノンストライク（ジャンプ中に214KK）</span><img src="https://static.frame-search.com/tn_img_6_39.gif" alt="ODキャノンストライク（ジャンプ中に214KK）" loading="lazy"></td>
+<td class="frame-cell">−2<br><span class="fsub">低め当て <span class="plus">+7</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -1813,7 +2226,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">昇龍拳（623P）</span><img src="https://static.frame-search.com/tn_img_0_33.gif" alt="昇龍拳" loading="lazy"></td>
-<td class="frame-cell">弱 −23／中 −32／強 −39／OD −40</td>
+<td class="frame-cell">弱 −23／<br>中 −32／<br>強 −39／<br>OD −40</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -1823,32 +2236,32 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">中竜巻旋風脚（214中K）</span><img src="https://static.frame-search.com/tn_img_0_38.gif" alt="中竜巻旋風脚" loading="lazy"></td>
-<td class="frame-cell">−13（持続後段 −28）</td>
+<td class="frame-cell">−13<br><span class="fsub">（持続後段 −28）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">強竜巻旋風脚（214強K）</span><img src="https://static.frame-search.com/tn_img_0_39.gif" alt="強竜巻旋風脚" loading="lazy"></td>
-<td class="frame-cell">−13（持続後段 −28／−43）</td>
+<td class="frame-cell">−13<br><span class="fsub">（持続後段 −28／</span><br>−43）</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">OD竜巻旋風脚（214KK）</span><img src="https://static.frame-search.com/tn_img_0_40.gif" alt="OD竜巻旋風脚" loading="lazy"></td>
-<td class="frame-cell">−14（先端 −32）</td>
+<td class="frame-cell">−14<br><span class="fsub">（先端 −32）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">空中竜巻旋風脚（前ジャンプ中に214K）／OD版（214KK）</span><img src="https://static.frame-search.com/tn_img_0_41.gif" alt="空中竜巻旋風脚（前ジャンプ中に214K）／OD版" loading="lazy"></td>
-<td class="frame-cell">通常 −6（しゃがみガード +3）／OD −29</td>
+<td class="frame-cell">通常 −6<br><span class="fsub">（しゃがみガード +3）／</span><br>OD −29</td>
 <td><span class="tag tag-cond">条件付き</span><br>OD版：着地が近ければ しゃがみ強P始動／通常版：密着着地時のみ 中PTC</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">弱上段足刀蹴り（236弱K）</span><img src="https://static.frame-search.com/tn_img_0_43.gif" alt="弱上段足刀蹴り" loading="lazy"></td>
-<td class="frame-cell">−11（持続当て −7）</td>
+<td class="frame-cell">−11<br><span class="fsub">（持続当て −7）</span></td>
 <td><span class="tag tag-ok">確定</span><br>立ち中K始動（持続当てはしゃがみ中P始動）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">中上段足刀蹴り（236中K）</span><img src="https://static.frame-search.com/tn_img_0_44.gif" alt="中上段足刀蹴り" loading="lazy"></td>
-<td class="frame-cell">−8（持続当て −2）</td>
+<td class="frame-cell">−8<br><span class="fsub">（持続当て −2）</span></td>
 <td><span class="tag tag-ok">確定</span><br>立ち中K始動※持続当ては確反なし</td>
 </tr>
 <tr>
@@ -1893,7 +2306,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">上段二連撃（5HP~HK）</span><img src="https://static.frame-search.com/tn_img_0_24.gif" alt="上段二連撃" loading="lazy"></td>
-<td class="frame-cell">−8（しゃがみガード時は2段目が空振りし −18）</td>
+<td class="frame-cell">−8<br><span class="fsub">（しゃがみガード時は2段目が空振りし −18）</span></td>
 <td><span class="tag tag-ok">確定</span><br>立ち中K始動</td>
 </tr>
 <tr>
@@ -1904,9 +2317,64 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">強波掌撃（214強P）</span><img src="https://static.frame-search.com/tn_img_0_49.gif" alt="強波掌撃（214強P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD波掌撃（214PP）</span><img src="https://static.frame-search.com/tn_img_0_51.gif" alt="OD波掌撃（214PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">電刃波掌撃（電刃錬気中に214強P）</span><img src="https://static.frame-search.com/tn_img_0_49.gif" alt="電刃波掌撃（電刃錬気中に214強P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">電刃OD波掌撃（電刃錬気中に214PP）</span><img src="https://static.frame-search.com/tn_img_0_51.gif" alt="電刃OD波掌撃（電刃錬気中に214PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">電刃OD波動拳（電刃錬気中に236PP）</span><img src="https://static.frame-search.com/tn_img_0_31.gif" alt="電刃OD波動拳（電刃錬気中に236PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強上段足刀蹴り（236強K）</span><img src="https://static.frame-search.com/tn_img_0_45.gif" alt="強上段足刀蹴り（236強K）" loading="lazy"></td>
+<td class="frame-cell">−3<br><span class="fsub">持続当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">空中竜巻旋風脚（ジャンプ中に214K）</span><img src="https://static.frame-search.com/tn_img_0_37.gif" alt="空中竜巻旋風脚（ジャンプ中に214K）" loading="lazy"></td>
+<td class="frame-cell">−6<br><span class="fsub">しゃがみガード時 <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強K（5HK）</span><img src="https://static.frame-search.com/tn_img_0_6.gif" alt="立ち強K（5HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">鳩尾砕き（6HP）</span><img src="https://static.frame-search.com/tn_img_0_20.gif" alt="鳩尾砕き（6HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -2067,12 +2535,12 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">弱・中・強・ODスーパー百貫落とし（[2]8K）</span><img src="https://static.frame-search.com/tn_img_13_37.gif" alt="弱スーパー百貫落とし" loading="lazy"></td>
-<td>+1〜+2（落下攻撃をガード時）／着地硬直17F</td>
+<td>+1〜+2<br><span class="fsub">（落下攻撃をガード時）／</span><br>着地硬直17F</td>
 <td><span class="tag tag-cond">条件付き</span> ガードした場合は確反なし。落下を空振りさせた場合のみ：着地へ しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">大銀杏投げ（63214K／OD版 63214KK）</span><img src="https://static.frame-search.com/tn_img_13_41.gif" alt="大銀杏投げ" loading="lazy"></td>
-<td class="frame-cell">ガード不可（投げ）</td>
+<td class="frame-cell">ガード不可<br><span class="fsub">（投げ）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動（空振り時）</td>
 </tr>
 <tr>
@@ -2097,12 +2565,12 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">立ち強P（5HP）</span><span class="tag tag-cancel">キャンセル可</span><img src="https://static.frame-search.com/tn_img_13_5.gif" alt="立ち強P" loading="lazy"></td>
-<td class="frame-cell">−6（持続後半 −3）</td>
+<td class="frame-cell">−6<br><span class="fsub">（持続後半 −3）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>中PTC（密着時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">立ち強K（5HK）</span><span class="tag tag-cancel">キャンセル可</span><img src="https://static.frame-search.com/tn_img_13_6.gif" alt="立ち強K" loading="lazy"></td>
-<td class="frame-cell">−5（対しゃがみ −9）</td>
+<td class="frame-cell">−5<br><span class="fsub">（対しゃがみ −9）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみガード時（2段目が空振り）：立ち中K始動／立ちガード時：弱K</td>
 </tr>
 <tr>
@@ -2123,9 +2591,54 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">OD百裂張り手（214PP）</span><img src="https://static.frame-search.com/tn_img_13_31.gif" alt="OD百裂張り手（214PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">猫だまし（22P）</span><img src="https://static.frame-search.com/tn_img_13_53.gif" alt="猫だまし（22P）" loading="lazy"></td>
+<td class="frame-cell">−3<br><span class="fsub">持続当て <span class="plus">+1</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD鉄砲（1段目まで）（236KK~P）</span><img src="https://static.frame-search.com/tn_img_13_49.gif" alt="OD鉄砲（1段目まで）（236KK~P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中P（5MP）</span><img src="https://static.frame-search.com/tn_img_13_3.gif" alt="立ち中P（5MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">フライング相撲プレス（ジャンプ中に2MK）</span><img src="https://static.frame-search.com/tn_img_13_22.gif" alt="フライング相撲プレス（ジャンプ中に2MK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+6</span><br><span class="fsub">低め当て <span class="plus">+9</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">弱・中・強相撲スマッシュ（タメ28K）</span><img src="https://static.frame-search.com/tn_img_13_38.gif" alt="弱・中・強相撲スマッシュ（タメ28K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD相撲スマッシュ（タメ28KK）</span><img src="https://static.frame-search.com/tn_img_13_40.gif" alt="OD相撲スマッシュ（タメ28KK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -2199,7 +2712,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">エリアルローリング（空中で[4]6P）</span><img src="https://static.frame-search.com/tn_img_15_58.gif" alt="エリアルローリング" loading="lazy"></td>
-<td class="frame-cell">−9（高め）〜−2（低め）</td>
+<td class="frame-cell">−9<br><span class="fsub">（高め）〜−2</span><br><span class="fsub">（低め）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち中K始動／しゃがみ中K（高め時）</td>
 </tr>
 <tr>
@@ -2219,7 +2732,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ワイルドハント（236K）</span><img src="https://static.frame-search.com/tn_img_15_66.gif" alt="ワイルドハント" loading="lazy"></td>
-<td class="frame-cell">投げ（ガード不可）</td>
+<td class="frame-cell">投げ<br><span class="fsub">（ガード不可）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動（空振り時）</td>
 </tr>
 <tr>
@@ -2254,20 +2767,70 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ワイルドネイル（6HP）</span><span class="tag tag-cancel">キャンセル可</span><img src="https://static.frame-search.com/tn_img_15_23.gif" alt="ワイルドネイル" loading="lazy"></td>
-<td class="frame-cell">−15（先端当て −12）</td>
+<td class="frame-cell">−15<br><span class="fsub">（先端当て −12）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動（浅当て・密着時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">アマゾンリバーラン（3HP／スライディング）</span><img src="https://static.frame-search.com/tn_img_15_24.gif" alt="アマゾンリバーラン" loading="lazy"></td>
-<td class="frame-cell">−18（先端当て −9）</td>
+<td class="frame-cell">−18<br><span class="fsub">（先端当て −9）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動／先端当てでも距離次第で しゃがみ中K・立ち強K（浅当て時）</td>
+</tr>
+</tbody>
+</table>
+
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">エレクトリックサンダー（溜め）（214P長押し）</span><img src="https://static.frame-search.com/tn_img_15_30.gif" alt="エレクトリックサンダー（溜め）（214P長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODエレクトリックサンダー（214PP）</span><img src="https://static.frame-search.com/tn_img_15_32.gif" alt="ODエレクトリックサンダー（214PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ワイルドエッジ（4MK）</span><img src="https://static.frame-search.com/tn_img_15_22.gif" alt="ワイルドエッジ（4MK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">弱バックステップローリング（63214弱K）</span><img src="https://static.frame-search.com/tn_img_15_50.gif" alt="弱バックステップローリング（63214弱K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span><br><span class="fsub">低め当て <span class="plus">+8</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">中バックステップローリング（63214中K）</span><img src="https://static.frame-search.com/tn_img_15_52.gif" alt="中バックステップローリング（63214中K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span><br><span class="fsub">低め当て <span class="plus">+8</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強バックステップローリング（63214強K）</span><img src="https://static.frame-search.com/tn_img_15_54.gif" alt="強バックステップローリング（63214強K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span><br><span class="fsub">低め当て <span class="plus">+9</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODバックステップローリング（63214KK）</span><img src="https://static.frame-search.com/tn_img_15_56.gif" alt="ODバックステップローリング（63214KK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+6</span><br><span class="fsub">低め当て <span class="plus">+9</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD空中ローリングアタック（ジャンプ中にタメ46PP）</span><img src="https://static.frame-search.com/tn_img_15_40.gif" alt="OD空中ローリングアタック（ジャンプ中にタメ46PP）" loading="lazy"></td>
+<td class="frame-cell">−3<br><span class="fsub">低め当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">不明</td>
 </tr>
 </tbody>
 </table>
 
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -2401,9 +2964,44 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">ODソニックブレイド（214PP）</span><img src="https://static.frame-search.com/tn_img_19_45.gif" alt="ODソニックブレイド（214PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ソニッククロス（214P系＞6PP）</span><img src="https://static.frame-search.com/tn_img_19_57.gif" alt="ソニッククロス（214P系＞6PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODソニックブーム（タメ46PP）</span><img src="https://static.frame-search.com/tn_img_19_37.gif" alt="ODソニックブーム（タメ46PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ソニックブレイク（SA2中にタメ46PP~P）</span><img src="https://static.frame-search.com/tn_img_19_61.gif" alt="ソニックブレイク（SA2中にタメ46PP~P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">スピニングバックナックル（6HP）</span><img src="https://static.frame-search.com/tn_img_19_21.gif" alt="スピニングバックナックル（6HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -2519,7 +3117,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">OD龍尾脚（623KK）</span><img src="https://static.frame-search.com/tn_img_16_46.gif" alt="OD龍尾脚" loading="lazy"></td>
-<td class="frame-cell">−9（立ちガード）／−6（しゃがみガード）</td>
+<td class="frame-cell">−9<br><span class="fsub">（立ちガード）／</span><br>−6<br><span class="fsub">（しゃがみガード）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ちガード時：立ち中K始動／しゃがみガード時：中PTC</td>
 </tr>
 <tr>
@@ -2595,9 +3193,24 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">強龍尾脚（623強K）</span><img src="https://static.frame-search.com/tn_img_16_45.gif" alt="強龍尾脚（623強K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span><br><span class="fsub">持続当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -2762,9 +3375,34 @@
 </table>
 <p class="small">※行雲流水（214P）本体は攻撃判定のない構えのため、確定反撃テーブルの行には入れていません（派生6種のみ掲載）。構え中に通常技からキャンセルで入るのが実戦形で、派生の数値は「派生区間だけの値」である点に注意してください。</p>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">行雲流水＞蓮掌（214P~HP）</span><img src="https://static.frame-search.com/tn_img_20_32.gif" alt="行雲流水＞蓮掌（214P~HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">鶴脚落（3HK）</span><img src="https://static.frame-search.com/tn_img_20_24.gif" alt="鶴脚落（3HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中P（5MP）</span><img src="https://static.frame-search.com/tn_img_20_3.gif" alt="立ち中P（5MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -2907,36 +3545,86 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">弱・中・強・ODスクリューパイルドライバー（360P）</span><img src="https://static.frame-search.com/tn_img_8_38.gif" alt="弱スクリューパイルドライバー" loading="lazy"></td>
-<td class="frame-cell">―（投げ・ガード不能）</td>
+<td class="frame-cell">―<br><span class="fsub">（投げ・ガード不能）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>空振り硬直へ しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ボルシチダイナマイト（空中360K）／ODボルシチダイナマイト（空中360KK）</span><img src="https://static.frame-search.com/tn_img_8_42.gif" alt="ボルシチダイナマイト／ODボルシチダイナマイト" loading="lazy"></td>
-<td class="frame-cell">―（投げ・ガード不能）</td>
+<td class="frame-cell">―<br><span class="fsub">（投げ・ガード不能）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>着地が近ければ しゃがみ強P始動／遠ければ サンフレア Lv2／Lv3</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ロシアンスープレックス（63214K・近距離）／ODロシアンスープレックス（63214KK・近距離）</span><img src="https://static.frame-search.com/tn_img_8_44.gif" alt="ロシアンスープレックス／ODロシアンスープレックス" loading="lazy"></td>
-<td class="frame-cell">―（投げ・ガード不能）</td>
+<td class="frame-cell">―<br><span class="fsub">（投げ・ガード不能）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>空振り硬直へ しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">シベリアンエクスプレス／ODシベリアンエクスプレス（63214K）</span><img src="https://static.frame-search.com/tn_img_8_46.gif" alt="シベリアンエクスプレス" loading="lazy"></td>
-<td class="frame-cell">―（投げ・ガード不能）</td>
+<td class="frame-cell">―<br><span class="fsub">（投げ・ガード不能）</span></td>
 <td><span class="tag tag-cond">条件付き</span> 空振り硬直へ しゃがみ強P始動／遠ければ サンフレア Lv2／Lv3</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">SA1 エリアルロシアンスラム（236236K）</span><img src="https://static.frame-search.com/tn_img_8_51.gif" alt="SA1 エリアルロシアンスラム" loading="lazy"></td>
-<td class="frame-cell">―（投げ・ガード不能）</td>
+<td class="frame-cell">―<br><span class="fsub">（投げ・ガード不能）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>着地硬直へ しゃがみ強P始動</td>
 </tr>
 </tbody>
 </table>
 <p class="small">※コマンド投げの行は「ガード時」の技ではありません。いずれもガード不能の投げで、数値は空振り時の全体／硬直です。反撃は相手が投げを空振りしたモーション中に殴る形になります。</p>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">立ち弱P（5LP）</span><img src="https://static.frame-search.com/tn_img_8_1.gif" alt="立ち弱P（5LP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">しゃがみ弱P（2LP）</span><img src="https://static.frame-search.com/tn_img_8_9.gif" alt="しゃがみ弱P（2LP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強K（5HK）</span><img src="https://static.frame-search.com/tn_img_8_8.gif" alt="立ち強K（5HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強P（溜め）（5HP長押し）</span><img src="https://static.frame-search.com/tn_img_8_7.gif" alt="立ち強P（溜め）（5HP長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ヘッドバット（6HP）</span><img src="https://static.frame-search.com/tn_img_8_26.gif" alt="ヘッドバット（6HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ニーハンマー（6MK）</span><img src="https://static.frame-search.com/tn_img_8_25.gif" alt="ニーハンマー（6MK）" loading="lazy"></td>
+<td class="frame-cell">−4<br><span class="fsub">先端当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">フライングボディプレス（ジャンプ中に2HP）</span><img src="https://static.frame-search.com/tn_img_8_29.gif" alt="フライングボディプレス（ジャンプ中に2HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+10</span><br><span class="fsub">低め当て <span class="plus">+14</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">フライングヘッドバット（垂直ジャンプ中にHP）</span><img src="https://static.frame-search.com/tn_img_8_30.gif" alt="フライングヘッドバット（垂直ジャンプ中にHP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+13</span><br><span class="fsub">低め当て <span class="plus">+16</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -3001,7 +3689,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ヨガテレポート（6／4＋PPP・KKK）</span><img src="https://static.frame-search.com/tn_img_14_62.gif" alt="ヨガテレポート" loading="lazy"></td>
-<td class="frame-cell">―（移動技）</td>
+<td class="frame-cell">―<br><span class="fsub">（移動技）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>出現を立ち弱Pで落とす／着地が近ければ小技〜中技</td>
 </tr>
 <tr>
@@ -3031,7 +3719,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">しゃがみ中K ヨガスライディング（2MK）</span><img src="https://static.frame-search.com/tn_img_14_10.gif" alt="しゃがみ中K ヨガスライディング" loading="lazy"></td>
-<td class="frame-cell">−10（発生直後当て）</td>
+<td class="frame-cell">−10<br><span class="fsub">（発生直後当て）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ中K（近距離・浅当て時）</td>
 </tr>
 <tr>
@@ -3041,7 +3729,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">しゃがみ強K ロングスライディング（2HK）</span><img src="https://static.frame-search.com/tn_img_14_12.gif" alt="しゃがみ強K ロングスライディング" loading="lazy"></td>
-<td class="frame-cell">−16（発生直後当て）</td>
+<td class="frame-cell">−16<br><span class="fsub">（発生直後当て）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動（浅当て・近距離時）</td>
 </tr>
 <tr>
@@ -3056,20 +3744,55 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ドリル頭突き（空中2LP）</span><span class="tag tag-cancel">キャンセル可</span><img src="https://static.frame-search.com/tn_img_14_27.gif" alt="ドリル頭突き" loading="lazy"></td>
-<td class="frame-cell">−22（高当て）〜+4（最低空当て）</td>
+<td class="frame-cell">−22<br><span class="fsub">（高当て）〜+4</span><br><span class="fsub">（最低空当て）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動（高当て時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ドリルキック（空中2K）</span><img src="https://static.frame-search.com/tn_img_14_28.gif" alt="ドリルキック" loading="lazy"></td>
-<td class="frame-cell">−30〜−20（高当て）〜+5（最低空当て）</td>
+<td class="frame-cell">−30〜−20<br><span class="fsub">（高当て）〜+5</span><br><span class="fsub">（最低空当て）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動（高当て時）</td>
+</tr>
+</tbody>
+</table>
+
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">しゃがみ中K（スライディング）（2MK）</span><img src="https://static.frame-search.com/tn_img_14_10.gif" alt="しゃがみ中K（スライディング）（2MK）" loading="lazy"></td>
+<td class="frame-cell">−10<br><span class="fsub">先端当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ドリルキック（弱）（ジャンプ中に2弱K）</span><img src="https://static.frame-search.com/tn_img_14_28.gif" alt="ドリルキック（弱）（ジャンプ中に2弱K）" loading="lazy"></td>
+<td class="frame-cell">−30<br><span class="fsub">低め当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ドリルキック（中）（ジャンプ中に2中K）</span><img src="https://static.frame-search.com/tn_img_14_29.gif" alt="ドリルキック（中）（ジャンプ中に2中K）" loading="lazy"></td>
+<td class="frame-cell">−20<br><span class="fsub">低め当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ドリルキック（強）（ジャンプ中に2強K）</span><img src="https://static.frame-search.com/tn_img_14_30.gif" alt="ドリルキック（強）（ジャンプ中に2強K）" loading="lazy"></td>
+<td class="frame-cell">−22<br><span class="fsub">低め当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ヨガマミー（ジャンプ中に2弱P）</span></td>
+<td class="frame-cell">−22<br><span class="fsub">低め当て <span class="plus">+4</span></span></td>
+<td class="shimmy-cell">不明</td>
 </tr>
 </tbody>
 </table>
 
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -3253,9 +3976,54 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">弱スピニング・ミキサー（気流版）（気流纏い中に236弱P）</span><img src="https://static.frame-search.com/tn_img_5_32.gif" alt="弱スピニング・ミキサー（気流版）（気流纏い中に236弱P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ワールウインド・ショット（溜め）（236K長押し）</span><img src="https://static.frame-search.com/tn_img_5_49.gif" alt="ワールウインド・ショット（溜め）（236K長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+8</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODワールウインド・ショット（溜め）（236KK長押し）</span><img src="https://static.frame-search.com/tn_img_5_57.gif" alt="ODワールウインド・ショット（溜め）（236KK長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+10</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">しゃがみ中P（2MP）</span><img src="https://static.frame-search.com/tn_img_5_9.gif" alt="しゃがみ中P（2MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中P（5MP）</span><img src="https://static.frame-search.com/tn_img_5_3.gif" alt="立ち中P（5MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">垂直ジャンプ強K（垂直ジャンプ中にHK）</span><img src="https://static.frame-search.com/tn_img_5_18.gif" alt="垂直ジャンプ強K（垂直ジャンプ中にHK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+8</span><br><span class="fsub">低め当て <span class="plus">+11</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">イウサール（SA2）（214214K）</span><img src="https://static.frame-search.com/tn_img_5_70.gif" alt="イウサール（SA2）（214214K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+33</span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -3340,17 +4108,17 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">紫煙追（214弱P~前P）</span><img src="https://static.frame-search.com/tn_img_4_26.gif" alt="紫煙追" loading="lazy"></td>
-<td class="frame-cell">−16（先端 −11）</td>
+<td class="frame-cell">−16<br><span class="fsub">（先端 −11）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動（先端当て時は立ち強K）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">OD紫煙追（214PP~前P）</span><img src="https://static.frame-search.com/tn_img_4_28.gif" alt="OD紫煙追" loading="lazy"></td>
-<td class="frame-cell">−13（先端 −10）</td>
+<td class="frame-cell">−13<br><span class="fsub">（先端 −10）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動（先端当て時は条件付きで立ち強K）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">弱蛇頭鞭（236弱P）</span><img src="https://static.frame-search.com/tn_img_4_33.gif" alt="弱蛇頭鞭" loading="lazy"></td>
-<td class="frame-cell">−8（先端 −6）</td>
+<td class="frame-cell">−8<br><span class="fsub">（先端 −6）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち中K始動（近距離時）</td>
 </tr>
 <tr>
@@ -3370,7 +4138,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">猛毒牙（悪鬼蛇行中にP）</span><img src="https://static.frame-search.com/tn_img_4_46.gif" alt="猛毒牙（悪鬼蛇行中にP）" loading="lazy"></td>
-<td class="frame-cell">−25（遠距離ヒット時 −11）</td>
+<td class="frame-cell">−25<br><span class="fsub">（遠距離ヒット時 −11）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -3381,9 +4149,49 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">OD凶襲突（214KK）</span><img src="https://static.frame-search.com/tn_img_4_40.gif" alt="OD凶襲突（214KK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD紫煙砲（214PP）</span><img src="https://static.frame-search.com/tn_img_4_27.gif" alt="OD紫煙砲（214PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD紫煙砲＞泡割り（214PP~6P）</span><img src="https://static.frame-search.com/tn_img_4_27.gif" alt="OD紫煙砲＞泡割り（214PP~6P）" loading="lazy"></td>
+<td class="frame-cell">−2<br><span class="fsub">泡の爆発が当たれば <span class="plus">+4</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">しゃがみ中K（2MK）</span><img src="https://static.frame-search.com/tn_img_4_10.gif" alt="しゃがみ中K（2MK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">囚牛（6HK）</span><img src="https://static.frame-search.com/tn_img_4_21.gif" alt="囚牛（6HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ジャンプ中に2HP（ジャンプ中に2HP）</span></td>
+<td class="frame-cell"><span class="plus">+1</span><br><span class="fsub">低め当て <span class="plus">+11</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -3461,7 +4269,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">サイコアッパー（623P）</span><img src="https://static.frame-search.com/tn_img_3_36.gif" alt="サイコアッパー" loading="lazy"></td>
-<td class="frame-cell">弱 −13／中 −20／強 −21／OD −28</td>
+<td class="frame-cell">弱 −13／<br>中 −20／<br>強 −21／<br>OD −28</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -3517,9 +4325,44 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">弱・中サイコフリッカー（溜め）（236弱K・中K長押し）</span><img src="https://static.frame-search.com/tn_img_3_47.gif" alt="弱・中サイコフリッカー（溜め）（236弱K・中K長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODサイコフリッカー（236KK）</span><img src="https://static.frame-search.com/tn_img_3_50.gif" alt="ODサイコフリッカー（236KK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強K（5HK）</span><img src="https://static.frame-search.com/tn_img_3_6.gif" alt="立ち強K（5HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">サイコナックル（溜めLv1）（5HP長押し（短））</span><img src="https://static.frame-search.com/tn_img_3_19.gif" alt="サイコナックル（溜めLv1）（5HP長押し（短））" loading="lazy"></td>
+<td class="frame-cell">−2<br><span class="fsub">端では <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">サイコナックル（溜めLv2）（5HP長押し（長））</span><img src="https://static.frame-search.com/tn_img_3_20.gif" alt="サイコナックル（溜めLv2）（5HP長押し（長））" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -3585,12 +4428,12 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">豪昇龍拳（623P）</span><img src="https://static.frame-search.com/tn_img_2_43.gif" alt="豪昇龍拳" loading="lazy"></td>
-<td class="frame-cell">弱 −23／中 −30／強 −36／OD −39</td>
+<td class="frame-cell">弱 −23／<br>中 −30／<br>強 −36／<br>OD −39</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">竜巻斬空脚（214K）</span><img src="https://static.frame-search.com/tn_img_2_47.gif" alt="竜巻斬空脚" loading="lazy"></td>
-<td class="frame-cell">弱 −13／中 −13（しゃがみガード −28）／強 −59／OD −17（しゃがみガード −32）</td>
+<td class="frame-cell">弱 −13／<br>中 −13<br><span class="fsub">（しゃがみガード −28）／</span><br>強 −59／<br>OD −17<br><span class="fsub">（しゃがみガード −32）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -3600,7 +4443,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">金剛灼火2段目（214P~前P）</span><img src="https://static.frame-search.com/tn_img_2_54.gif" alt="金剛灼火2段目" loading="lazy"></td>
-<td class="frame-cell">弱 −10／中 −18／強 −14／OD −18</td>
+<td class="frame-cell">弱 −10／<br>中 −18／<br>強 −14／<br>OD −18</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動（弱版は条件付きで立ち強K）</td>
 </tr>
 <tr>
@@ -3631,9 +4474,64 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">百鬼襲＞豪刃（236K~K）</span><img src="https://static.frame-search.com/tn_img_2_67.gif" alt="百鬼襲＞豪刃（236K~K）" loading="lazy"></td>
+<td class="frame-cell">−5<br><span class="fsub">低め当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">百鬼襲＞豪斬（236K~入力なし）</span><img src="https://static.frame-search.com/tn_img_2_65.gif" alt="百鬼襲＞豪斬（236K~入力なし）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span><br><span class="fsub">持続当て <span class="plus">+5</span>（通常版）</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">百鬼襲＞豪衝（236K~P）</span><img src="https://static.frame-search.com/tn_img_2_66.gif" alt="百鬼襲＞豪衝（236K~P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span><br><span class="fsub">持続当て <span class="plus">+7</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD豪波動拳（236PP）</span><img src="https://static.frame-search.com/tn_img_2_37.gif" alt="OD豪波動拳（236PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">中・強豪波動拳（フル溜め）（236中P・強P長押し）</span><img src="https://static.frame-search.com/tn_img_2_31.gif" alt="中・強豪波動拳（フル溜め）（236中P・強P長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+21</span><br><span class="fsub">4段すべてガード時</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">豪波動拳（溜めLv2）（236P長押し（中））</span><img src="https://static.frame-search.com/tn_img_2_32.gif" alt="豪波動拳（溜めLv2）（236P長押し（中））" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強K（5HK）</span><img src="https://static.frame-search.com/tn_img_2_6.gif" alt="立ち強K（5HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span><br><span class="fsub">2段目が空振りすると −13</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中P（5MP）</span><img src="https://static.frame-search.com/tn_img_2_3.gif" alt="立ち中P（5MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">天魔空刃脚（ジャンプ中に2MK）</span><img src="https://static.frame-search.com/tn_img_2_27.gif" alt="天魔空刃脚（ジャンプ中に2MK）" loading="lazy"></td>
+<td class="frame-cell">−4<br><span class="fsub">低め当て <span class="plus">+6</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -3682,13 +4580,13 @@
 <tbody>
 <tr>
 <td class="move-cell"><span class="move-name">弱・中サイコクラッシャーアタック（[4]6P）</span><img src="https://static.frame-search.com/tn_img_1_25.gif" alt="弱サイコクラッシャーアタック" loading="lazy"></td>
-<td class="frame-cell">−20（密着）〜−5（持続後半）</td>
+<td class="frame-cell">−20<br><span class="fsub">（密着）〜−5</span><br><span class="fsub">（持続後半）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動／サンフレア Lv2・Lv3（着地位置次第）</td>
 </tr>
 
 <tr>
 <td class="move-cell"><span class="move-name">強サイコクラッシャーアタック（[4]6強P）</span><img src="https://static.frame-search.com/tn_img_1_29.gif" alt="強サイコクラッシャーアタック" loading="lazy"></td>
-<td class="frame-cell">−23（密着）／持続当て +2</td>
+<td class="frame-cell">−23<br><span class="fsub">（密着）／</span><br>持続当て +2</td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動／サンフレア Lv2・Lv3（着地位置次第）</td>
 </tr>
 <tr>
@@ -3709,22 +4607,89 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">バックフィストコンボ（214P）／ODバックフィストコンボ（214PP）</span><img src="https://static.frame-search.com/tn_img_1_39.gif" alt="バックフィストコンボ／ODバックフィストコンボ" loading="lazy"></td>
-<td class="frame-cell">弱 −14／中 −15／強 −15／OD −25</td>
+<td class="frame-cell">弱 −14／<br>中 −15／<br>強 −15／<br>OD −25</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 
 <tr>
 <td class="move-cell"><span class="move-name">ヘッドプレス（[2]8K~K）</span><img src="https://static.frame-search.com/tn_img_1_50.gif" alt="ヘッドプレス" loading="lazy"></td>
-<td class="frame-cell">−39（着地硬直）</td>
+<td class="frame-cell">−39<br><span class="fsub">（着地硬直）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動／サンフレア Lv2・Lv3（着地位置次第）</td>
 </tr>
 </tbody>
 </table>
 <p class="small">※サイコマイン起爆版はガード時の数値が変わり、基本的に確反なしです（サイコクラッシャー系・バックフィストコンボはベガ側有利、ODバックフィストコンボは −3）。</p>
 
+
+
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">弱・中・強バックフィストコンボ（214P）</span><img src="https://static.frame-search.com/tn_img_1_39.gif" alt="弱・中・強バックフィストコンボ（214P）" loading="lazy"></td>
+<td class="frame-cell">−14〜−15<br><span class="fsub">サイコマイン起爆時 <span class="plus">+9</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">イビルニー（4HK）</span><img src="https://static.frame-search.com/tn_img_1_20.gif" alt="イビルニー（4HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強P（5HP）</span><img src="https://static.frame-search.com/tn_img_1_5.gif" alt="立ち強P（5HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span><br><span class="fsub">先端当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ヘッドプレス＞サマーソルトスカルダイバー（タメ28K~K）</span><img src="https://static.frame-search.com/tn_img_1_52.gif" alt="ヘッドプレス＞サマーソルトスカルダイバー（タメ28K~K）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span><br><span class="fsub">低め当て <span class="plus">+9</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">デビルリバース（タメ28K~P）</span><img src="https://static.frame-search.com/tn_img_1_53.gif" alt="デビルリバース（タメ28K~P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span><br><span class="fsub">低め当て <span class="plus">+9</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">デビルリバース（マイン起爆時）（タメ28K~P）</span><img src="https://static.frame-search.com/tn_img_1_54.gif" alt="デビルリバース（マイン起爆時）（タメ28K~P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+21</span><br><span class="fsub">低め当て <span class="plus">+27</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODデビルリバース（タメ28KK~P）</span><img src="https://static.frame-search.com/tn_img_1_55.gif" alt="ODデビルリバース（タメ28KK~P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span><br><span class="fsub">低め当て <span class="plus">+10</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODデビルリバース（マイン起爆時）（タメ28KK~P）</span><img src="https://static.frame-search.com/tn_img_1_56.gif" alt="ODデビルリバース（マイン起爆時）（タメ28KK~P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+23</span><br><span class="fsub">低め当て <span class="plus">+28</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">弱・中サイコクラッシャーアタック（タメ46弱P・中P）</span><img src="https://static.frame-search.com/tn_img_1_25.gif" alt="弱・中サイコクラッシャーアタック（タメ46弱P・中P）" loading="lazy"></td>
+<td class="frame-cell">−20<br><span class="fsub">持続当て −5／マイン起爆時 <span class="plus">+6</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強サイコクラッシャーアタック（タメ46強P）</span><img src="https://static.frame-search.com/tn_img_1_29.gif" alt="強サイコクラッシャーアタック（タメ46強P）" loading="lazy"></td>
+<td class="frame-cell">−23<br><span class="fsub">持続当て <span class="plus">+2</span>／マイン起爆時 <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODサイコクラッシャーアタック（タメ46PP）</span><img src="https://static.frame-search.com/tn_img_1_31.gif" alt="ODサイコクラッシャーアタック（タメ46PP）" loading="lazy"></td>
+<td class="frame-cell">−3<br><span class="fsub">マイン起爆時 <span class="plus">+10</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -3801,27 +4766,27 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">中・強・ODバーンナックル（214P）</span><img src="https://static.frame-search.com/tn_img_23_33.gif" alt="中バーンナックル" loading="lazy"></td>
-<td class="frame-cell">−8〜−6（先端 +2〜+5）</td>
+<td class="frame-cell">−8〜−6<br><span class="fsub">（先端 +2〜+5）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>強・OD版は立ち中K始動／中版は中PTC（近距離時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">弱パワーチャージ（236弱K）</span><img src="https://static.frame-search.com/tn_img_23_36.gif" alt="弱パワーチャージ" loading="lazy"></td>
-<td class="frame-cell">−9（遅当て −5）</td>
+<td class="frame-cell">−9<br><span class="fsub">（遅当て −5）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち強K（遅当て時は弱K）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">中パワーチャージ（236中K）</span><img src="https://static.frame-search.com/tn_img_23_37.gif" alt="中パワーチャージ" loading="lazy"></td>
-<td class="frame-cell">−11（遅当て −6）</td>
+<td class="frame-cell">−11<br><span class="fsub">（遅当て −6）</span></td>
 <td><span class="tag tag-ok">確定</span><br>立ち強K（遅当て時は中PTC）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">強・ODパワーチャージ（236K）</span><img src="https://static.frame-search.com/tn_img_23_38.gif" alt="強パワーチャージ" loading="lazy"></td>
-<td class="frame-cell">−16〜−14（遅当て −8〜−7）</td>
+<td class="frame-cell">−16〜−14<br><span class="fsub">（遅当て −8〜−7）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動（遅当て時：しゃがみ中P始動／−8当ては立ち中K始動）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ライジングタックル（623P）</span><img src="https://static.frame-search.com/tn_img_23_46.gif" alt="ライジングタックル" loading="lazy"></td>
-<td class="frame-cell">弱 −23／中 −26／強 −36／OD −42</td>
+<td class="frame-cell">弱 −23／<br>中 −26／<br>強 −36／<br>OD −42</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -3857,9 +4822,44 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">中バーンナックル（214中P）</span><img src="https://static.frame-search.com/tn_img_23_33.gif" alt="中バーンナックル（214中P）" loading="lazy"></td>
+<td class="frame-cell">−6<br><span class="fsub">先端当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強バーンナックル（214強P）</span><img src="https://static.frame-search.com/tn_img_23_34.gif" alt="強バーンナックル（214強P）" loading="lazy"></td>
+<td class="frame-cell">−8<br><span class="fsub">先端当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODバーンナックル（214PP）</span><img src="https://static.frame-search.com/tn_img_23_35.gif" alt="ODバーンナックル（214PP）" loading="lazy"></td>
+<td class="frame-cell">−8<br><span class="fsub">先端当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強ラウンドウェイブ（236強P）</span><img src="https://static.frame-search.com/tn_img_23_29.gif" alt="強ラウンドウェイブ（236強P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+5</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強P（5HP）</span><img src="https://static.frame-search.com/tn_img_23_5.gif" alt="立ち強P（5HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -3926,22 +4926,22 @@
 <tbody>
 <tr>
 <td class="move-cell"><span class="move-name">弱花蝶扇（236弱P）</span><img src="https://static.frame-search.com/tn_img_24_24.gif" alt="弱花蝶扇" loading="lazy"></td>
-<td class="frame-cell">−7（焔時 −3）</td>
+<td class="frame-cell">−7<br><span class="fsub">（焔時 −3）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ中P始動。焔時は確反なし（近距離時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">中花蝶扇（236中P）</span><img src="https://static.frame-search.com/tn_img_24_28.gif" alt="中花蝶扇" loading="lazy"></td>
-<td class="frame-cell">−9（焔時 −5）</td>
+<td class="frame-cell">−9<br><span class="fsub">（焔時 −5）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち強K。焔時は密着のみ弱K（近距離時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">強花蝶扇（236強P）</span><img src="https://static.frame-search.com/tn_img_24_32.gif" alt="強花蝶扇" loading="lazy"></td>
-<td class="frame-cell">−11（焔時 −7）</td>
+<td class="frame-cell">−11<br><span class="fsub">（焔時 −7）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち強K。焔時はしゃがみ中P始動（近距離時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">OD花蝶扇（236PP）</span><img src="https://static.frame-search.com/tn_img_24_36.gif" alt="OD花蝶扇" loading="lazy"></td>
-<td class="frame-cell">−5（焔時 +1）</td>
+<td class="frame-cell">−5<br><span class="fsub">（焔時 +1）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>弱K。焔時は確反なし（密着時）</td>
 </tr>
 <tr>
@@ -3951,17 +4951,17 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">飛翔龍炎陣（623K）</span><img src="https://static.frame-search.com/tn_img_24_42.gif" alt="飛翔龍炎陣" loading="lazy"></td>
-<td class="frame-cell">弱 −29／中 −28／強 −28／OD −40</td>
+<td class="frame-cell">弱 −29／<br>中 −28／<br>強 −28／<br>OD −40</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">弱必殺忍蜂（236弱K）</span><img src="https://static.frame-search.com/tn_img_24_58.gif" alt="弱必殺忍蜂" loading="lazy"></td>
-<td class="frame-cell">−10（先端 +6）</td>
+<td class="frame-cell">−10<br><span class="fsub">（先端 +6）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち強K（近距離時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">中・強必殺忍蜂（236中K／236強K）</span><img src="https://static.frame-search.com/tn_img_24_60.gif" alt="中・強必殺忍蜂" loading="lazy"></td>
-<td class="frame-cell">中 −12（先端 +4）／強 −13（先端 +3）</td>
+<td class="frame-cell">中 −12<br><span class="fsub">（先端 +4）／</span><br>強 −13<br><span class="fsub">（先端 +3）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ強P始動（近距離時）</td>
 </tr>
 <tr>
@@ -3992,9 +4992,59 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">弱必殺忍蜂（236弱K）</span><img src="https://static.frame-search.com/tn_img_24_58.gif" alt="弱必殺忍蜂（236弱K）" loading="lazy"></td>
+<td class="frame-cell">−10<br><span class="fsub">遅当て <span class="plus">+6</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">中必殺忍蜂（236中K）</span><img src="https://static.frame-search.com/tn_img_24_60.gif" alt="中必殺忍蜂（236中K）" loading="lazy"></td>
+<td class="frame-cell">−12<br><span class="fsub">遅当て <span class="plus">+4</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強必殺忍蜂（236強K）</span><img src="https://static.frame-search.com/tn_img_24_62.gif" alt="強必殺忍蜂（236強K）" loading="lazy"></td>
+<td class="frame-cell">−13<br><span class="fsub">遅当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD花蝶扇（236PP）</span><img src="https://static.frame-search.com/tn_img_24_36.gif" alt="OD花蝶扇（236PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD花蝶扇（溜め・跳ねる版）（236PP長押し）</span><img src="https://static.frame-search.com/tn_img_24_36.gif" alt="OD花蝶扇（溜め・跳ねる版）（236PP長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+46</span><br><span class="fsub">全段ガード <span class="plus">+53</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD花蝶扇（溜め・跳ねない版）（236PP長押し（短））</span><img src="https://static.frame-search.com/tn_img_24_36.gif" alt="OD花蝶扇（溜め・跳ねない版）（236PP長押し（短））" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+12</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">星孔雀（4HK）</span><img src="https://static.frame-search.com/tn_img_24_22.gif" alt="星孔雀（4HK）" loading="lazy"></td>
+<td class="frame-cell">−1<br><span class="fsub">持続当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">空中龍炎舞（ジャンプ中に214P・PP）</span><img src="https://static.frame-search.com/tn_img_24_50.gif" alt="空中龍炎舞（ジャンプ中に214P・PP）" loading="lazy"></td>
+<td class="frame-cell">−5<br><span class="fsub">低め当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -4067,22 +5117,22 @@
 <tbody>
 <tr>
 <td class="move-cell"><span class="move-name">スクラッチホイール（623K）</span><img src="https://static.frame-search.com/tn_img_25_36.gif" alt="スクラッチホイール" loading="lazy"></td>
-<td class="frame-cell">弱 −24／中 −30／強 −33／OD −46</td>
+<td class="frame-cell">弱 −24／<br>中 −30／<br>強 −33／<br>OD −46</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ライノホーン（236K）</span><img src="https://static.frame-search.com/tn_img_25_32.gif" alt="ライノホーン" loading="lazy"></td>
-<td class="frame-cell">弱〜OD 全版 −9（先端 −4）</td>
+<td class="frame-cell">弱〜OD 全版 −9<br><span class="fsub">（先端 −4）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち強K。先端当て（−4）時は確反なし（近距離時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">スピンサイズ（214K）</span><img src="https://static.frame-search.com/tn_img_25_54.gif" alt="スピンサイズ" loading="lazy"></td>
-<td class="frame-cell">弱 −12／中 −14／強 −10／OD −10</td>
+<td class="frame-cell">弱 −12／<br>中 −14／<br>強 −10／<br>OD −10</td>
 <td><span class="tag tag-cond">条件付き</span><br>弱・中は しゃがみ強P始動、強・ODは立ち強K（全段時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">ムーングライド派生（214P~前P）</span><img src="https://static.frame-search.com/tn_img_25_61.gif" alt="ムーングライド派生" loading="lazy"></td>
-<td class="frame-cell">−13（OD版 −19）</td>
+<td class="frame-cell">−13<br><span class="fsub">（OD版 −19）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -4107,7 +5157,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">スライディング（3HK）</span><img src="https://static.frame-search.com/tn_img_25_19.gif" alt="スライディング" loading="lazy"></td>
-<td class="frame-cell">−10（先端 −2）</td>
+<td class="frame-cell">−10<br><span class="fsub">（先端 −2）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち強K。先端当て時は確反なし（密着〜近距離時）</td>
 </tr>
 <tr>
@@ -4143,9 +5193,39 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">リンクスソング＞マレットスマッシュ（236P~6P~6HK）</span><img src="https://static.frame-search.com/tn_img_25_49.gif" alt="リンクスソング＞マレットスマッシュ（236P~6P~6HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span><br><span class="fsub">OD構えからの強化版の値</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">リンクスソング＞レオパードスナップ（236P~6P~6LK）</span><img src="https://static.frame-search.com/tn_img_25_45.gif" alt="リンクスソング＞レオパードスナップ（236P~6P~6LK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span><br><span class="fsub">OD構えからの強化版の値</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中K（5MK）</span><img src="https://static.frame-search.com/tn_img_25_4.gif" alt="立ち中K（5MK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">空中ターゲットコンボ（ジャンプ中に弱P＞中K）</span></td>
+<td class="frame-cell"><span class="plus">+8</span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -4206,22 +5286,22 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">タイガーアッパーカット（623P）</span><img src="https://static.frame-search.com/tn_img_26_32.gif" alt="タイガーアッパーカット" loading="lazy"></td>
-<td class="frame-cell">弱 −37／中 −45／強 −45／OD −43</td>
+<td class="frame-cell">弱 −37／<br>中 −45／<br>強 −45／<br>OD −43</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">タイガーニークラッシュ（236弱K）</span><img src="https://static.frame-search.com/tn_img_26_37.gif" alt="タイガーニークラッシュ" loading="lazy"></td>
-<td class="frame-cell">−8（先端・しゃがみ時 +2）</td>
+<td class="frame-cell">−8<br><span class="fsub">（先端・しゃがみ時 +2）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>立ち中K始動（密着時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">タイガーニークラッシュ（236中K）</span><img src="https://static.frame-search.com/tn_img_26_38.gif" alt="タイガーニークラッシュ" loading="lazy"></td>
-<td class="frame-cell">−7（先端・しゃがみ時 +3）</td>
+<td class="frame-cell">−7<br><span class="fsub">（先端・しゃがみ時 +3）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>しゃがみ中P始動（密着時）</td>
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">タイガーニークラッシュ（236強K）</span><img src="https://static.frame-search.com/tn_img_26_39.gif" alt="タイガーニークラッシュ" loading="lazy"></td>
-<td class="frame-cell">−5（先端 +5）</td>
+<td class="frame-cell">−5<br><span class="fsub">（先端 +5）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>弱P／弱K（密着で両段時）</td>
 </tr>
 <tr>
@@ -4236,7 +5316,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">立ち強K（5HK）</span><span class="tag tag-cancel">キャンセル可</span><img src="https://static.frame-search.com/tn_img_26_6.gif" alt="立ち強K" loading="lazy"></td>
-<td class="frame-cell">−5（しゃがみガード時 −7）</td>
+<td class="frame-cell">−5<br><span class="fsub">（しゃがみガード時 −7）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>弱P／弱K。しゃがみガードで両段当たればしゃがみ中P始動（密着時）</td>
 </tr>
 <tr>
@@ -4247,9 +5327,64 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">タイガーノヴァ（214K~6HK）</span><img src="https://static.frame-search.com/tn_img_26_49.gif" alt="タイガーノヴァ（214K~6HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">弱タイガーニークラッシュ（236弱K）</span><img src="https://static.frame-search.com/tn_img_26_37.gif" alt="弱タイガーニークラッシュ（236弱K）" loading="lazy"></td>
+<td class="frame-cell">−8<br><span class="fsub">先端当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">中タイガーニークラッシュ（236中K）</span><img src="https://static.frame-search.com/tn_img_26_38.gif" alt="中タイガーニークラッシュ（236中K）" loading="lazy"></td>
+<td class="frame-cell">−7<br><span class="fsub">先端当て <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強タイガーニークラッシュ（236強K）</span><img src="https://static.frame-search.com/tn_img_26_39.gif" alt="強タイガーニークラッシュ（236強K）" loading="lazy"></td>
+<td class="frame-cell">−5<br><span class="fsub">先端当て <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODタイガーニークラッシュ（236KK）</span><img src="https://static.frame-search.com/tn_img_26_40.gif" alt="ODタイガーニークラッシュ（236KK）" loading="lazy"></td>
+<td class="frame-cell">−2<br><span class="fsub">先端当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">中タイガーショット（236中P）</span><img src="https://static.frame-search.com/tn_img_26_27.gif" alt="中タイガーショット（236中P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODタイガーショット（236MP+HP）</span><img src="https://static.frame-search.com/tn_img_26_29.gif" alt="ODタイガーショット（236MP+HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+6</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中P（5MP）</span><img src="https://static.frame-search.com/tn_img_26_3.gif" alt="立ち中P（5MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">不可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ステップハイキック（6HK）</span><img src="https://static.frame-search.com/tn_img_26_22.gif" alt="ステップハイキック（6HK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+4</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -4329,7 +5464,7 @@
 <tbody>
 <tr>
 <td class="move-cell"><span class="move-name">サンダースラップ（弱／214弱P）</span><img src="https://static.frame-search.com/tn_img_27_24.gif" alt="サンダースラップ" loading="lazy"></td>
-<td class="frame-cell">−4（持続当て −1）</td>
+<td class="frame-cell">−4<br><span class="fsub">（持続当て −1）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>弱P（密着時）</td>
 </tr>
 <tr>
@@ -4364,7 +5499,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">空中バーニングキック（空中236K）</span><img src="https://static.frame-search.com/tn_img_27_38.gif" alt="空中バーニングキック" loading="lazy"></td>
-<td class="frame-cell">−5（高度で最大 +8）</td>
+<td class="frame-cell">−5<br><span class="fsub">（高度で最大 +8）</span></td>
 <td><span class="tag tag-cond">条件付き</span><br>弱P（低空でガード時）</td>
 </tr>
 <tr>
@@ -4385,9 +5520,54 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">弱・中・強バーニングキック（236K）</span><img src="https://static.frame-search.com/tn_img_27_34.gif" alt="弱・中・強バーニングキック（236K）" loading="lazy"></td>
+<td class="frame-cell">−2<br><span class="fsub">先端当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ダブルバーン（236K~KK）</span><img src="https://static.frame-search.com/tn_img_27_37.gif" alt="ダブルバーン（236K~KK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち中P（5MP）</span><img src="https://static.frame-search.com/tn_img_27_3.gif" alt="立ち中P（5MP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">空中バーニングキック（弱）（ジャンプ中に236弱K）</span><img src="https://static.frame-search.com/tn_img_27_38.gif" alt="空中バーニングキック（弱）（ジャンプ中に236弱K）" loading="lazy"></td>
+<td class="frame-cell">−5<br><span class="fsub">低め当て <span class="plus">+2</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">空中バーニングキック（中）（ジャンプ中に236中K）</span><img src="https://static.frame-search.com/tn_img_27_39.gif" alt="空中バーニングキック（中）（ジャンプ中に236中K）" loading="lazy"></td>
+<td class="frame-cell">−5<br><span class="fsub">低め当て <span class="plus">+8</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">空中バーニングキック（強）（ジャンプ中に236強K）</span><img src="https://static.frame-search.com/tn_img_27_40.gif" alt="空中バーニングキック（強）（ジャンプ中に236強K）" loading="lazy"></td>
+<td class="frame-cell">−5<br><span class="fsub">低め当て <span class="plus">+7</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD空中バーニングキック（ジャンプ中に236KK）</span><img src="https://static.frame-search.com/tn_img_27_41.gif" alt="OD空中バーニングキック（ジャンプ中に236KK）" loading="lazy"></td>
+<td class="frame-cell">−1<br><span class="fsub">低め当て <span class="plus">+13</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -4500,9 +5680,54 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">強フラッシュチョップ（236強P）</span><img src="https://static.frame-search.com/tn_img_28_44.gif" alt="強フラッシュチョップ（236強P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">構え＞ヘビーラリアット（2PP~HP）</span><img src="https://static.frame-search.com/tn_img_28_29.gif" alt="構え＞ヘビーラリアット（2PP~HP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">構え＞ヘビーラリアット（溜め）（2PP~HP長押し）</span><img src="https://static.frame-search.com/tn_img_28_30.gif" alt="構え＞ヘビーラリアット（溜め）（2PP~HP長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+5</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">構え＞エアスタンピード（2PP~MK）</span><img src="https://static.frame-search.com/tn_img_28_32.gif" alt="構え＞エアスタンピード（2PP~MK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">オブリークスタンプ（4MK）</span><img src="https://static.frame-search.com/tn_img_28_38.gif" alt="オブリークスタンプ（4MK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強P（溜め）（5HP長押し）</span><img src="https://static.frame-search.com/tn_img_28_6.gif" alt="立ち強P（溜め）（5HP長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち強K（溜め）（5HK長押し）</span><img src="https://static.frame-search.com/tn_img_28_8.gif" alt="立ち強K（溜め）（5HK長押し）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -4568,7 +5793,7 @@
 </tr>
 <tr>
 <td class="move-cell"><span class="move-name">リパ・ン・アギラ（623K）</span><img src="https://static.frame-search.com/tn_img_30_55.gif" alt="リパ・ン・アギラ" loading="lazy"></td>
-<td class="frame-cell">弱・中 −29／強 −32／OD −40</td>
+<td class="frame-cell">弱・中 −29／<br>強 −32／<br>OD −40</td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -4599,9 +5824,44 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">強タリム・ン・ハンギン（214強P）</span><img src="https://static.frame-search.com/tn_img_30_45.gif" alt="強タリム・ン・ハンギン（214強P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">フリップ＞クーログ（236K~K）</span><img src="https://static.frame-search.com/tn_img_30_53.gif" alt="フリップ＞クーログ（236K~K）" loading="lazy"></td>
+<td class="frame-cell">−5<br><span class="fsub">低め当て <span class="plus">+4</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODフリップ＞クーログ（236KK~K）</span><img src="https://static.frame-search.com/tn_img_30_54.gif" alt="ODフリップ＞クーログ（236KK~K）" loading="lazy"></td>
+<td class="frame-cell">−2<br><span class="fsub">低め当て <span class="plus">+7</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">フリップ＞ウラン（236K~P）</span><img src="https://static.frame-search.com/tn_img_30_51.gif" alt="フリップ＞ウラン（236K~P）" loading="lazy"></td>
+<td class="frame-cell">−3<br><span class="fsub">当て方により <span class="plus">+3</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">SA2中の派生技（214214P~4KK）</span></td>
+<td class="frame-cell">−3<br><span class="fsub">当て方により <span class="plus">+5</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
@@ -4651,7 +5911,7 @@
 <tbody>
 <tr>
 <td class="move-cell"><span class="move-name">無情の拳（特殊技）</span><span class="tag tag-cancel">キャンセル可</span><img src="https://static.frame-search.com/tn_img_31_25.gif" alt="無情の拳（特殊技）" loading="lazy"></td>
-<td class="frame-cell">−23（溜め版 −19）</td>
+<td class="frame-cell">−23<br><span class="fsub">（溜め版 −19）</span></td>
 <td><span class="tag tag-ok">確定</span><br>しゃがみ強P始動</td>
 </tr>
 <tr>
@@ -4687,9 +5947,64 @@
 </tbody>
 </table>
 
+<p class="tbl-title">相手が有利な技</p>
+<p class="small">ガードしても相手が先に動ける技です。赤字は相手の有利フレームで、条件付きでプラスになる技は通常時の数値と条件を併記しています。シミーは、ガード後に相手が投げ間合いで打撃と投げの二択を仕掛けられるかです。「離れる」は、ガードした時点で間合いが開いて投げの心配がない技、「不明」は判定できなかった技です。</p>
+<table class="qr-table plus-table">
+<thead>
+<tr><th class="move-cell">技</th><th class="frame-cell">ガード時</th><th class="shimmy-cell">シミーリスク</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="move-cell"><span class="move-name">弱・中アーム・オブ・ジャスティス（236弱P・中P）</span><img src="https://static.frame-search.com/tn_img_31_27.gif" alt="弱・中アーム・オブ・ジャスティス（236弱P・中P）" loading="lazy"></td>
+<td class="frame-cell">−2<br><span class="fsub">先端当て <span class="plus">+4</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">強アーム・オブ・ジャスティス（236強P）</span><img src="https://static.frame-search.com/tn_img_31_29.gif" alt="強アーム・オブ・ジャスティス（236強P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span><br><span class="fsub">先端当て <span class="plus">+7</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">ODアーム・オブ・ジャスティス（236PP）</span><img src="https://static.frame-search.com/tn_img_31_31.gif" alt="ODアーム・オブ・ジャスティス（236PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+2</span><br><span class="fsub">先端当て <span class="plus">+7</span></span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">アーム・オブ・ジャスティス＞追撃（236P~6P）</span><img src="https://static.frame-search.com/tn_img_31_30.gif" alt="アーム・オブ・ジャスティス＞追撃（236P~6P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">倫理の崩壊（22強K~P）</span><img src="https://static.frame-search.com/tn_img_31_60.gif" alt="倫理の崩壊（22強K~P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+3</span></td>
+<td class="shimmy-cell">不明</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD息吹の円筒（236KK）</span><img src="https://static.frame-search.com/tn_img_31_44.gif" alt="OD息吹の円筒（236KK）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">立ち弱P（5LP）</span><img src="https://static.frame-search.com/tn_img_31_1.gif" alt="立ち弱P（5LP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">可</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">厳酷な岩肩（623強P）</span><img src="https://static.frame-search.com/tn_img_31_35.gif" alt="厳酷な岩肩（623強P）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+<tr>
+<td class="move-cell"><span class="move-name">OD厳酷な岩肩（623PP）</span><img src="https://static.frame-search.com/tn_img_31_37.gif" alt="OD厳酷な岩肩（623PP）" loading="lazy"></td>
+<td class="frame-cell"><span class="plus">+1</span></td>
+<td class="shimmy-cell">離れる</td>
+</tr>
+</tbody>
+</table>
+
 <p class="tbl-title">インパクト・テーブル</p>
 <p class="di-caution">相手がSA3を持っていると、キャンセル可能な技はSA3で返されます（OD必殺技はSA2でも返されます）。インパクトを狙う前に相手のSAゲージを必ず確認してください。</p>
-<table class="qr-table">
+<table class="qr-table di-table">
 <thead>
 <tr><th class="gif-cell">GIF</th><th>技・経路</th><th class="frame-cell">DI可否</th><th>条件・注意</th></tr>
 </thead>
